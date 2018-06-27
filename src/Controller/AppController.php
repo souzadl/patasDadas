@@ -41,7 +41,7 @@ class AppController extends Controller
         parent::initialize();
         
         $this->loadModel('Permissoes');
-        $this->loadModel('Users');
+        $this->loadModel('Adotaveis');
         
         $this->paginate['limit'] = Configure::read('App.limitPagination');
         //$this->paginate['maxLimit'] = 2;
@@ -82,32 +82,23 @@ class AppController extends Controller
         //$this->loadComponent('Security');
     }
     
-    public function isAuthorized($user) {
+    public function isAuthorized($user){   
         $permissoes = $this->Permissoes->find('all')
-            ->where(['users_id ='=>$this->Auth->user()['id']])
+            ->where(['users_id ='=>$user['id']])
             ->contain(['Acoes', 'Controles', 'Users']);
         $action = $this->request->getParam('action');
         $controller = $this->request->getParam('controller');
+        $permitido = false;
         foreach ($permissoes as $permissao){
-            var_dump($permissao);
-            var_dump($permissao->acao);
             if(isset($permissao->controle)
-              and isset($permissao->acao)
+              and isset($permissao->aco)
               and $controller === $permissao->controle->nome 
-              and $action === $permissao->acao->nome){
-              echo "sim";
+              and $action === $permissao->aco->nome){
+              $permitido = true;
             }              
         }
-        die;
         
-        return true;
-        // Admin pode acessar todas as actions
-        //if (isset($user['role']) && $user['role'] === 'admin') {
-        //    return true;
-        //}
-
-        // Bloqueia acesso por padrão
-        //return false;       
+        return $permitido;     
     }
     
     public function beforeFilter(Event $event) {

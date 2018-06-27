@@ -34,4 +34,5 @@ class Permissao extends Entity
         'controle' => true,
         'user' => true
     ];
+
 }
