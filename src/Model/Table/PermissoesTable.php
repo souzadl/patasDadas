@@ -36,11 +36,12 @@ class PermissoesTable extends Table
         parent::initialize($config);
 
         $this->setTable('permissoes');
+        $this->setPrimaryKey(['users_id', 'acoes_id', 'controles_id']);
 
         $this->belongsTo('Acoes', [
             'foreignKey' => 'acoes_id',
             'joinType' => 'INNER'
-        ]);
+        ]);        
         $this->belongsTo('Controles', [
             'foreignKey' => 'controles_id',
             'joinType' => 'INNER'
@@ -48,15 +49,7 @@ class PermissoesTable extends Table
         $this->belongsTo('Users', [
             'foreignKey' => 'users_id',
             'joinType' => 'INNER'
-        ]);
-
-        $this->hasMany('Acoes')
-            ->setForeignKey('acoes_id')
-            ->setDependent(true);
-        
-        $this->hasMany('Controles')
-            ->setForeignKey('controles_id')
-            ->setDependent(true);        
+        ]);    
         
     }
 

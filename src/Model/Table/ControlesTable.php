@@ -32,8 +32,13 @@ class ControlesTable extends Table
         parent::initialize($config);
 
         $this->setTable('controles');
-        $this->setDisplayField('id');
+        $this->setDisplayField('nome');
         $this->setPrimaryKey('id');
+        
+        $this->hasMany('Permissoes',[
+            'dependent' => true,
+            'foreignKey' => 'users_id'
+        ]);        
     }
 
     /**

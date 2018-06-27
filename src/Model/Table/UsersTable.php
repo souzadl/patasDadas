@@ -46,6 +46,11 @@ class UsersTable extends Table
             'foreignKey' => 'roles_id',
             'joinType' => 'INNER'
         ]);
+        
+        $this->hasMany('Permissoes',[
+            'dependent' => true,
+            'foreignKey' => 'users_id'
+        ]);
     }
 
     /**

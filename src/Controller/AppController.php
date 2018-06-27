@@ -41,6 +41,7 @@ class AppController extends Controller
         parent::initialize();
         
         $this->loadModel('Permissoes');
+        $this->loadModel('Users');
         
         $this->paginate['limit'] = Configure::read('App.limitPagination');
         //$this->paginate['maxLimit'] = 2;
@@ -82,17 +83,20 @@ class AppController extends Controller
     }
     
     public function isAuthorized($user) {
-        //die;
         $permissoes = $this->Permissoes->find('all')
             ->where(['users_id ='=>$this->Auth->user()['id']])
-            ->contain(['']);
-            // echo "<pre>";
-            //var_dump($permissoes);
+            ->contain(['Acoes', 'Controles', 'Users']);
         $action = $this->request->getParam('action');
         $controller = $this->request->getParam('controller');
         foreach ($permissoes as $permissao){
-            //echo "<pre>";
-            //var_dump($permissao->controle->nome);
+            var_dump($permissao);
+            var_dump($permissao->acao);
+            if(isset($permissao->controle)
+              and isset($permissao->acao)
+              and $controller === $permissao->controle->nome 
+              and $action === $permissao->acao->nome){
+              echo "sim";
+            }              
         }
         die;
         
