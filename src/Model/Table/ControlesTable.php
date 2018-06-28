@@ -37,7 +37,7 @@ class ControlesTable extends Table
         
         $this->hasMany('Permissoes',[
             'dependent' => true,
-            'foreignKey' => 'users_id'
+            'foreignKey' => 'controles_id'
         ]);        
     }
 
@@ -60,5 +60,22 @@ class ControlesTable extends Table
             ->notEmpty('nome');
 
         return $validator;
+    }
+    
+    public function findComPermissoes(Query $query, array $options) {
+        //return parent::findAll($query, $options);
+        if(is_array($options) and isset($options['conditions'])){
+            $conditions = $options['conditions'];
+            unset($options['conditions']);
+        }else{
+            $conditions = '';
+        }
+        return $query->contain(['Permissoes' => [
+            'conditions' => $conditions
+            //'foreignKey' => false,
+            //'queryBuilder' => function ($q){
+            //    return $q->where('acoes_id in (select id from acoes)');
+            //}
+        ]]);
     }
 }

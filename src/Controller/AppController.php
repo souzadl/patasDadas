@@ -82,22 +82,25 @@ class AppController extends Controller
         //$this->loadComponent('Security');
     }
     
-    public function isAuthorized($user){   
-        $permissoes = $this->Permissoes->find('all')
-            ->where(['users_id ='=>$user['id']])
-            ->contain(['Acoes', 'Controles', 'Users']);
-        $action = $this->request->getParam('action');
-        $controller = $this->request->getParam('controller');
-        $permitido = false;
-        foreach ($permissoes as $permissao){
-            if(isset($permissao->controle)
-              and isset($permissao->aco)
-              and $controller === $permissao->controle->nome 
-              and $action === $permissao->aco->nome){
-              $permitido = true;
-            }              
-        }
-        
+    public function isAuthorized($user){  
+        if($user['roles_id'] == Configure::read('App.idRoleSistema')){
+          $permitido = true;
+        }else{          
+          $permissoes = $this->Permissoes->find('all')
+              ->where(['users_id ='=>$user['id']])
+              ->contain(['Acoes', 'Controles', 'Users']);
+          $action = $this->request->getParam('action');
+          $controller = $this->request->getParam('controller');
+          $permitido = false;
+          foreach ($permissoes as $permissao){
+              if(isset($permissao->controle)
+                and isset($permissao->aco)
+                and $controller === $permissao->controle->nome 
+                and $action === $permissao->aco->nome){
+                $permitido = true;
+              }              
+          }
+        }  
         return $permitido;     
     }
     

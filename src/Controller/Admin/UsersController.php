@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 use Cake\Core\Configure;
 use App\Controller\AppController;
 use Cake\Mailer\MailerAwareTrait;
+use Cake\Error\Debugger;
 
 /**
  * Users Controller
@@ -12,8 +13,7 @@ use Cake\Mailer\MailerAwareTrait;
  *
  * @method \App\Model\Entity\User[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
-class UsersController extends AppController
-{
+class UsersController extends AppController{
     use MailerAwareTrait;
     
     public function beforeFilter(\Cake\Event\Event $event) {
@@ -21,36 +21,19 @@ class UsersController extends AppController
         $this->Auth->allow(['rememberPassword', 'changePassword']);
     }
 
-    public function isAuthorized($user) {
-        $result = parent::isAuthorized($user);
-        //die(Configure::read('App.idRoleAdmin'));
-        //echo "<pre>";      
-        if ($result){
-            switch ($this->request->getParam('action')){
-                case "add":
-                case "edit":
-                case "delete":
-                case "view":
-                    //Usuário do tipo admin
-                    //var_dump($user);
-                    $result = isset($user['roles_id']) 
-                        && $user['roles_id'] === Configure::read('App.idRoleAdmin');
-                    break;
-            }
-            
-        }
-
-        //var_dump($result);
-        //die;
-        //var_dump($user['roles_id']);
-        return $result;
-    }
     
     private function renderForm($user, $view = 'form', $layout = null) {
         $this->set('user', $user);
         $this->set('action', $this->request->getParam('action'));
         $this->set('roles', $this->Users->Roles->find('list')->where(['active =' => 1]));
         parent::render($view, $layout);
+    }
+    
+    public function initialize() {
+        parent::initialize();
+        $this->loadModel('Controles');
+        $this->loadModel('Acoes');
+        $this->loadModel('Permissoes');
     }
 
     /**
@@ -147,6 +130,45 @@ class UsersController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+    
+    public function permissoes($users_id = null){
+        //$controles = $this->Controles->find('ComPermissoes', ['conditions' => ['user_id' => $users_id]]);
+        $controles = $this->Controles->find('All')
+                ->contain(['Permissoes' => [
+                    'conditions' => ['users_id' => $users_id]
+                ]]);
+        $acoes = $this->Acoes->find('all');  
+        $user = $this->Users->get($users_id);        
+        if ($this->request->is('post')) {            
+            $permissao = $this->Permissoes->newEntity();
+            try{
+                $this->Permissoes->getConnection()->begin();
+                if($this->Permissoes->deleteAll(['users_id'=>$users_id])){
+                    foreach($controles as $controle){                              
+                        $permControle = $this->request->getData($controle->nome);
+                        if(is_array($permControle)){
+                            foreach($permControle as $acao_id){                        
+                                $permissao->controles_id = $controle->id;
+                                $permissao->acoes_id = $acao_id;
+                                $permissao->users_id = $users_id;
+                                if(!$this->Permissoes->save($permissao)){
+                                    $this->Flash->error(__('Permissões não salvas. Por favor, teste novamente.'));
+                                }
+                            }
+                        }
+                    }
+                }
+                $this->Permissoes->getConnection()->commit();
+            } catch(\Cake\ORM\Exception\PersistenceFailedException $e) {
+                $this->Permissoes->getConnection()->rollback();
+            }
+        }
+        
+        $this->set('controles', $controles);
+        $this->set('acoes', $acoes);
+        $this->set('nomeUser', $user->name);
+        //$this->set('permissoes', $permissoes);
+    }  
     
     public function login(){
         if($this->request->is('post')){            

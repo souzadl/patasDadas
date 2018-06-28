@@ -36,7 +36,7 @@ class PermissoesTable extends Table
         parent::initialize($config);
 
         $this->setTable('permissoes');
-        $this->setPrimaryKey(['users_id', 'acoes_id', 'controles_id']);
+        $this->setPrimaryKey(['acoes_id', 'users_id', 'controles_id']);
 
         $this->belongsTo('Acoes', [
             'foreignKey' => 'acoes_id',
