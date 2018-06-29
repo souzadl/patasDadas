@@ -38,6 +38,11 @@ class RolesTable extends Table
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
+        
+        $this->hasMany('Pessoas',[
+            'dependent' => true,
+            'foreignKey' => 'roles_id'
+        ]);        
     }
 
     /**

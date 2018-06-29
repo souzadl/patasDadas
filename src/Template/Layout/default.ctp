@@ -39,7 +39,7 @@ $cakeDescription = 'Patas Dadas';
               <?= $this->Html->link(__('Home'), ['controller' => 'Home', 'action' => 'index'], ['class' => 'nav-link']) ?> 
             </li>
                   <?php if($username): ?>                      
-                      <li class="nav-item active"><?= $this->Html->link(__('Users'), ['controller' => 'Users', 'action' => 'index'], ['class' => 'nav-link']) ?></li>
+                      <li class="nav-item active"><?= $this->Html->link(__('Pessoas'), ['controller' => 'Pessoas', 'action' => 'index'], ['class' => 'nav-link']) ?></li>
                       <li class="nav-item active"><?= $this->Html->link(__('Adotáveis'), ['controller' => 'Adotaveis', 'action' => 'index'], ['class' => 'nav-link']) ?></li>
                       <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?= _('Tipos')?></a>

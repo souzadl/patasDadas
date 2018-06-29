@@ -7,14 +7,16 @@
 <div class="users form large-9 medium-8 columns content">
     <?= $this->Form->create($pessoa) ?>
     <fieldset <?= (isset($action) and $action === 'view') ? 'disabled' : ''; ?> >
-        <legend><?= $this->RotuloAcao($action, 'Usuário'); ?></legend>
-        <?php
-            echo $this->Form->control('nome', ['value'=>$pessoa->nome, 'required'=>true]);
-            echo $this->Form->control('email', ['value'=>$pessoa->email, 'required'=>true]);
-            echo $this->Form->control('roles_id', ['options' => $roles]);            
-            echo $this->Form->control('username');            
-            if($action === 'add'){
-                echo $this->Form->control('password');
+        <legend><?= $this->RotuloAcao($action, 'Pessoa'); ?></legend>
+        <?php             
+            echo $this->Form->control('nome');
+            echo $this->Form->control('email');
+            echo $this->Form->control('roles_id', ['options' => $roles]);                        
+            if(!in_array($pessoa->roles_id, $idsSomentePessoas)){
+                echo $this->Form->control('username', ['value'=>$pessoa->user->username, 'required'=>true]);            
+                if($action === 'add'){
+                    echo $this->Form->control('password');
+                }
             }
             echo $this->Form->control('active');
         ?>    

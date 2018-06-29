@@ -42,10 +42,15 @@ class UsersTable extends Table
 
         $this->addBehavior('Timestamp');
 
+        $this->belongsTo('Pessoas', [
+            'foreignKey' => 'pessoas_id',
+            'joinType' => 'INNER'
+        ]);   
+        
         $this->belongsTo('Roles', [
             'foreignKey' => 'roles_id',
             'joinType' => 'INNER'
-        ]);
+        ]);        
         
         $this->hasMany('Permissoes',[
             'dependent' => true,
@@ -65,7 +70,7 @@ class UsersTable extends Table
             ->integer('id')
             ->allowEmpty('id', 'create');
 
-        $validator
+        /*$validator
             ->scalar('name')
             ->maxLength('name', 200)
             ->requirePresence('name', 'create')
@@ -74,7 +79,7 @@ class UsersTable extends Table
         $validator
             ->email('email')
             ->requirePresence('email', 'create')
-            ->notEmpty('email');
+            ->notEmpty('email');*/
 
         $validator
             ->scalar('username')
@@ -112,9 +117,6 @@ class UsersTable extends Table
      * @return \Cake\ORM\RulesChecker
      */
     public function buildRules(RulesChecker $rules){
-        if(!Configure::read('debug')){
-            $rules->add($rules->isUnique(['email']));            
-        }
         $rules->add($rules->isUnique(['username']));
         $rules->add($rules->existsIn(['roles_id'], 'Roles'));
 
@@ -123,8 +125,9 @@ class UsersTable extends Table
     
     public function findAuth(\Cake\ORM\Query $query, array $options){
         $query
-            ->select(['id', 'username', 'name', 'password', 'roles_id'])
-            ->where(['Users.active' => 1]);
+            ->select(['id', 'username', 'password', 'Pessoas.nome', 'roles_id'])
+            ->where(['Users.active' => 1])
+            ->contain('Pessoas');
 
         return $query;    
     }

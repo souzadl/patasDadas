@@ -5,6 +5,7 @@ use Cake\Core\Configure;
 use App\Controller\AppController;
 use Cake\Mailer\MailerAwareTrait;
 use Cake\Error\Debugger;
+use Cake\ORM\TableRegistry;
 
 /**
  * Users Controller
@@ -32,7 +33,8 @@ class UsersController extends AppController{
     public function initialize() {
         parent::initialize();
         $this->loadModel('Controles');
-        $this->loadModel('Acoes');       
+        $this->loadModel('Acoes');     
+        $this->loadModel('Pessoas');
     }
 
     /**
@@ -41,11 +43,19 @@ class UsersController extends AppController{
      * @return \Cake\Http\Response|void
      */
     public function index(){
-        $this->paginate['contain'] = ['Roles'];
-
+        /*$this->paginate['order'] = ['Pessoas.nome'];
+        $this->paginate['contain'] = ['Pessoas','Roles'];
         $users = $this->paginate($this->Users);              
-        $this->set(compact('users'));
-        $this->set('acoesPermitidas', $this->acoesPermitidas);
+        $this->set(compact('users'));*/
+        
+        $this->paginate['order'] = ['Pessoas.nome'];
+        $this->paginate['contain'] = ['Roles','Users'];
+        $pessoas = $this->paginate($this->Pessoas); 
+        
+        
+        $this->set(compact('pessoas'));        
+        
+        
     }
     
 
@@ -58,7 +68,7 @@ class UsersController extends AppController{
      */
     public function view($id = null){        
         $user = $this->Users->get($id, [
-            'contain' => ['Roles']
+            'contain' => ['Pessoas']
         ]);
 
         $this->renderForm($user);
@@ -70,21 +80,36 @@ class UsersController extends AppController{
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
     public function add(){
-        $user = $this->Users->newEntity();
-        if ($this->request->is('post')) {
+        $user = $this->Users->newEntity();        
+        $user->pessoa = $this->Pessoas->newEntity();
+        if ($this->request->is('post')) {            
             $user = $this->Users->patchEntity($user, $this->request->getData());
-            if ($this->Users->save($user)) {
-                $this->getMailer('User')->send('welcome', [$user]);
-                $this->getMailer('Admin')->send('novoUsuario', [$user]);
+            $user->pessoa = $this->Pessoas->patchEntity($user->pessoa, $this->request->getData());  
+            $idsSomentePessoas = array(Configure::read('App.idRolePadrinho'), 
+                Configure::read('App.idRoleAdotante'));
+            if(in_array($user->roles_id, $idsSomentePessoas)){                
+                //Cadastro apenas de pessoa
+                $salvo = $this->Pessoas->save($user->pessoa);
+            }else{
+                //Cadastro de pessoa e usuário
+                $salvo = $this->Users->save($user);
+            }
+            
+            if ($salvo) {
+                if(!Configure::read('debug') and !in_array($user->roles_id, $idsSomentePessoas)){
+                    $this->getMailer('User')->send('welcome', [$user]);
+                    $this->getMailer('Admin')->send('novoUsuario', [$user]);
+                }
                 
-                $this->Flash->success(__('The user has been saved.'));
+                $this->Flash->success(__('O usuário foi salvo.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The user could not be saved. Please, try again.'));
+            $this->Flash->error(__('O usuário não pode ser salvo. Por favor, tente novamente.'));
         }
         $this->renderForm($user);
     }
+    
 
     /**
      * Edit method
@@ -95,16 +120,16 @@ class UsersController extends AppController{
      */
     public function edit($id = null){
         $user = $this->Users->get($id, [
-            'contain' => []
+            'contain' => ['Pessoas']
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $user = $this->Users->patchEntity($user, $this->request->getData());
             if ($this->Users->save($user)) {
-                $this->Flash->success(__('The user has been saved.'));
+                $this->Flash->success(__('O usuário foi salvo.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The user could not be saved. Please, try again.'));
+            $this->Flash->error(__('O usuário não pode ser salvo. Por favor, tente novamente.'));
         }
         $this->renderForm($user);
     }

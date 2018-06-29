@@ -116,7 +116,7 @@ class AppController extends Controller{
                   'controles_id ='=>])
               ->contain(['Acoes', 'Controles', 'Users']);   */
         $this->acoesPermitidas = array('add', 'edit', 'delete', 'view', 'permissoes');
-        
+        $this->set('acoesPermitidas', $this->acoesPermitidas);
     }
 
 }

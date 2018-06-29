@@ -1,7 +1,7 @@
 <?php
 /**
  * @var \App\View\AppView $this
- * @var \App\Model\Entity\User[]|\Cake\Collection\CollectionInterface $users
+ * @var \App\Model\Entity\Pessoa[]|\Cake\Collection\CollectionInterface $pessoas
  */
 ?>
 <h4><?= __('Pessoas') ?></h4>
@@ -29,7 +29,6 @@
                 <?= (in_array('view', $acoesPermitidas)) ? $this->Html->link(__('View'), ['action' => 'view', $pessoa->id]) : ''?>
                 <?= (in_array('edit', $acoesPermitidas)) ? $this->Html->link(__('Edit'), ['action' => 'edit', $pessoa->id]) : ''?>
                 <?= (in_array('delete', $acoesPermitidas)) ? $this->Form->postLink(__('Delete'), ['action' => 'delete', $pessoa->id], ['confirm' => __('Confirme a exclusão de {0}?', $pessoa->nome)]) : ''?>
-                <?= (in_array('permissoes', $acoesPermitidas)) ? $this->Html->link(__('Permissões'), ['action' => 'permissoes', $pessoa->id]) : ''?>                
             </td>
         </tr>
         <?php endforeach; ?>
