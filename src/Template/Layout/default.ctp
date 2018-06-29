@@ -38,8 +38,7 @@ $cakeDescription = 'Patas Dadas';
             <li class="nav-item active">
               <?= $this->Html->link(__('Home'), ['controller' => 'Home', 'action' => 'index'], ['class' => 'nav-link']) ?> 
             </li>
-                  <?php if($username): ?>
-                      <li class="nav-item active"><?= $this->Html->link(__('Roles'), ['controller' => 'Roles', 'action' => 'index'], ['class' => 'nav-link']) ?></li>
+                  <?php if($username): ?>                      
                       <li class="nav-item active"><?= $this->Html->link(__('Users'), ['controller' => 'Users', 'action' => 'index'], ['class' => 'nav-link']) ?></li>
                       <li class="nav-item active"><?= $this->Html->link(__('Adotáveis'), ['controller' => 'Adotaveis', 'action' => 'index'], ['class' => 'nav-link']) ?></li>
                       <li class="nav-item dropdown">
@@ -48,11 +47,19 @@ $cakeDescription = 'Patas Dadas';
                             <?= $this->Html->link(__('Padrinhos'), ['controller' => 'TiposPadrinhos', 'action' => 'index'], ['class' => 'dropdown-item']) ?>
                             <?= $this->Html->link(__('Adotáveis'), ['controller' => 'TiposAdotaveis', 'action' => 'index'], ['class' => 'dropdown-item']) ?>
                         </div>
-                      </li>                
+                      </li>     
+                      <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?= _('Admin')?></a>
+                        <div class="dropdown-menu" aria-labelledby="dropdown01">
+                            <?= $this->Html->link(__('Roles'), ['controller' => 'Roles', 'action' => 'index'], ['class' => 'dropdown-item']) ?>
+                            <?= $this->Html->link(__('Ações'), ['controller' => 'Acoes', 'action' => 'index'], ['class' => 'dropdown-item']) ?>
+                            <?= $this->Html->link(__('Controles'), ['controller' => 'Controles', 'action' => 'index'], ['class' => 'dropdown-item']) ?>
+                        </div>
+                      </li>                        
                       <li class="nav-item active"><?= $this->Html->link(__('Logout {0}', $username), ['controller' => 'Users', 'action' => 'logout'], ['class' => 'nav-link']) ?></li>
                   <?php else: ?>
                       <li class="nav-item active"><?= $this->Html->link(__('Login'), ['controller' => 'Users', 'action' => 'login'], ['class' => 'nav-link']) ?></li>
-                      <li class="nav-item active"><?= $this->Html->link(__('Novo Usuário'), ['controller' => 'Users', 'action' => 'add'], ['class' => 'nav-link']) ?></li>
+                      <li class="nav-item active"><?= $this->Html->link(__('Cadastro'), ['controller' => 'Users', 'action' => 'add'], ['class' => 'nav-link']) ?></li>
                       <li class="nav-item active"><?= $this->Html->link(__('Relembrar Password'), ['controller' => 'Users', 'action' => 'rememberPassword'], ['class' => 'nav-link']) ?></li>
                   <?php endif; ?>
           </ul>
