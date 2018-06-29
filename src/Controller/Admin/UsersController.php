@@ -32,8 +32,7 @@ class UsersController extends AppController{
     public function initialize() {
         parent::initialize();
         $this->loadModel('Controles');
-        $this->loadModel('Acoes');
-        $this->loadModel('Permissoes');
+        $this->loadModel('Acoes');       
     }
 
     /**
@@ -41,13 +40,12 @@ class UsersController extends AppController{
      *
      * @return \Cake\Http\Response|void
      */
-    public function index()
-    {
+    public function index(){
         $this->paginate['contain'] = ['Roles'];
 
-        $users = $this->paginate($this->Users);
-
+        $users = $this->paginate($this->Users);              
         $this->set(compact('users'));
+        $this->set('acoesPermitidas', $this->acoesPermitidas);
     }
     
 
@@ -137,24 +135,25 @@ class UsersController extends AppController{
                 ->contain(['Permissoes' => [
                     'conditions' => ['users_id' => $users_id]
                 ]]);
+
         $acoes = $this->Acoes->find('all');  
         $user = $this->Users->get($users_id);        
-        if ($this->request->is('post')) {            
-            $permissao = $this->Permissoes->newEntity();
+        if ($this->request->is('post')) {                        
             try{
                 $this->Permissoes->getConnection()->begin();
                 if($this->Permissoes->deleteAll(['users_id'=>$users_id])){
-                    foreach($controles as $controle){                              
+                    foreach($controles as $controle){         
                         $permControle = $this->request->getData($controle->nome);
                         if(is_array($permControle)){
-                            foreach($permControle as $acao_id){                        
+                            foreach($permControle as $acao_id){    
+                                $permissao = $this->Permissoes->newEntity();
                                 $permissao->controles_id = $controle->id;
                                 $permissao->acoes_id = $acao_id;
                                 $permissao->users_id = $users_id;
                                 if(!$this->Permissoes->save($permissao)){
-                                    $this->Flash->error(__('Permissões não salvas. Por favor, teste novamente.'));
-                                }
-                            }
+                                   $this->Flash->error(__('Permissões não salvas. Por favor, teste novamente.'));
+                                }                                 
+                            }                           
                         }
                     }
                 }

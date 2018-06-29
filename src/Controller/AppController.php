@@ -26,8 +26,8 @@ use Cake\Event\Event;
  *
  * @link https://book.cakephp.org/3.0/en/controllers.html#the-app-controller
  */
-class AppController extends Controller
-{
+class AppController extends Controller{
+    var $acoesPermitidas = array();
     /**
      * Initialization hook method.
      *
@@ -41,7 +41,7 @@ class AppController extends Controller
         parent::initialize();
         
         $this->loadModel('Permissoes');
-        $this->loadModel('Adotaveis');
+        $this->loadModel('Adotaveis');               
         
         $this->paginate['limit'] = Configure::read('App.limitPagination');
         //$this->paginate['maxLimit'] = 2;
@@ -80,6 +80,8 @@ class AppController extends Controller
          * see https://book.cakephp.org/3.0/en/controllers/components/security.html
          */
         //$this->loadComponent('Security');
+        
+        $this->carregarPermissoesController();
     }
     
     public function isAuthorized($user){  
@@ -108,5 +110,13 @@ class AppController extends Controller
         $this->set('username', $this->Auth->user('username'));
     }
     
+    private function carregarPermissoesController(){
+        /*$permissoes = $this->Permissoes->find('all')
+              ->where(['users_id ='=>$this->Auth->user('id'),
+                  'controles_id ='=>])
+              ->contain(['Acoes', 'Controles', 'Users']);   */
+        $this->acoesPermitidas = array('add', 'edit', 'delete', 'view', 'permissoes');
+        
+    }
 
 }
