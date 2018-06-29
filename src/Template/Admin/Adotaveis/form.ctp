@@ -49,17 +49,17 @@
             <?php
                 //var_dump($adotavel->padrinhos);
                 foreach ($tiposPadrinhos as $tipoPadrinho) {
-                    $idPadrinho = '';
+                    $idPessoa = '';
                     foreach ($adotavel->padrinhos as $padrinho){
                         if($padrinho->tipos_padrinhos_id === $tipoPadrinho->id){
-                            $idPadrinho = $padrinho->padrinho_id;
+                            $idPessoa = $padrinho->pessoas_id;
                             //var_dump($padrinho->pad);
                         }
                     }
                     echo $this->Form->control($tipoPadrinho->nome, 
                         ['options' => $padrinhosDisponiveis, 
                          //'name' => $tipoPadrinho->nome,
-                         'value' => $idPadrinho,
+                         'value' => $idPessoa,
                          'empty' => 'Escolha um']);
 
                 }

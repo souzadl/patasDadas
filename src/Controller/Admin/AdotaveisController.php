@@ -25,7 +25,8 @@ class AdotaveisController extends AppController{
         $this->loadModel('TiposPadrinhos');
         $this->loadModel('Padrinhos');
         $this->loadModel('Fotos');
-        $this->padrinhosDisponiveis = $this->Adotaveis->Users->find('list')
+        $this->loadModel('Pessoas');
+        $this->padrinhosDisponiveis = $this->Pessoas->find('list')
             ->where(['roles_id =' => Configure::read('App.idRolePadrinho'), 'active =' => 1]);        
         $this->tiposAdotaveis = $this->Adotaveis->TiposAdotaveis->find('list')->where(['active =' => 1]);
         $this->tiposPadrinhos = $this->TiposPadrinhos->find('all')->where(['active =' => 1]);
@@ -41,20 +42,33 @@ class AdotaveisController extends AppController{
         parent::render($view, $layout);
     }
     
-    private function setPadrinhos(){
-        $padrinhos = array();
-        foreach ($this->tiposPadrinhos as $tipoPadrinho){
-            $idPadrinho = $this->request->getData(str_replace(' ','_',$tipoPadrinho->nome));
-            if($idPadrinho){
-                $novoPadrinho = $this->Adotaveis->Padrinhos->newEntity();
-                $novoPadrinho->tipos_padrinhos_id = $tipoPadrinho->id;
-                $novoPadrinho->users_id = $this->Auth->user()['id'];   
-                $novoPadrinho->padrinho_id = $idPadrinho;
-                $novoPadrinho->active = true;
-                $padrinhos[] = $novoPadrinho;
+    private function addPadrinho($novoPadrinho){
+        $add = true;
+        foreach($this->adotavel->padrinhos as $padrinho){
+            if($padrinho->tipos_padrinhos_id === $novoPadrinho->tipos_padrinhos_id){
+                $padrinho->pessoas_id = $novoPadrinho->pessoas_id;
+                $add = false;
             }
         }
-        $this->adotavel->padrinhos = $padrinhos;
+        return $add; 
+    }
+    
+    private function setPadrinhos(){
+        $padrinhos = $this->adotavel->padrinhos;
+        foreach ($this->tiposPadrinhos as $tipoPadrinho){
+            $idPessoa = $this->request->getData(str_replace(' ','_',$tipoPadrinho->nome));
+            if($idPessoa){
+                $novoPadrinho = $this->Adotaveis->Padrinhos->newEntity();
+                $novoPadrinho->tipos_padrinhos_id = $tipoPadrinho->id;
+                $novoPadrinho->users_id = $this->Auth->user('id');   
+                $novoPadrinho->pessoas_id = $idPessoa;
+                $novoPadrinho->active = true;
+                if($this->addPadrinho($novoPadrinho)){
+                    $padrinhos[] = $novoPadrinho;
+                }
+            }
+        }
+        $this->adotavel->padrinhos = $padrinhos;        
     }
     
     private function setFotos(){
@@ -144,20 +158,19 @@ class AdotaveisController extends AppController{
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function edit($id = null)
-    {
+    public function edit($id = null){
         $this->adotavel = $this->Adotaveis->get($id, [
             'contain' => ['Padrinhos','Fotos']
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $this->adotavel = $this->Adotaveis->patchEntity($this->adotavel, $this->request->getData());
-            $this->adotavel->users_id = $this->Auth->user()['id'];            
+            $this->adotavel->users_id = $this->Auth->user('id');            
             $this->setHistoricoMedico();
             $this->setPadrinhos();            
             
             if ($this->Upload->upload($this->request->data['fotos'], Configure::read('App.fotosUrl'))){
                 $this->setFotos();
-            }
+            }        
             if ($this->Adotaveis->save($this->adotavel)) {
                 $this->Flash->success(__('Adotável salvo.'));
                 return $this->redirect(['action' => 'index']);

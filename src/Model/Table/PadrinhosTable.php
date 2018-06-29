@@ -45,8 +45,8 @@ class PadrinhosTable extends Table
 
         $this->addBehavior('Timestamp');
 
-        $this->belongsTo('Users', [
-            'foreignKey' => 'padrinho_id',
+        $this->belongsTo('Pessoas', [
+            'foreignKey' => 'pessoas_id',
             'joinType' => 'INNER'
         ]);
         $this->belongsTo('Adotaveis', [
@@ -61,9 +61,9 @@ class PadrinhosTable extends Table
             'foreignKey' => 'users_id',
             'joinType' => 'INNER'
         ]);
-        $this->hasMany('Padrinhos', [
+        /*$this->hasMany('Padrinhos', [
             'foreignKey' => 'padrinho_id'
-        ]);
+        ]);*/
     }
 
     /**
@@ -95,7 +95,7 @@ class PadrinhosTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['padrinho_id'], 'Users'));
+        $rules->add($rules->existsIn(['pessoas_id'], 'Pessoas'));
         $rules->add($rules->existsIn(['adotaveis_id'], 'Adotaveis'));
         $rules->add($rules->existsIn(['tipos_padrinhos_id'], 'TiposPadrinhos'));
         $rules->add($rules->existsIn(['users_id'], 'Users'));
