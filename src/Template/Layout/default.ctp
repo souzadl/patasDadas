@@ -60,7 +60,7 @@ $cakeDescription = 'Patas Dadas';
                       <li class="nav-item active"><?= $this->Html->link(__('Logout {0}', $username), ['controller' => 'Users', 'action' => 'logout'], ['class' => 'nav-link']) ?></li>
                   <?php else: ?>
                       <li class="nav-item active"><?= $this->Html->link(__('Login'), ['controller' => 'Users', 'action' => 'login'], ['class' => 'nav-link']) ?></li>
-                      <li class="nav-item active"><?= $this->Html->link(__('Cadastro'), ['controller' => 'Users', 'action' => 'add'], ['class' => 'nav-link']) ?></li>
+                      <li class="nav-item active"><?= $this->Html->link(__('Cadastro'), ['controller' => 'Pessoas', 'action' => 'add'], ['class' => 'nav-link']) ?></li>
                       <li class="nav-item active"><?= $this->Html->link(__('Relembrar Password'), ['controller' => 'Users', 'action' => 'rememberPassword'], ['class' => 'nav-link']) ?></li>
                   <?php endif; ?>
           </ul>

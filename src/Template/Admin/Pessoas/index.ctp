@@ -9,10 +9,9 @@
 <table class="table">
     <thead>
         <tr>
-            <th scope="col"><?= $this->Paginator->sort('id') ?></th>
             <th scope="col"><?= $this->Paginator->sort('name') ?></th>
             <th scope="col"><?= $this->Paginator->sort('username') ?></th>
-            <th scope="col"><?= $this->Paginator->sort('roles_id') ?></th>
+            <th scope="col"><?= $this->Paginator->sort('roles_id', ['Perfil']) ?></th>
             <th scope="col"><?= $this->Paginator->sort('active') ?></th>
             <th scope="col" class="actions"><?= __('Actions') ?></th>
         </tr>
@@ -20,7 +19,6 @@
     <tbody>
         <?php foreach ($pessoas as $pessoa): ?>
         <tr>
-            <td><?= $this->Number->format($pessoa->id) ?></td>
             <td><?= h($pessoa->nome) ?></td>
             <td><?= $pessoa->has('user') ? h($pessoa->user->username) : '' ?></td>
             <td><?= $pessoa->has('role') ? $this->Html->link($pessoa->role->nome, ['controller' => 'Roles', 'action' => 'view', $pessoa->role->id]) : '' ?></td>

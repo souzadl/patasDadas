@@ -13,19 +13,28 @@ use Cake\Core\Configure;
  */
 class PessoasController extends AppController{
     var $idsSomentePessoas;
+    var $showActive;
+    
+    public function beforeFilter(\Cake\Event\Event $event) {
+        parent::beforeFilter($event);
+        $this->Auth->allow(['add']);
+    }    
     
     public function initialize() {
         parent::initialize();
         $this->loadModel('Users');
         $this->idsSomentePessoas = array(Configure::read('App.idRolePadrinho'), 
             Configure::read('App.idRoleAdotante'));
+        $this->showActive = ($this->Auth->user() 
+            && in_array($this->Auth->user(['roles_id']),[Configure::read('App.idRoleSistema'), Configure::read('App.idRoleAdmin')]));
     }
     
     private function renderForm($pessoa, $view = 'form', $layout = null) {
         $this->set('pessoa', $pessoa);
         $this->set('action', $this->request->getParam('action'));
         $this->set('roles', $this->Pessoas->Roles->find('list')->where(['active =' => 1]));
-        $this->set('idsSomentePessoas', $this->idsSomentePessoas);        
+        $this->set('idsSomentePessoas', $this->idsSomentePessoas);     
+        $this->set('showActive', $this->showActive);
         parent::render($view, $layout);
     }
     
@@ -72,15 +81,28 @@ class PessoasController extends AppController{
             $pessoa = $this->Pessoas->patchEntity($pessoa, $this->request->getData());
             $pessoa->user = (!in_array($pessoa->roles_id, $this->idsSomentePessoas)) ?
                 $this->Users->patchEntity($pessoa->user, $this->request->getData()) : NULL;
+            if($this->showActive){
+                $pessoa->active = $this->request->getData('active');
+                $this->setActionUser($pessoa);
+            }else{
+                $pessoa->active = FALSE;
+                $this->setActionUser($pessoa);
+            }
             if ($this->Pessoas->save($pessoa)) {
                 $this->Flash->success(__('Pessoa salva.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            debug($pessoa->errors());
+            debug($pessoa);
             $this->Flash->error(__('Pessoa não pode ser salva. Por favor, tente novamente.'));
         }
         $this->renderForm($pessoa);
+    }
+    
+    private function setActionUser($pessoa){
+        if(isset($pessoa->user)){
+            $pessoa->user->active = $pessoa->active;
+        }        
     }
 
     /**
