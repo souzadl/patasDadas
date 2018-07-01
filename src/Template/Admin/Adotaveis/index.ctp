@@ -9,7 +9,6 @@
 <table class="table">
     <thead>
         <tr>
-            <th scope="col"><?= $this->Paginator->sort('id') ?></th>
             <th scope="col"><?= $this->Paginator->sort('nome') ?></th>
             <th scope="col"><?= $this->Paginator->sort('tipos_adotavel_id', ['label' => 'Tipo']) ?></th>                
             <th scope="col"><?= $this->Paginator->sort('active') ?></th>
@@ -19,7 +18,6 @@
     <tbody>
         <?php foreach ($adotaveis as $adotavel): ?>
         <tr>
-            <td><?= $this->Number->format($adotavel->id) ?></td>
             <td><?= h($adotavel->nome) ?></td>
             <td><?= $adotavel->has('tipos_adotavei') ? $this->Html->link($adotavel->tipos_adotavei->nome, ['controller' => 'TiposAdotaveis', 'action' => 'view', $adotavel->tipos_adotavei->id]) : '' ?></td>
             <td><?= $this->SimOuNao($adotavel->active); ?></td> 
