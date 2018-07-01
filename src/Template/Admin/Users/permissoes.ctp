@@ -9,11 +9,7 @@
     <fieldset>
         <legend><?= __('Permissões para '.$nomeUser); ?></legend>
         <?php
-            //$optionsCheck = ['label'=>'checkbox'];
-            //echo $this->Form->control('Label de teste');
-            //echo $this->Form->control('Teste', ['type'=>'multiCheckbox', 'options'=>['0'=>'Teste','1'=>'Teste1']]);
-            //echo $this->Form->control('Teste2', ['type'=>'multiCheckbox']);
-
+            $options = array();
             foreach($acoes as $acao){
                 $options[$acao->id] = $acao->nome;
             }
@@ -21,7 +17,7 @@
                 $selOptions = array();
                 foreach ($controle->permissoes as $permControle){
                     $selOptions[] = $permControle->acoes_id;
-                }                              
+                }  
                 //echo $this->Form->select($controle->nome, $acoes, ['label'=>$controle->nome]);
                 //echo $this->Form->multiCheckbox($controle->nome, $acoes, ['text' => $controle->nome]);
                 echo $this->Form->control($controle->nome, 

@@ -34,7 +34,7 @@ class UsersController extends AppController{
         parent::initialize();
         $this->loadModel('Controles');
         $this->loadModel('Acoes');     
-        $this->loadModel('Pessoas');
+        //$this->loadModel('Pessoas');
     }
 
     /**
@@ -43,19 +43,10 @@ class UsersController extends AppController{
      * @return \Cake\Http\Response|void
      */
     public function index(){
-        /*$this->paginate['order'] = ['Pessoas.nome'];
-        $this->paginate['contain'] = ['Pessoas','Roles'];
-        $users = $this->paginate($this->Users);              
-        $this->set(compact('users'));*/
-        
         $this->paginate['order'] = ['Pessoas.nome'];
-        $this->paginate['contain'] = ['Roles','Users'];
-        $pessoas = $this->paginate($this->Pessoas); 
-        
-        
-        $this->set(compact('pessoas'));        
-        
-        
+        $this->paginate['contain'] = ['Roles', 'Pessoas'];
+        $users = $this->paginate($this->Users);              
+        $this->set(compact('users'));                 
     }
     
 
@@ -161,13 +152,15 @@ class UsersController extends AppController{
                     'conditions' => ['users_id' => $users_id]
                 ]]);
 
-        $acoes = $this->Acoes->find('all');  
+        $acoes = $this->Acoes->find('all'); 
+        $permissoes = $this->Permissoes->find('All')
+            ->where(['users_id'=>$users_id]);
         $user = $this->Users->get($users_id);        
         if ($this->request->is('post')) {                        
             try{
                 $this->Permissoes->getConnection()->begin();
-                if($this->Permissoes->deleteAll(['users_id'=>$users_id])){
-                    foreach($controles as $controle){         
+                $this->Permissoes->deleteAll(['users_id'=>$users_id]);
+                    foreach($controles as $controle){      
                         $permControle = $this->request->getData($controle->nome);
                         if(is_array($permControle)){
                             foreach($permControle as $acao_id){    
@@ -179,18 +172,16 @@ class UsersController extends AppController{
                                    $this->Flash->error(__('Permissões não salvas. Por favor, teste novamente.'));
                                 }                                 
                             }                           
-                        }
+                        }                    
                     }
-                }
                 $this->Permissoes->getConnection()->commit();
             } catch(\Cake\ORM\Exception\PersistenceFailedException $e) {
                 $this->Permissoes->getConnection()->rollback();
             }
         }
         
-        $this->set('controles', $controles);
-        $this->set('acoes', $acoes);
-        $this->set('nomeUser', $user->name);
+        $this->set(compact('controles', 'acoes'));    
+        $this->set('nomeUser', $user->username);
         //$this->set('permissoes', $permissoes);
     }  
     

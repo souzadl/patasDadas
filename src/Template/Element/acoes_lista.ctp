@@ -7,7 +7,7 @@
 
     <?= $this->Html->link(
         $this->Html->tag('i','',['class'=>'fas fa-eye'])
-        /*.__('View')*/, ['action' => 'view', $id], ['escape'=>false, 'alt'=>'Ver']) ?>
+        /*.__('View')*/, ['action' => 'view', $id], ['escape'=>false]) ?>
     <?= $this->Html->link(
         $this->Html->tag('i','',['class'=>'fas fa-edit'])
         /*.__('Edit')*/, ['action' => 'edit', $id], ['escape'=>false]) ?>
