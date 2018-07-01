@@ -110,9 +110,7 @@ class UsersController extends AppController{
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
     public function edit($id = null){
-        $user = $this->Users->get($id, [
-            'contain' => ['Pessoas']
-        ]);
+        $user = $this->Users->get($id);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $user = $this->Users->patchEntity($user, $this->request->getData());
             if ($this->Users->save($user)) {
@@ -146,34 +144,18 @@ class UsersController extends AppController{
     }
     
     public function permissoes($users_id = null){
-        //$controles = $this->Controles->find('ComPermissoes', ['conditions' => ['user_id' => $users_id]]);
         $controles = $this->Controles->find('All')
-                ->contain(['Permissoes' => [
-                    'conditions' => ['users_id' => $users_id]
-                ]]);
+            ->contain(['Permissoes' => [
+                'conditions' => ['users_id' => $users_id]
+            ]]);
 
         $acoes = $this->Acoes->find('all'); 
-        $permissoes = $this->Permissoes->find('All')
-            ->where(['users_id'=>$users_id]);
         $user = $this->Users->get($users_id);        
         if ($this->request->is('post')) {                        
             try{
                 $this->Permissoes->getConnection()->begin();
                 $this->Permissoes->deleteAll(['users_id'=>$users_id]);
-                    foreach($controles as $controle){      
-                        $permControle = $this->request->getData($controle->nome);
-                        if(is_array($permControle)){
-                            foreach($permControle as $acao_id){    
-                                $permissao = $this->Permissoes->newEntity();
-                                $permissao->controles_id = $controle->id;
-                                $permissao->acoes_id = $acao_id;
-                                $permissao->users_id = $users_id;
-                                if(!$this->Permissoes->save($permissao)){
-                                   $this->Flash->error(__('Permissões não salvas. Por favor, teste novamente.'));
-                                }                                 
-                            }                           
-                        }                    
-                    }
+                $this->SalvarPermissoes($controles, $users_id);
                 $this->Permissoes->getConnection()->commit();
             } catch(\Cake\ORM\Exception\PersistenceFailedException $e) {
                 $this->Permissoes->getConnection()->rollback();
@@ -182,8 +164,24 @@ class UsersController extends AppController{
         
         $this->set(compact('controles', 'acoes'));    
         $this->set('nomeUser', $user->username);
-        //$this->set('permissoes', $permissoes);
     }  
+    
+    private function SalvarPermissoes($controles, $users_id){
+        foreach($controles as $controle){      
+            $permControle = $this->request->getData($controle->nome);
+            if(is_array($permControle)){
+                foreach($permControle as $acao_id){    
+                    $permissao = $this->Permissoes->newEntity();
+                    $permissao->controles_id = $controle->id;
+                    $permissao->acoes_id = $acao_id;
+                    $permissao->users_id = $users_id;
+                    if(!$this->Permissoes->save($permissao)){
+                       $this->Flash->error(__('Permissões não salvas. Por favor, teste novamente.'));
+                    }                                 
+                }                           
+            }                    
+        }        
+    } 
     
     public function login(){
         if($this->request->is('post')){            

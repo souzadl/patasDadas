@@ -9,6 +9,8 @@
     <fieldset>
         <legend><?= __('Permissões para '.$nomeUser); ?></legend>
         <?php
+            echo $this->Form->control('Selecionar Todos', ['type'=>'checkbox',
+                'name'=>'selecionarTodos']);
             $options = array();
             foreach($acoes as $acao){
                 $options[$acao->id] = $acao->nome;
@@ -18,18 +20,28 @@
                 foreach ($controle->permissoes as $permControle){
                     $selOptions[] = $permControle->acoes_id;
                 }  
-                //echo $this->Form->select($controle->nome, $acoes, ['label'=>$controle->nome]);
-                //echo $this->Form->multiCheckbox($controle->nome, $acoes, ['text' => $controle->nome]);
                 echo $this->Form->control($controle->nome, 
                       ['type'=>'multiCheckbox',                           
                           'options'=>$options,
                           'default'=>$selOptions]);    
-                /*echo $this->Form->control('permissoes', ['type' => 'checkbox', 
-                    'label' => $controle->nome, 
-                    'options' => ['M'=>'M', 'F'=>'F']]);*/
             }
         ?>    
     </fieldset>   
     <?= $this->Form->button(__('Submit')) ?>
     <?= $this->Form->end() ?>
 </div>
+<script type="text/javascript">
+$('document').ready(function(){
+    $('input[id=selecionar-todos]').change(function(){
+        var checked = $(this).is(':checked');
+        //alert($(this).is(':checked'));
+        $('input').each(function(){
+            //your code here
+            //alert('oi');
+            $(this).attr('checked', checked);
+        });
+        //$('#textbox1').val($(this).is(':checked'));
+    });
+
+});
+</script>
