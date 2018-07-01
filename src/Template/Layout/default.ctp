@@ -13,6 +13,7 @@ $cakeDescription = 'Patas Dadas';
     <?= $this->Html->css('bootstrap.min') ?>
     <?= $this->Html->css('starter-template') ?>
     <?= $this->Html->css('form') ?>    
+    <?= $this->Html->css('https://use.fontawesome.com/releases/v5.1.0/css/all.css') ?>    
     <?= $this->Html->script('https://code.jquery.com/jquery-3.3.1.min.js') ?>
     <?= $this->Html->script('bootstrap.min') ?>
     <?= $this->Html->script('form') ?>
@@ -21,9 +22,9 @@ $cakeDescription = 'Patas Dadas';
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
-  </head>
+</head>
 
-<body>
+<body>    
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
         <a class="navbar-brand" href="#">
             <?= $this->Html->image('patasdadas-header-logo.png', ['alt' => 'Patas Dadas', 'width' => '50', 'style' => 'margin-top: 5px;']); ?>  

@@ -5,7 +5,7 @@
  */
 ?>
 <h4><?= __('Adotáveis') ?></h4>
-<?= $this->Html->link(__('New'), ['action' => 'add']) ?>
+<?= $this->Html->link($this->Html->tag('i','',['class'=>'fas fa-plus-square'])/*.__('New')*/, ['action' => 'add'], ['escape'=>false]) ?>
 <table class="table">
     <thead>
         <tr>
@@ -24,9 +24,15 @@
             <td><?= $adotavel->has('tipos_adotavei') ? $this->Html->link($adotavel->tipos_adotavei->nome, ['controller' => 'TiposAdotaveis', 'action' => 'view', $adotavel->tipos_adotavei->id]) : '' ?></td>
             <td><?= $this->SimOuNao($adotavel->active); ?></td>              
             <td class="actions">
-                <?= $this->Html->link(__('View'), ['action' => 'view', $adotavel->id]) ?>
-                <?= $this->Html->link(__('Edit'), ['action' => 'edit', $adotavel->id]) ?>
-                <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $adotavel->id], ['confirm' => __('Are you sure you want to delete # {0}?', $adotavel->id)]) ?>
+                <?= $this->Html->link(
+                    $this->Html->tag('i','',['class'=>'fas fa-eye'])
+                    /*.__('View')*/, ['action' => 'view', $adotavel->id], ['escape'=>false, 'alt'=>'Ver']) ?>
+                <?= $this->Html->link(
+                    $this->Html->tag('i','',['class'=>'fas fa-edit'])
+                    /*.__('Edit')*/, ['action' => 'edit', $adotavel->id], ['escape'=>false]) ?>
+                <?= $this->Form->postLink(
+                    $this->Html->tag('i','',['class'=>'fas fa-trash-alt'])
+                    /*.__('Delete')*/, ['action' => 'delete', $adotavel->id], ['escape'=>false, 'confirm' => __('Are you sure you want to delete # {0}?', $adotavel->id)]) ?>
             </td>
         </tr>
         <?php endforeach; ?>

@@ -99,6 +99,7 @@ class AdotaveisController extends AppController{
     public function index(){
         $this->paginate = [
             'contain' => ['TiposAdotaveis'],
+            'order'=>['Adotaveis.nome'],
             'limit' => Configure::read('App.limitPagination')
         ];
         $adotaveis = $this->paginate($this->Adotaveis);
