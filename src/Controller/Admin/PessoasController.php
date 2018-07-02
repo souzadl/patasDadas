@@ -45,10 +45,8 @@ class PessoasController extends AppController{
      * @return \Cake\Http\Response|void
      */
     public function index(){
-        $this->paginate = [
-            'contain' => ['Roles', 'Users'],
-            'order' => ['Pessoas.nome']
-        ];
+        $this->paginate['contain'] = ['Roles', 'Users'];  
+        $this->paginate['order'] = ['Pessoas.nome'];  
         $pessoas = $this->paginate($this->Pessoas);
 
         $this->set(compact('pessoas'));

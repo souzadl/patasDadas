@@ -18,8 +18,8 @@ class AcoesController extends AppController
      *
      * @return \Cake\Http\Response|void
      */
-    public function index()
-    {
+    public function index(){
+        $this->paginate['order'] = ['nome'];   
         $acoes = $this->paginate($this->Acoes);
 
         $this->set(compact('acoes'));
@@ -32,13 +32,12 @@ class AcoesController extends AppController
      * @return \Cake\Http\Response|void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
-    {
-        $aco = $this->Acoes->get($id, [
+    public function view($id = null){
+        $acao = $this->Acoes->get($id, [
             'contain' => []
         ]);
 
-        $this->set('aco', $aco);
+        $this->renderForm($acao);
     }
 
     /**
@@ -46,19 +45,18 @@ class AcoesController extends AppController
      *
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add()
-    {
-        $aco = $this->Acoes->newEntity();
+    public function add(){
+        $acao = $this->Acoes->newEntity();
         if ($this->request->is('post')) {
-            $aco = $this->Acoes->patchEntity($aco, $this->request->getData());
-            if ($this->Acoes->save($aco)) {
-                $this->Flash->success(__('The aco has been saved.'));
+            $acao = $this->Acoes->patchEntity($acao, $this->request->getData());
+            if ($this->Acoes->save($acao)) {
+                $this->Flash->success(__('Ação salva.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The aco could not be saved. Please, try again.'));
+            $this->Flash->error(__('Ação não pode ser salva. Por favor, tente novamente.'));
         }
-        $this->set(compact('aco'));
+        $this->renderForm($acao);
     }
 
     /**
@@ -68,21 +66,20 @@ class AcoesController extends AppController
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function edit($id = null)
-    {
-        $aco = $this->Acoes->get($id, [
+    public function edit($id = null){
+        $acao = $this->Acoes->get($id, [
             'contain' => []
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $aco = $this->Acoes->patchEntity($aco, $this->request->getData());
-            if ($this->Acoes->save($aco)) {
-                $this->Flash->success(__('The aco has been saved.'));
+            $acao = $this->Acoes->patchEntity($acao, $this->request->getData());
+            if ($this->Acoes->save($acao)) {
+                $this->Flash->success(__('Ação salva.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The aco could not be saved. Please, try again.'));
+            $this->Flash->error(__('Ação não pode ser salva. Por favor, tente novamente.'));
         }
-        $this->set(compact('aco'));
+        $this->renderForm($acao);
     }
 
     /**
@@ -92,16 +89,21 @@ class AcoesController extends AppController
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
-    {
+    public function delete($id = null){
         $this->request->allowMethod(['post', 'delete']);
         $aco = $this->Acoes->get($id);
         if ($this->Acoes->delete($aco)) {
-            $this->Flash->success(__('The aco has been deleted.'));
+            $this->Flash->success(__('Ação deletada.'));
         } else {
-            $this->Flash->error(__('The aco could not be deleted. Please, try again.'));
+            $this->Flash->error(__('Ação não pode ser deletada. Por favor, tente novamente.'));
         }
 
         return $this->redirect(['action' => 'index']);
     }
+    
+    private function renderForm($acao, $view = 'form', $layout = null) {
+        $this->set('acao', $acao);
+        $this->set('action', $this->request->getParam('action'));
+        parent::render($view, $layout);
+    }    
 }

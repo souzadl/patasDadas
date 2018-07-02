@@ -4,44 +4,26 @@
  * @var \App\Model\Entity\Aco[]|\Cake\Collection\CollectionInterface $acoes
  */
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('New Aco'), ['action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="acoes index large-9 medium-8 columns content">
-    <h3><?= __('Acoes') ?></h3>
-    <table cellpadding="0" cellspacing="0">
-        <thead>
-            <tr>
-                <th scope="col"><?= $this->Paginator->sort('id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('nome') ?></th>
-                <th scope="col" class="actions"><?= __('Actions') ?></th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($acoes as $aco): ?>
-            <tr>
-                <td><?= $this->Number->format($aco->id) ?></td>
-                <td><?= h($aco->nome) ?></td>
-                <td class="actions">
-                    <?= $this->Html->link(__('View'), ['action' => 'view', $aco->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $aco->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $aco->id], ['confirm' => __('Are you sure you want to delete # {0}?', $aco->id)]) ?>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-    <div class="paginator">
-        <ul class="pagination">
-            <?= $this->Paginator->first('<< ' . __('first')) ?>
-            <?= $this->Paginator->prev('< ' . __('previous')) ?>
-            <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('next') . ' >') ?>
-            <?= $this->Paginator->last(__('last') . ' >>') ?>
-        </ul>
-        <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
-    </div>
-</div>
+<h3><?= __('Ações') ?></h3>
+<?= $this->element('acao_add') ?>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col"><?= $this->Paginator->sort('id') ?></th>
+            <th scope="col"><?= $this->Paginator->sort('nome') ?></th>
+            <th scope="col" class="actions"><?= __('Actions') ?></th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($acoes as $acao): ?>
+        <tr>
+            <td><?= $this->Number->format($acao->id) ?></td>
+            <td><?= h($acao->nome) ?></td>
+            <td class="actions">
+                <?= $this->element('acoes_lista', ['id' => $acao->id]) ?>
+            </td>
+        </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
+<?= $this->element('paginacao') ?>

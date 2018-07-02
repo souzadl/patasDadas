@@ -97,11 +97,8 @@ class AdotaveisController extends AppController{
      * @return \Cake\Http\Response|void
      */
     public function index(){
-        $this->paginate = [
-            'contain' => ['TiposAdotaveis'],
-            'order'=>['Adotaveis.nome'],
-            'limit' => Configure::read('App.limitPagination')
-        ];
+        $this->paginate['contain'] = ['TiposAdotaveis'];  
+        $this->paginate['order'] = ['Adotaveis.nome'];         
         $adotaveis = $this->paginate($this->Adotaveis);
 
         $this->set(compact('adotaveis'));        
