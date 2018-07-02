@@ -4,7 +4,7 @@
  * @var \App\Model\Entity\Aco[]|\Cake\Collection\CollectionInterface $acoes
  */
 ?>
-<h3><?= __('Ações') ?></h3>
+<h4><?= __('Ações') ?></h4>
 <?= $this->element('acao_add') ?>
 <table class="table">
     <thead>
