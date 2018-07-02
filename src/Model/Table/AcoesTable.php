@@ -35,10 +35,15 @@ class AcoesTable extends Table
         $this->setDisplayField('nome');
         $this->setPrimaryKey('id');
         
-        $this->hasMany('Permissoes',[
+        $this->hasMany('PermissoesUsers',[
             'dependent' => true,
-            'foreignKey' => 'users_id'
-        ]);        
+            'foreignKey' => 'acoes_id'
+        ]);    
+        
+        $this->hasMany('PermissoesRoles',[
+            'dependent' => true,
+            'foreignKey' => 'acoes_id'
+        ]);          
     }
 
     /**

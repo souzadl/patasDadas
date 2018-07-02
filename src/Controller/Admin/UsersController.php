@@ -4,8 +4,6 @@ namespace App\Controller\Admin;
 use Cake\Core\Configure;
 use App\Controller\AppController;
 use Cake\Mailer\MailerAwareTrait;
-use Cake\Error\Debugger;
-use Cake\ORM\TableRegistry;
 
 /**
  * Users Controller
@@ -33,8 +31,8 @@ class UsersController extends AppController{
     public function initialize() {
         parent::initialize();
         $this->loadModel('Controles');
-        $this->loadModel('Acoes');     
-        //$this->loadModel('Pessoas');
+        $this->loadModel('Acoes');    
+        $this->loadModel('PermissoesUsers');   
     }
 
     /**
@@ -143,39 +141,41 @@ class UsersController extends AppController{
         return $this->redirect(['action' => 'index']);
     }
     
-    public function permissoes($users_id = null){
-        $controles = $this->Controles->find('All')
+    public function permissoes($id = null){
+        /*$controles = $this->Controles->find('All')
             ->contain(['Permissoes' => [
                 'conditions' => ['users_id' => $users_id]
-            ]]);
-
-        $acoes = $this->Acoes->find('all'); 
-        $user = $this->Users->get($users_id);        
+            ]]);       */
+        $user = $this->Users->get($id, [
+            'contain' => ['PermissoesUsers'] 
+        ]);
+        
+        $acoes = $this->Acoes->find('list'); 
+        $controles = $this->Controles->find('all');         
         if ($this->request->is('post')) {                        
             try{
-                $this->Permissoes->getConnection()->begin();
-                $this->Permissoes->deleteAll(['users_id'=>$users_id]);
-                $this->SalvarPermissoes($controles, $users_id);
-                $this->Permissoes->getConnection()->commit();
+                $this->PermissoesUsers->getConnection()->begin();
+                $this->PermissoesUsers->deleteAll(['users_id'=>$user->id]);
+                $this->SalvarPermissoes($controles, $user);
+                $this->PermissoesUsers->getConnection()->commit();
             } catch(\Cake\ORM\Exception\PersistenceFailedException $e) {
-                $this->Permissoes->getConnection()->rollback();
+                $this->PermissoesUsers->getConnection()->rollback();
             }
         }
         
-        $this->set(compact('controles', 'acoes'));    
-        $this->set('nomeUser', $user->username);
+        $this->set(compact('controles', 'acoes', 'user'));    
     }  
     
-    private function SalvarPermissoes($controles, $users_id){
+    private function SalvarPermissoes($controles, $user){
         foreach($controles as $controle){      
-            $permControle = $this->request->getData($controle->nome);
-            if(is_array($permControle)){
-                foreach($permControle as $acao_id){    
-                    $permissao = $this->Permissoes->newEntity();
+            $acoes = $this->request->getData($controle->nome);
+            if(is_array($acoes)){
+                foreach($acoes as $acao_id){    
+                    $permissao = $this->PermissoesUsers->newEntity();
                     $permissao->controles_id = $controle->id;
                     $permissao->acoes_id = $acao_id;
-                    $permissao->users_id = $users_id;
-                    if(!$this->Permissoes->save($permissao)){
+                    $permissao->users_id = $user->id;
+                    if(!$this->PermissoesUsers->save($permissao)){
                        $this->Flash->error(__('Permissões não salvas. Por favor, teste novamente.'));
                     }                                 
                 }                           

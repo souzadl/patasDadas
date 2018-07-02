@@ -11,6 +11,12 @@ use App\Controller\AppController;
  * @method \App\Model\Entity\Role[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class RolesController extends AppController{
+    public function initialize() {
+        parent::initialize();
+        $this->loadModel('Acoes');     
+        $this->loadModel('Controles');
+        $this->loadModel('PermissoesRoles');
+    }    
     
     public function renderForm($role, $view = 'form', $layout = null) {
         $this->set('role', $role);
@@ -106,5 +112,41 @@ class RolesController extends AppController{
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+    
+    public function permissoes($id = null){
+        $role = $this->Roles->get($id, [
+            'contain' => ['PermissoesRoles'] 
+        ]);
+        $acoes = $this->Acoes->find('list'); 
+        $controles = $this->Controles->find('all');                                 
+        if ($this->request->is('post')) { 
+            try{
+                $this->PermissoesRoles->getConnection()->begin();
+                $this->PermissoesRoles->deleteAll(['roles_id'=>$role->id]);
+                $this->SalvarPermissoes($controles, $role);
+                $this->PermissoesRoles->getConnection()->commit();
+            } catch(\Cake\ORM\Exception\PersistenceFailedException $e) {
+                $this->PermissoesRoles->getConnection()->rollback();
+            }            
+        }
+        $this->set(compact('controles', 'acoes', 'role'));
+    }
+    
+    private function salvarPermissoes($controles, $role){
+        foreach($controles as $controle){
+            $acoes = $this->request->getData($controle->nome);
+            if(is_array($acoes)){              
+                foreach($acoes as $acao_id){    
+                    $permissao = $this->PermissoesRoles->newEntity();
+                    $permissao->controles_id = $controle->id;
+                    $permissao->acoes_id = $acao_id;
+                    $permissao->roles_id = $role->id;
+                    if(!$this->PermissoesRoles->save($permissao)){
+                       $this->Flash->error(__('Permissões não salvas. Por favor, teste novamente.'));
+                    }                                 
+                }                           
+            }         
+        }
     }
 }

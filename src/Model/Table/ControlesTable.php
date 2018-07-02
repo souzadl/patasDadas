@@ -35,7 +35,12 @@ class ControlesTable extends Table
         $this->setDisplayField('nome');
         $this->setPrimaryKey('id');
         
-        $this->hasMany('Permissoes',[
+        $this->hasMany('PermissoesUsers',[
+            'dependent' => true,
+            'foreignKey' => 'controles_id'
+        ]); 
+        
+        $this->hasMany('PermissoesRoles',[
             'dependent' => true,
             'foreignKey' => 'controles_id'
         ]);        

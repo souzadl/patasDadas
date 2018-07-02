@@ -40,7 +40,10 @@ class AppController extends Controller{
     public function initialize(){
         parent::initialize();
         
-        $this->loadModel('Permissoes');
+        $this->loadModel('PermissoesUsers');
+        $this->loadModel('PermissoesRoles');
+        $this->loadModel('Controles');
+        $this->loadModel('Acoes');
         $this->loadModel('Adotaveis');               
         
         $this->paginate['limit'] = Configure::read('App.limitPagination');
@@ -86,22 +89,26 @@ class AppController extends Controller{
     
     public function isAuthorized($user){  
         if($user['roles_id'] == Configure::read('App.idRoleSistema')){
-          $permitido = true;
+            $permitido = true;
         }else{          
-          $permissoes = $this->Permissoes->find('all')
-              ->where(['users_id ='=>$user['id']])
-              ->contain(['Acoes', 'Controles', 'Users']);
-          $action = $this->request->getParam('action');
-          $controller = $this->request->getParam('controller');
-          $permitido = false;
-          foreach ($permissoes as $permissao){
-              if(isset($permissao->controle)
-                and isset($permissao->aco)
-                and $controller === $permissao->controle->nome 
-                and $action === $permissao->aco->nome){
-                $permitido = true;
-              }              
-          }
+            $controle = $this->Controles->find('all')
+                    ->where(['nome =' => $this->request->getParam('controller')]);
+            $acao = $this->Acoes->find('all')
+                    ->where(['nome =' => $this->request->getParam('action')]);
+
+            $permissoesRoles = $this->PermissoesRoles->find('all')
+              ->where(['roles_id =' => $user['roles_id']
+                      , 'controles_id =' => $controle->first()->id
+                      , 'acoes_id' => $acao->first()->id]);   
+            $permitido = ($permissoesRoles->count() > 0);
+            if($permitido === false){
+                $permissoesUser = $this->PermissoesUsers->find('all')
+                  ->where(['users_id =' => $user['id']
+                          , 'controles_id =' => $controle->first()->id
+                          , 'acoes_id' => $acao->first()->id]);
+
+                $permitido = ($permissoesUser->count() > 0);
+            }
         }  
         return $permitido;     
     }

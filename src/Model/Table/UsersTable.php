@@ -52,7 +52,7 @@ class UsersTable extends Table
             'joinType' => 'INNER'
         ]);        
         
-        $this->hasMany('Permissoes',[
+        $this->hasMany('PermissoesUsers',[
             'dependent' => true,
             'foreignKey' => 'users_id'
         ]);

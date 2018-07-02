@@ -42,7 +42,11 @@ class RolesTable extends Table
         $this->hasMany('Pessoas',[
             'dependent' => true,
             'foreignKey' => 'roles_id'
-        ]);        
+        ]);                     
+        $this->hasMany('PermissoesRoles',[
+            'dependent' => true,
+            'foreignKey' => 'roles_id'
+        ]);           
     }
 
     /**

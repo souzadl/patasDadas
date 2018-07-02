@@ -17,7 +17,7 @@ class PessoasController extends AppController{
     
     public function beforeFilter(\Cake\Event\Event $event) {
         parent::beforeFilter($event);
-        $this->Auth->allow(['add']);
+        //$this->Auth->allow(['add']);
     }    
     
     public function initialize() {
@@ -93,7 +93,6 @@ class PessoasController extends AppController{
 
                 return $this->redirect(['action' => 'index']);
             }
-            debug($pessoa);
             $this->Flash->error(__('Pessoa não pode ser salva. Por favor, tente novamente.'));
         }
         $this->renderForm($pessoa);
@@ -103,7 +102,7 @@ class PessoasController extends AppController{
         if(isset($pessoa->user)){
             $pessoa->user->active = $pessoa->active;
         }        
-    }
+    }    
 
     /**
      * Edit method

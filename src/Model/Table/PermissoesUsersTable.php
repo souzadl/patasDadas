@@ -7,22 +7,22 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * Permissoes Model
+ * PermissoesUsers Model
  *
  * @property \App\Model\Table\AcoesTable|\Cake\ORM\Association\BelongsTo $Acoes
  * @property \App\Model\Table\ControlesTable|\Cake\ORM\Association\BelongsTo $Controles
  * @property \App\Model\Table\UsersTable|\Cake\ORM\Association\BelongsTo $Users
  *
- * @method \App\Model\Entity\Permisso get($primaryKey, $options = [])
- * @method \App\Model\Entity\Permisso newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\Permisso[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\Permisso|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Permisso|bool saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Permisso patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\Permisso[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\Permisso findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\PermissoesUser get($primaryKey, $options = [])
+ * @method \App\Model\Entity\PermissoesUser newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\PermissoesUser[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\PermissoesUser|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\PermissoesUser|bool saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\PermissoesUser patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\PermissoesUser[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\PermissoesUser findOrCreate($search, callable $callback = null, $options = [])
  */
-class PermissoesTable extends Table
+class PermissoesUsersTable extends Table
 {
 
     /**
@@ -35,13 +35,14 @@ class PermissoesTable extends Table
     {
         parent::initialize($config);
 
-        $this->setTable('permissoes');
-        $this->setPrimaryKey(['acoes_id', 'users_id', 'controles_id']);
+        $this->setTable('permissoes_users');
+        $this->setDisplayField('acoes_id');
+        $this->setPrimaryKey(['acoes_id', 'controles_id', 'users_id']);
 
         $this->belongsTo('Acoes', [
             'foreignKey' => 'acoes_id',
             'joinType' => 'INNER'
-        ]);        
+        ]);
         $this->belongsTo('Controles', [
             'foreignKey' => 'controles_id',
             'joinType' => 'INNER'
@@ -49,8 +50,7 @@ class PermissoesTable extends Table
         $this->belongsTo('Users', [
             'foreignKey' => 'users_id',
             'joinType' => 'INNER'
-        ]);    
-        
+        ]);
     }
 
     /**

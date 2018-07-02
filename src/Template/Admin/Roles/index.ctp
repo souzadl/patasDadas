@@ -5,7 +5,7 @@
  */
 ?>
 <h4><?= __('Perfís') ?></h4>
-<?= $this->Html->link(__('New'), ['action' => 'add']) ?>
+<?= $this->element('acao_add') ?>
 <table class="table">
     <thead>
         <tr>
@@ -22,20 +22,13 @@
             <td><?= h($role->nome) ?></td>
             <td><?= $this->SimOuNao($role->active) ?></td>
             <td class="actions">
-                <?= $this->Html->link(__('View'), ['action' => 'view', $role->id]) ?>
-                <?= $this->Html->link(__('Edit'), ['action' => 'edit', $role->id]) ?>
-                <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $role->id], ['confirm' => __('Are you sure you want to delete # {0}?', $role->id)]) ?>
+                <?= $this->element('acoes_lista', ['id' => $role->id]) ?>
+                <?= $this->Html->link($this->Html->tag('i','',['class'=>'fas fa-lock'])/*.__('Permissões')*/, 
+                    ['action' => 'permissoes', $role->id], 
+                    ['escape'=>false]) ?>                     
             </td>
         </tr>
         <?php endforeach; ?>
     </tbody>
 </table>
-<nav aria-label="Page navigation">
-    <ul class="pagination justify-content-center">
-        <!--<?= $this->Paginator->first(__('first')) ?>-->
-        <?= $this->Paginator->prev(__('previous')) ?>
-        <?= $this->Paginator->numbers() ?>
-        <?= $this->Paginator->next(__('next')) ?>
-        <!--<?= $this->Paginator->last(__('last')) ?>-->
-    </ul>
-</nav>
+<?= $this->element('paginacao') ?>
