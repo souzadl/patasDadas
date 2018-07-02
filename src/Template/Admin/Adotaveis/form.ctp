@@ -29,7 +29,7 @@
                 echo $this->Form->control('nome');
                 echo $this->Form->control('porte', ['options' => ['P'=>'Pequeno','M'=>'Médio','G'=>'Grande']]);
                 echo $this->Form->control('sexo', ['type' => 'radio', 'options' => ['M'=>'M', 'F'=>'F']]);
-                echo $this->Form->control('idade');
+                echo $this->Form->control('data_nascimento');
                 echo $this->Form->control('vacinado');
                 echo $this->Form->control('vermifugado');
                 echo $this->Form->control('castrado');

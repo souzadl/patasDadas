@@ -96,9 +96,9 @@ class AdotaveisTable extends Table
             ->notEmpty('sexo');
 
         $validator
-            ->integer('idade')
-            ->requirePresence('idade', 'create')
-            ->notEmpty('idade');
+            ->date('data_nascimento')
+            ->requirePresence('data_nascimento', 'create')
+            ->notEmpty('data_nascimento');
 
         $validator
             ->boolean('vacinado')
