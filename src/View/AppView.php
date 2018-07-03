@@ -46,9 +46,16 @@ class AppView extends View
     
     protected function RotuloAcao($action, $label){
         switch ($action){
-            case 'add': $rotulo = __('Adicionar'); break;
-            case 'edit': $rotulo = __('Editar'); break;
-            case 'view': $rotulo = __('Visualizar'); break;            
+            case 'add': 
+            case 'addPublic': 
+                $rotulo = __('Adicionar'); 
+                break;
+            case 'edit': 
+                $rotulo = __('Editar'); 
+                break;
+            case 'view': 
+                $rotulo = __('Visualizar'); 
+                break;            
         }
         return $rotulo .' '. $label;   
     }

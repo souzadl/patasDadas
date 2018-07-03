@@ -14,7 +14,7 @@
             echo $this->Form->control('roles_id', ['options' => $roles]);                        
             if(!in_array($pessoa->roles_id, $idsSomentePessoas)){
                 echo $this->Form->control('username', ['value'=>$pessoa->user->username, 'required'=>true]);                 
-                echo ($action === 'add') ? $this->Form->control('password') : '';                
+                echo (in_array($action, array('add', 'addPublic'))) ? $this->Form->control('password') : '';                
             }
             echo ($showActive) ? $this->Form->control('active') : '';
         ?>    

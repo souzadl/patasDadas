@@ -17,7 +17,7 @@ class PessoasController extends AppController{
     
     public function beforeFilter(\Cake\Event\Event $event) {
         parent::beforeFilter($event);
-        //$this->Auth->allow(['add']);
+        $this->Auth->allow(['addPublic']);
     }    
     
     public function initialize() {
@@ -30,9 +30,14 @@ class PessoasController extends AppController{
     }
     
     private function renderForm($pessoa, $view = 'form', $layout = null) {
+        $filtroRoles['active ='] = 1;
+        if($this->request->getParam('action') === 'addPublic'){
+            $filtroRoles['id NOT IN'] = array(Configure::read('App.idRoleSistema'), Configure::read('App.idRoleAdmin'));
+        }
+        
         $this->set('pessoa', $pessoa);
         $this->set('action', $this->request->getParam('action'));
-        $this->set('roles', $this->Pessoas->Roles->find('list')->where(['active =' => 1]));
+        $this->set('roles', $this->Pessoas->Roles->find('list')->where($filtroRoles));
         $this->set('idsSomentePessoas', $this->idsSomentePessoas);     
         $this->set('showActive', $this->showActive);
         parent::render($view, $layout);
@@ -65,6 +70,10 @@ class PessoasController extends AppController{
         ]);
 
         $this->renderForm($pessoa);
+    }
+    
+    public function addPublic(){
+        $this->add();
     }
 
     /**

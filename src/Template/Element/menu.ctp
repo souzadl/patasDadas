@@ -40,14 +40,9 @@
                   <li class="nav-item active"><?= $this->Html->link(__('Logout {0}', $username), ['controller' => 'Users', 'action' => 'logout'], ['class' => 'nav-link']) ?></li>
               <?php else: ?>
                   <li class="nav-item active"><?= $this->Html->link(__('Login'), ['controller' => 'Users', 'action' => 'login'], ['class' => 'nav-link']) ?></li>
-                  <li class="nav-item active"><?= $this->Html->link(__('Cadastro'), ['controller' => 'Pessoas', 'action' => 'add'], ['class' => 'nav-link']) ?></li>
+                  <li class="nav-item active"><?= $this->Html->link(__('Cadastro'), ['controller' => 'Pessoas', 'action' => 'addPublic'], ['class' => 'nav-link']) ?></li>
                   <li class="nav-item active"><?= $this->Html->link(__('Relembrar Password'), ['controller' => 'Users', 'action' => 'rememberPassword'], ['class' => 'nav-link']) ?></li>
               <?php endif; ?>
       </ul>
-        <!--
-      <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-      </form>-->
     </div>
 </nav>
