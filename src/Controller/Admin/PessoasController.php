@@ -12,7 +12,7 @@ use Cake\Core\Configure;
  * @method \App\Model\Entity\Pessoa[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class PessoasController extends AppController{
-    var $idsSomentePessoas;
+    var $idsRolesUsuarios;
     var $showActive;
     
     public function beforeFilter(\Cake\Event\Event $event) {
@@ -23,8 +23,9 @@ class PessoasController extends AppController{
     public function initialize() {
         parent::initialize();
         $this->loadModel('Users');
-        $this->idsSomentePessoas = array(Configure::read('App.idRolePadrinho'), 
-            Configure::read('App.idRoleAdotante'));
+        $this->idsRolesUsuarios = array(Configure::read('App.idRoleAdmin'), 
+            Configure::read('App.idRoleVoluntario'),
+            Configure::read('App.idRoleSistema'));
         $this->showActive = ($this->Auth->user() 
             && in_array($this->Auth->user(['roles_id']),[Configure::read('App.idRoleSistema'), Configure::read('App.idRoleAdmin')]));
     }
@@ -38,7 +39,9 @@ class PessoasController extends AppController{
         $this->set('pessoa', $pessoa);
         $this->set('action', $this->request->getParam('action'));
         $this->set('roles', $this->Pessoas->Roles->find('list')->where($filtroRoles));
-        $this->set('idsSomentePessoas', $this->idsSomentePessoas);     
+        $this->set('idsRolesUsuarios', $this->idsRolesUsuarios);     
+        //$this->set('idRoleSistema', Configure::read('App.idRoleSistema'));
+        //$this->set('idRoleAdmin', Configure::read('App.idRoleAdmin'));
         $this->set('showActive', $this->showActive);
         parent::render($view, $layout);
     }
@@ -86,7 +89,7 @@ class PessoasController extends AppController{
         $pessoa->user = $this->Users->newEntity();
         if ($this->request->is('post')) {
             $pessoa = $this->Pessoas->patchEntity($pessoa, $this->request->getData());
-            $pessoa->user = (!in_array($pessoa->roles_id, $this->idsSomentePessoas)) ?
+            $pessoa->user = (in_array($pessoa->roles_id, $this->idsRolesUsuarios)) ?
                 $this->Users->patchEntity($pessoa->user, $this->request->getData()) : NULL;
             if($this->showActive){
                 $pessoa->active = $this->request->getData('active');
@@ -124,7 +127,7 @@ class PessoasController extends AppController{
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $pessoa = $this->Pessoas->patchEntity($pessoa, $this->request->getData());
-            $pessoa->user = (!in_array($pessoa->roles_id, $this->idsSomentePessoas)) ?
+            $pessoa->user = (in_array($pessoa->roles_id, $this->idsRolesUsuarios)) ?
                 $this->Users->patchEntity($pessoa->user, $this->request->getData()) : NULL;
             if ($this->Pessoas->save($pessoa)) {
                 $this->Flash->success(__('Pessoa salva.'));
