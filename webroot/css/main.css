@@ -23,6 +23,7 @@
     border-color: red;
 }
 
+/*Linhas de checkbox para configurações*/
 .multiCheckbox .checkbox{
     display: inline-block;
 }
@@ -30,7 +31,9 @@
 .multiCheckbox label{
     padding-right: 30px;
 }
+/*Linhas de checkbox para configurações*/
 
+/*Campos Data tipo dd/MM/yyyy*/
 div.date{
     height: 91px;
     margin-bottom: 16px;
@@ -45,6 +48,19 @@ div.date select{
     float: left;
     width: 100px;
 }
+
+div.date select[name*="day"]{
+    width: 80px;
+}
+
+div.date select[name*="month"]{
+    width: 150px;
+}
+
+div.date select[name*="year"]{
+    width: 100px;
+}
+/*Campos Data tipo dd/MM/yyyy*/
 
 
 
