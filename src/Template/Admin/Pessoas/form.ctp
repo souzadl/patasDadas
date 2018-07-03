@@ -14,7 +14,7 @@
             echo $this->Form->control('roles_id', ['options' => $roles]);                        
             if(!in_array($pessoa->roles_id, $idsRolesUsuarios)){
                 echo $this->Form->control('username', ['value'=>$pessoa->user->username, 'required'=>true]);                 
-                echo (in_array($action, array('add', 'addPublic'))) ? $this->Form->control('password') : '';                
+                echo (in_array($action, array('add', 'addPublic'))) ? $this->Form->control('password', ['required'=>true]) : '';                
             }
             echo ($showActive) ? $this->Form->control('active') : '';
         ?>    
@@ -25,22 +25,26 @@
 <script type="text/javascript">
 $('document').ready(function(){
     $("select[name=roles_id]").on('change', function(){
+        var userName = $("input[name=username]");
+        var password = $("input[name=password]");
         if($.inArray(parseInt($(this).val()), [<?= implode(",", $idsRolesUsuarios)?>]) >= 0){
-            $("input[name=username]").parent().show();
-            $("input[name=username]").parent().addClass('required');
-            $("input[name=username]").attr('required', true);
-            $("input[name=password]").parent().show();            
-            $("input[name=password]").parent().addClass('required');
-            $("input[name=password]").attr('required', true);            
+            Show(userName);
+            Show(password); 
         }else{
-            $("input[name=username]").parent().hide();
-            $("input[name=username]").parent().removeClass('required');
-            $("input[name=username]").attr('required', false);
-            $("input[name=password]").parent().hide();
-            $("input[name=password]").parent().removeClass('required');
-            $("input[name=password]").attr('required', false);
+            Hide(userName);
+            Hide(password);            
         }
     });
-    //alert(Roles);
 });
+
+function Show(input){
+    input.parent().show();
+    input.parent().addClass('required');
+    input.attr('required', true);    
+}
+function Hide(input){
+    input.parent().hide();
+    input.parent().removeClass('required');
+    input.attr('required', false);    
+}    
 </script>
