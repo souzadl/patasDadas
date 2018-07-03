@@ -28,13 +28,10 @@
         <div class="tab-content" id="myTabContent">
           <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
             <?php
-                $this->Form->templates(
-                    ['dateWidget' => '{{day}}{{month}}{{year}}{{hour}}{{minute}}{{second}}']
-                );
                 echo $this->Form->control('tipos_adotaveis_id', ['options' => $tiposAdotaveis, 'label'=>'Tipo Adotável']);               
                 echo $this->Form->control('nome');
                 echo $this->Form->control('porte', ['options' => ['P'=>'Pequeno','M'=>'Médio','G'=>'Grande']]);
-                echo $this->Form->control('sexo', ['type' => 'radio', 'options' => ['M'=>'M', 'F'=>'F']]);
+                echo $this->Form->control('sexo', ['type' => 'radio', 'options' => ['M'=>'Macho', 'F'=>'Fêmea']]);
                 echo $this->Form->control('data_nascimento');
                 echo $this->Form->control('vacinado');
                 echo $this->Form->control('vermifugado');
@@ -89,7 +86,7 @@
                 <table class="vertical-table">
                     <tr>
                         <th scope="row"><?= __('Usuário última alteração') ?></th>
-                        <td><?= h($adotavel->user->username) ?></td>
+                        <td><?= ($adotavel->has('user')) ? h($adotavel->user->username) : ''?></td>
                     </tr>                    
                     <tr>
                         <th scope="row"><?= __('Criado') ?></th>
@@ -101,7 +98,7 @@
                     </tr>                        
                 </table>
             </div>
-        </div>
+        </div>       
     </fieldset>
      <?= $this->Form->button(__('Submit'), [(isset($action) and $action === 'view') ? 'disabled' : '']) ?>
     <?= $this->Form->end() ?>   
