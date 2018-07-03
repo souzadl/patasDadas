@@ -50,6 +50,9 @@ msgstr "Ver"
 msgid "Edit"
 msgstr "Editar"
 
+msgid "Editar"
+msgstr "Editado"
+
 msgid "Delete"
 msgstr "Excluir"
 
@@ -295,51 +298,51 @@ msgstr ""
 
 #: View/Widget/DateTimeWidget.php:540
 msgid "January"
-msgstr ""
+msgstr "Janeiro"
 
 #: View/Widget/DateTimeWidget.php:541
 msgid "February"
-msgstr ""
+msgstr "Fevereiro"
 
 #: View/Widget/DateTimeWidget.php:542
 msgid "March"
-msgstr ""
+msgstr "Março"
 
 #: View/Widget/DateTimeWidget.php:543
 msgid "April"
-msgstr ""
+msgstr "Abril"
 
 #: View/Widget/DateTimeWidget.php:544
 msgid "May"
-msgstr ""
+msgstr "Maio"
 
 #: View/Widget/DateTimeWidget.php:545
 msgid "June"
-msgstr ""
+msgstr "Julho"
 
 #: View/Widget/DateTimeWidget.php:546
 msgid "July"
-msgstr ""
+msgstr "Julho"
 
 #: View/Widget/DateTimeWidget.php:547
 msgid "August"
-msgstr ""
+msgstr "Agosto"
 
 #: View/Widget/DateTimeWidget.php:548
 msgid "September"
-msgstr ""
+msgstr "Setembro"
 
 #: View/Widget/DateTimeWidget.php:549
 msgid "October"
-msgstr ""
+msgstr "Outubro"
 
 #: View/Widget/DateTimeWidget.php:550
 msgid "November"
-msgstr ""
+msgstr "Novembro"
 
 #: View/Widget/DateTimeWidget.php:551
 msgid "December"
-msgstr ""
+msgstr "Dezembro"
 
 #: View/Helper/PaginatorHelper.php:1212
 msgid "View"

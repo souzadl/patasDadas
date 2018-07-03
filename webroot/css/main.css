@@ -31,5 +31,20 @@
     padding-right: 30px;
 }
 
+div.date{
+    height: 91px;
+    margin-bottom: 16px;
+}
+
+div.date label{
+    float: left;
+    width: 100%;
+}
+
+div.date select{
+    float: left;
+    width: 100px;
+}
+
 
 

@@ -21,10 +21,16 @@
           <li class="nav-item">
             <a class="nav-link" id="contact-tab" data-toggle="tab" href="#fotos" role="tab" aria-controls="fotos" aria-selected="false">Fotos</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#auditoria" role="tab" aria-controls="auditoria" aria-selected="false">Auditoria</a>
+          </li>          
         </ul>
         <div class="tab-content" id="myTabContent">
           <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
             <?php
+                $this->Form->templates(
+                    ['dateWidget' => '{{day}}{{month}}{{year}}{{hour}}{{minute}}{{second}}']
+                );
                 echo $this->Form->control('tipos_adotaveis_id', ['options' => $tiposAdotaveis, 'label'=>'Tipo Adotável']);               
                 echo $this->Form->control('nome');
                 echo $this->Form->control('porte', ['options' => ['P'=>'Pequeno','M'=>'Médio','G'=>'Grande']]);
@@ -79,9 +85,25 @@
                     }
                 ?>
           </div>
+            <div class="tab-pane fade" id="auditoria" role="tabpanel" aria-labelledby="auditoria-tab"> 
+                <table class="vertical-table">
+                    <tr>
+                        <th scope="row"><?= __('Usuário última alteração') ?></th>
+                        <td><?= h($adotavel->user->username) ?></td>
+                    </tr>                    
+                    <tr>
+                        <th scope="row"><?= __('Criado') ?></th>
+                        <td><?= h($adotavel->created) ?></td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><?= __('Modificado') ?></th>
+                        <td><?= h($adotavel->modified) ?></td>
+                    </tr>                        
+                </table>
+            </div>
         </div>
-    <?= $this->Form->button(__('Submit')) ?>
     </fieldset>
+     <?= $this->Form->button(__('Submit'), [(isset($action) and $action === 'view') ? 'disabled' : '']) ?>
     <?= $this->Form->end() ?>   
 </div>
 

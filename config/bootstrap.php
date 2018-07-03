@@ -179,16 +179,28 @@ ServerRequest::addDetector('tablet', function ($request) {
  * locale specific date formats. For details see
  * @link https://book.cakephp.org/3.0/en/core-libraries/internationalization-and-localization.html#parsing-localized-datetime-data
  */
+//date_default_timezone_set('America/Sao_Paulo');
+//ini_set('intl.default_locale', 'pt_BR');
+//\Cake\I18n\Time::setToStringFormat([IntlDateFormatter::MEDIUM, IntlDateFormatter::SHORT]);
+
 Type::build('time')
     ->useImmutable();
+    //->useLocaleParser()    
+    //->setLocaleFormat('HH:mm:ss');
 Type::build('date')
     ->useImmutable();
+    //->useLocaleParser()    
     //->setLocaleFormat('dd/MM/yyyy');
 Type::build('datetime')
     ->useImmutable();
-    //->setLocaleFormat('dd/MM/yyyy');    
+    //->useLocaleParser()    
+    //->setLocaleFormat('dd/MM/yyyy HH:mm:ss');
 Type::build('timestamp')
     ->useImmutable();
+    //->useLocaleParser()    
+    //->setLocaleFormat('dd/MM/yyyy HH:mm:ss');
+
+//Cake\I18n\Time::setToStringFormat('dd/MM/YYYY HH:mm');
 
 /*
  * Custom Inflector rules, can be set to correctly pluralize or singularize
@@ -217,3 +229,8 @@ Type::build('timestamp')
 if (Configure::read('debug')) {
     Plugin::load('DebugKit', ['bootstrap' => true]);
 }
+
+/*Cake\I18n\FrozenDate::setToStringFormat('dd/MM/yyyy');
+Cake\I18n\FrozenTime::setToStringFormat('dd/MM/yyyy - hh:mm:ss');
+Cake\I18n\Date::setToStringFormat('dd/MM/yyyy');
+Cake\I18n\Time::setToStringFormat('dd/MM/yyyy - hh:mm:ss');*/

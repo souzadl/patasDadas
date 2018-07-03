@@ -158,7 +158,7 @@ class AdotaveisController extends AppController{
      */
     public function edit($id = null){
         $this->adotavel = $this->Adotaveis->get($id, [
-            'contain' => ['Padrinhos','Fotos']
+            'contain' => ['Padrinhos','Fotos','Users']
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $this->adotavel = $this->Adotaveis->patchEntity($this->adotavel, $this->request->getData());
