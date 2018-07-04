@@ -31,7 +31,11 @@
                 echo $this->Form->control('tipos_adotaveis_id', ['options' => $tiposAdotaveis, 'label'=>'Tipo Adotável']);               
                 echo $this->Form->control('nome');
                 echo $this->Form->control('porte', ['options' => ['P'=>'Pequeno','M'=>'Médio','G'=>'Grande']]);
-                echo $this->Form->control('sexo', ['type' => 'radio', 'options' => ['M'=>'Macho', 'F'=>'Fêmea']]);
+                echo $this->Form->control('sexo', [
+                    'type' => 'radio', 
+                    'options' => ['M'=>'Macho', 'F'=>'Fêmea'],
+                    'templates' => ['nestingLabel'=>'{{hidden}}<div class="custom-control custom-radio">{{input}}<label{{attrs}} class="custom-control-label">{{text}}</label></div>']
+                    ]);
                 echo $this->Form->control('data_nascimento');
                 echo $this->Form->control('vacinado');
                 echo $this->Form->control('vermifugado');
@@ -66,12 +70,17 @@
             ?>              
           </div>
           <div class="tab-pane fade" id="fotos" role="tabpanel" aria-labelledby="fotos-tab"> 
+                <div class="custom-file">
+                    <input type="file" name="fotosSelecionadas[]" multiple="multiple" id="fotosselecionadas" class="custom-file-input">
+                    <label class="custom-file-label" for="fotosSelecionadas">Escolha os arquivos...</label>
+                    <div class="invalid-feedback">Nenhum arquivo selecionado</div>
+                </div>       
                 <?php 
-                    echo $this->Form->control('fotosSelecionadas[]', [
+                    /*echo $this->Form->control('fotosSelecionadas[]', [
                         'label' => '',
                         'type' => 'file',
                         'multiple' => 'true'
-                    ]);
+                    ]);*/
                     $fotos = array();
                     foreach ($adotavel->fotos as $foto){
                         $fotos[$foto->id] = $this->Html->image('fotos/'.$foto->nome, ['class'=>'thumbnail']);
@@ -105,5 +114,6 @@
      <?= $this->Form->button(__('Submit'), [(isset($action) and $action === 'view') ? 'disabled' : '']) ?>
     <?= $this->Form->end() ?>   
 </div>
+
 
 

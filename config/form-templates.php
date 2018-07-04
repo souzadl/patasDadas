@@ -22,12 +22,12 @@ return [
         // Used for button elements in button().
         'button' => '<button{{attrs}} class="btn btn-primary">{{text}}</button>',
         // Used for checkboxes in checkbox() and multiCheckbox().
-        'checkbox' => '<input type="checkbox" class="form-check-input" name="{{name}}" value="{{value}}"{{attrs}}>',
-        'checkboxContainer' => '<div class="form-group form-check form-check-inline">{{content}}</div>',
+        'checkbox' => '<input type="checkbox" class="custom-control-input" name="{{name}}" value="{{value}}"{{attrs}}>',
+        'checkboxContainer' => '<div class="custom-control custom-checkbox">{{content}}</div>',
         // Input group wrapper for checkboxes created via control().
         'checkboxFormGroup' => '{{label}}',
         // Wrapper container for checkboxes.
-        'checkboxWrapper' => '<div class="checkbox">{{label}}</div>',
+        'checkboxWrapper' => '<div class="custom-control custom-checkbox">{{label}}</div>',
         // Widget ordering for date/time/datetime pickers.
         'dateWidget' => '{{day}}{{month}}{{year}}{{hour}}{{minute}}{{second}}',
         // Error message wrapper elements.
@@ -60,7 +60,7 @@ return [
         // Label element when inputs are not nested inside the label.
         'label' => '<label{{attrs}}>{{text}}</label>',
         // Label element used for radio and multi-checkbox inputs.
-        'nestingLabel' => '{{hidden}}<label{{attrs}}>{{input}}{{text}}</label>',
+        'nestingLabel' => '{{hidden}}{{input}}<label{{attrs}} class="custom-control-label">{{text}}</label>',
         // Legends created by allControls()
         'legend' => '<legend>{{text}}</legend>',
         // Multi-Checkbox input set title element.
@@ -76,8 +76,8 @@ return [
         // Multi-select element,
         'selectMultiple' => '<select class="form-control" name="{{name}}[]" multiple="multiple"{{attrs}}>{{content}}</select>',
         // Radio input element,
-        'radio' => '<input class="form-check-input" type="radio" name="{{name}}" value="{{value}}"{{attrs}}>',
-        'radioContainer' => '<div class="form-group form-check form-check-inline">{{content}}</div>',
+        'radio' => '<input class="custom-control-input" type="radio" name="{{name}}" value="{{value}}"{{attrs}}>',
+        //'radioContainer' => '<div class="custom-control custom-radio">{{content}}</div>',
         // Wrapping container for radio input/label,
         'radioWrapper' => '{{label}}',
         // Textarea input element,
