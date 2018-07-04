@@ -27,7 +27,6 @@ use Cake\Event\Event;
  * @link https://book.cakephp.org/3.0/en/controllers.html#the-app-controller
  */
 class AppController extends Controller{
-    var $acoesPermitidas = array();
     /**
      * Initialization hook method.
      *
@@ -83,31 +82,36 @@ class AppController extends Controller{
          * see https://book.cakephp.org/3.0/en/controllers/components/security.html
          */
         //$this->loadComponent('Security');
-        
-        $this->carregarPermissoesController();
     }
     
     public function isAuthorized($user){  
         if($user['roles_id'] == Configure::read('App.idRoleSistema')){
-            $permitido = true;
+            $permitido = true; 
+            $this->set('acoesPermitidas', array('all'));
         }else{          
+            $permitido = false;
             $controle = $this->Controles->find('all')
                     ->where(['nome =' => $this->request->getParam('controller')]);
             $acao = $this->Acoes->find('all')
                     ->where(['nome =' => $this->request->getParam('action')]);
 
-            $permissoesRoles = $this->PermissoesRoles->find('all')
-              ->where(['roles_id =' => $user['roles_id']
-                      , 'controles_id =' => $controle->first()->id
-                      , 'acoes_id' => $acao->first()->id]);   
-            $permitido = ($permissoesRoles->count() > 0);
-            if($permitido === false){
-                $permissoesUser = $this->PermissoesUsers->find('all')
-                  ->where(['users_id =' => $user['id']
+            if($controle->count() === 1 && $acao->count() === 1){
+                $permissoesRoles = $this->PermissoesRoles->find('all')
+                  ->where(['roles_id =' => $user['roles_id']
                           , 'controles_id =' => $controle->first()->id
-                          , 'acoes_id' => $acao->first()->id]);
+                          , 'acoes_id' => $acao->first()->id]);   
+                $permitido = ($permissoesRoles->count() > 0);
+                if($permitido === false){
+                    $permissoesUser = $this->PermissoesUsers->find('all')
+                      ->where(['users_id =' => $user['id']
+                              , 'controles_id =' => $controle->first()->id
+                              , 'acoes_id' => $acao->first()->id]);
 
-                $permitido = ($permissoesUser->count() > 0);
+                    $permitido = ($permissoesUser->count() > 0);
+                }
+                if($permitido && $this->request->getParam('action') === 'index'){
+                    $this->carregarAcoesPermitidasIndex($user, $controle->first());
+                }
             }
         }  
         return $permitido;     
@@ -117,13 +121,25 @@ class AppController extends Controller{
         $this->set('username', $this->Auth->user('username'));
     }
     
-    private function carregarPermissoesController(){
-        /*$permissoes = $this->Permissoes->find('all')
-              ->where(['users_id ='=>$this->Auth->user('id'),
-                  'controles_id ='=>])
-              ->contain(['Acoes', 'Controles', 'Users']);   */
-        $this->acoesPermitidas = array('add', 'edit', 'delete', 'view', 'permissoes');
-        $this->set('acoesPermitidas', $this->acoesPermitidas);
+    private function carregarAcoesPermitidasIndex($user, $controle){
+        $permissoesRole = $this->PermissoesRoles->find('all')
+            ->where([
+                'roles_id =' => $user['roles_id'], 
+                'controles_id =' => $controle->id 
+            ])->contain(['Acoes']); 
+        $permissoesUser = $this->PermissoesUsers->find('all')
+            ->where([
+                'users_id =' => $user['id'], 
+                'controles_id =' => $controle->id 
+            ])->contain(['Acoes']);         
+        $acoesPermitidas = array();
+        foreach ($permissoesRole as $permissao){
+            $acoesPermitidas[] = $permissao->aco->nome;
+        }
+        foreach ($permissoesUser as $permissao){
+            $acoesPermitidas[] = $permissao->aco->nome;
+        }        
+        $this->set('acoesPermitidas', $acoesPermitidas);
     }
 
 }

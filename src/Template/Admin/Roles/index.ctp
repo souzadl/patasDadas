@@ -23,9 +23,10 @@
             <td><?= $this->SimOuNao($role->active) ?></td>
             <td class="actions">
                 <?= $this->element('acoes_lista', ['id' => $role->id]) ?>
-                <?= $this->Html->link($this->Html->tag('i','',['class'=>'fas fa-lock'])/*.__('Permissões')*/, 
-                    ['action' => 'permissoes', $role->id], 
-                    ['escape'=>false]) ?>                     
+                <?= (in_array('all', $acoesPermitidas)) ? 
+                    $this->Html->link($this->Html->tag('i','',['class'=>'fas fa-lock'])/*.__('Permissões')*/, 
+                        ['action' => 'permissoes', $role->id], 
+                        ['escape'=>false]) : ''?>                     
             </td>
         </tr>
         <?php endforeach; ?>

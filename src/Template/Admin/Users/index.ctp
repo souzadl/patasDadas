@@ -25,7 +25,7 @@
             <td><?= $this->SimOuNao($user->active) ?></td>
             <td class="actions">
                 <?= $this->element('acoes_lista', ['id' => $user->id]) ?>
-                <?= (in_array('permissoes', $acoesPermitidas)) ? 
+                <?= (in_array('all', $acoesPermitidas)) ? 
                         $this->Html->link($this->Html->tag('i','',['class'=>'fas fa-lock'])/*.__('Permissões')*/, 
                             ['action' => 'permissoes', $user->id], 
                             ['escape'=>false]) : ''?>                
