@@ -71,7 +71,7 @@ class AdotaveisController extends AppController{
         $this->adotavel->padrinhos = $padrinhos;        
     }
     
-    private function setFotos(){
+    private function setFotosNovas(){
         $fotos = array();
         foreach ($this->Upload->fileNames as $fileName){
             $foto = $this->Adotaveis->Fotos->newEntity();
@@ -81,6 +81,16 @@ class AdotaveisController extends AppController{
             $fotos[] = $foto;
         }
         $this->adotavel->fotos = $fotos;
+    }
+    
+    private function addFotosSelecionadas($fotos){
+        if ($this->Upload->upload($fotos, Configure::read('App.fotosUrl'))){
+            $this->setFotosNovas();
+        }        
+    }
+    
+    private function delFotosArmazenadas($fotos){
+        $this->Adotaveis->Fotos->deleteAll(['id IN'=>$fotos]);
     }
     
     private function setHistoricoMedico(){
@@ -132,9 +142,7 @@ class AdotaveisController extends AppController{
             $this->adotavel->users_id = $this->Auth->user()['id'];
             $this->setHistoricoMedico();
             $this->setPadrinhos();
-            if ($this->Upload->upload($this->request->data['fotos'], Configure::read('App.fotosUrl'))){
-                $this->setFotos();
-            }
+            $this->addFotosSelecionadas($this->request->getData('fotosSelecionadas'));
             if ($this->Adotaveis->save($this->adotavel)) {                             
                 $this->Flash->success(__('Adotável salvo.'));
 
@@ -142,10 +150,6 @@ class AdotaveisController extends AppController{
             }
             $this->Flash->error(__('O Adotável não pode ser salvo. Por favor, tente novamente.'));
         }    
-        //$users = $this->Adotaveis->Users->find('list', ['limit' => 200]);
-        //$tiposAdotaveis = $this->Adotaveis->TiposAdotaveis->find('list', ['limit' => 200]);
-        //$this->set(compact('adotavel', 'tiposAdotaveis'));
-        //return $this->render('form');
         $this->renderForm();
     }
 
@@ -164,17 +168,20 @@ class AdotaveisController extends AppController{
             $this->adotavel = $this->Adotaveis->patchEntity($this->adotavel, $this->request->getData());
             $this->adotavel->users_id = $this->Auth->user('id');            
             $this->setHistoricoMedico();
-            $this->setPadrinhos();            
-            
-            if ($this->Upload->upload($this->request->data['fotos'], Configure::read('App.fotosUrl'))){
-                $this->setFotos();
-            }        
-            if ($this->Adotaveis->save($this->adotavel)) {
-                $this->Flash->success(__('Adotável salvo.'));
-                return $this->redirect(['action' => 'index']);
-            }            
-            
-            $this->Flash->error(__('Adotável não pode ser valvo. Por favor, tente novamente.'));
+            $this->setPadrinhos(); 
+            $this->addFotosSelecionadas($this->request->getData('fotosSelecionadas'));
+            $this->Adotaveis->getConnection()->begin();
+            try{
+                $this->delFotosArmazenadas($this->request->getData('fotosArmazenadas'));
+                if ($this->Adotaveis->save($this->adotavel)) {
+                    $this->Adotaveis->getConnection()->commit();
+                    $this->Flash->success(__('Adotável salvo.'));
+                    return $this->redirect(['action' => 'index']);
+                }   
+            } catch(\Cake\ORM\Exception\PersistenceFailedException $e) {
+                $this->Adotaveis->getConnection()->rollback();
+                $this->Flash->error(__('Adotável não pode ser valvo. Por favor, tente novamente.'));
+            }                                  
         }
         $this->renderForm();
     }

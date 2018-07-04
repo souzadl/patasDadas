@@ -50,18 +50,15 @@
           </div>
           <div class="tab-pane fade" id="padrinhos" role="tabpanel" aria-labelledby="padrinhos-tab">
             <?php
-                //var_dump($adotavel->padrinhos);
                 foreach ($tiposPadrinhos as $tipoPadrinho) {
                     $idPessoa = '';
                     foreach ($adotavel->padrinhos as $padrinho){
                         if($padrinho->tipos_padrinhos_id === $tipoPadrinho->id){
                             $idPessoa = $padrinho->pessoas_id;
-                            //var_dump($padrinho->pad);
                         }
                     }
                     echo $this->Form->control($tipoPadrinho->nome, 
                         ['options' => $padrinhosDisponiveis, 
-                         //'name' => $tipoPadrinho->nome,
                          'value' => $idPessoa,
                          'empty' => 'Escolha um']);
 
@@ -70,16 +67,21 @@
           </div>
           <div class="tab-pane fade" id="fotos" role="tabpanel" aria-labelledby="fotos-tab"> 
                 <?php 
-                    echo $this->Form->control('fotos[]', [
+                    echo $this->Form->control('fotosSelecionadas[]', [
                         'label' => '',
                         'type' => 'file',
                         'multiple' => 'true'
                     ]);
-                    //var_dump($expression)
+                    $fotos = array();
                     foreach ($adotavel->fotos as $foto){
-                        echo $this->Html->image('fotos/'.$foto->nome, ['class'=>'thumbnail']);
-                    //    echo $this->Form->imput('fotos', ['type'=>'file']); 
+                        $fotos[$foto->id] = $this->Html->image('fotos/'.$foto->nome, ['class'=>'thumbnail']);
                     }
+                    echo $this->Form->control('fotosArmazenadas',[
+                        'label' => 'Fotos Armazenadas - Marque as que devem ser removidas.',
+                        'multiple' => 'checkbox',
+                        'options' => $fotos,
+                        'escape' => false
+                    ]);
                 ?>
           </div>
             <div class="tab-pane fade" id="auditoria" role="tabpanel" aria-labelledby="auditoria-tab"> 
