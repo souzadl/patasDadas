@@ -12,7 +12,7 @@
             echo $this->Form->control('nome');
             echo $this->Form->control('email');
             echo $this->Form->control('roles_id', ['options' => $roles]);                        
-            if(!in_array($pessoa->roles_id, $idsRolesUsuarios)){
+            if(in_array($pessoa->roles_id, $idsRolesUsuarios)){
                 echo $this->Form->control('username', ['value'=>$pessoa->user->username, 'required'=>true]);                 
                 echo (in_array($action, array('add', 'addPublic'))) ? $this->Form->control('password', ['required'=>true]) : '';                
             }

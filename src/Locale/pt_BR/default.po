@@ -278,7 +278,7 @@ msgstr ""
 
 #: Validation/Validator.php:2054
 msgid "The provided value is invalid"
-msgstr ""
+msgstr "O valor informado é inválido"
 
 #: View/Helper/FormHelper.php:1097
 msgid "Edit {0}"

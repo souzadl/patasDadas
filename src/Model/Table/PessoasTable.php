@@ -68,8 +68,7 @@ class PessoasTable extends Table
             ->scalar('nome')
             ->maxLength('nome', 200)
             ->requirePresence('nome', 'create')
-            ->notEmpty('nome')
-            ->add('nome', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
+            ->notEmpty('nome');
 
         $validator
             ->email('email')
@@ -94,9 +93,9 @@ class PessoasTable extends Table
     public function buildRules(RulesChecker $rules)
     {
         if(!Configure::read('debug')){
-            $rules->add($rules->isUnique(['email']));            
+            $rules->add($rules->isUnique(['email'], __('Esse email já consta na base de dados.')));            
         }
-        $rules->add($rules->isUnique(['nome']));
+        $rules->add($rules->isUnique(['nome'], __('Esse nome já consta na base de dados.')));
 
         return $rules;
     }

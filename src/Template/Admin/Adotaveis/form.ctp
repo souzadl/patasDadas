@@ -5,26 +5,26 @@
  */
 ?>
  <div class="adotaveis form large-9 medium-8 columns content">
+    <legend><?= $this->RotuloAcao($action, 'Adotável'); ?></legend>     
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Dados</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#historico_medico" role="tab" aria-controls="historico_medico" aria-selected="false">Histórico Médico</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#padrinhos" role="tab" aria-controls="padrinhos" aria-selected="false">Padrinhos</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#fotos" role="tab" aria-controls="fotos" aria-selected="false">Fotos</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#auditoria" role="tab" aria-controls="auditoria" aria-selected="false">Auditoria</a>
+      </li>          
+    </ul>    
     <?= $this->Form->create($adotavel, ['type' => 'file']) ?>          
-     <fieldset <?= (isset($action) and $action === 'view') ? 'disabled' : ''; ?> >
-         <legend><?= $this->RotuloAcao($action, 'Adotável'); ?></legend>
-        <ul class="nav nav-tabs" id="myTab" role="tablist">
-          <li class="nav-item">
-            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Dados</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#historico_medico" role="tab" aria-controls="historico_medico" aria-selected="false">Histórico Médico</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#padrinhos" role="tab" aria-controls="padrinhos" aria-selected="false">Padrinhos</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#fotos" role="tab" aria-controls="fotos" aria-selected="false">Fotos</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#auditoria" role="tab" aria-controls="auditoria" aria-selected="false">Auditoria</a>
-          </li>          
-        </ul>
+        <fieldset <?= (isset($action) and $action === 'view') ? 'disabled' : ''; ?> >        
         <div class="tab-content" id="myTabContent">
           <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
             <?php
@@ -36,7 +36,9 @@
                     'options' => ['M'=>'Macho', 'F'=>'Fêmea'],
                     'templates' => ['nestingLabel'=>'{{hidden}}<div class="custom-control custom-radio">{{input}}<label{{attrs}} class="custom-control-label">{{text}}</label></div>']
                     ]);
-                echo $this->Form->control('data_nascimento');
+                echo $this->Form->control('data_nascimento', [
+                    'minYear' => date('Y') - 20
+                ]);
                 echo $this->Form->control('vacinado');
                 echo $this->Form->control('vermifugado');
                 echo $this->Form->control('castrado');
