@@ -3,7 +3,7 @@ namespace App\Model\Table;
 
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
-use Cake\ORM\Table;
+use App\Model\Table\BaseTable;
 use Cake\Validation\Validator;
 use App\Model\Rule\NoAssociatedData;
 
@@ -23,7 +23,7 @@ use App\Model\Rule\NoAssociatedData;
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
-class TiposAdotaveisTable extends Table
+class TiposAdotaveisTable extends BaseTable
 {
 
     /**
@@ -87,16 +87,8 @@ class TiposAdotaveisTable extends Table
      * @return \Cake\ORM\RulesChecker
      */
     public function buildRules(RulesChecker $rules){
+        $rules = parent::buildRules($rules);                
         $rules->add($rules->existsIn(['users_id'], 'Users'));
-        
-        foreach ($this->associations()->type('HasOne') + $this->associations()->type('HasMany') as $association) {
-            if ($association->dependent()) {
-                $rules->addDelete(new NoAssociatedData($association), 'NoAssociatedData', [
-                    'errorField' => 'error' ,
-                    'message'=>__('Registro ainda possui associação.')]);
-            }
-        }        
-
         return $rules;
     }
     

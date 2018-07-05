@@ -3,9 +3,8 @@ namespace App\Model\Table;
 
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
-use Cake\ORM\Table;
+use App\Model\Table\BaseTable;
 use Cake\Validation\Validator;
-use App\Model\Rule\NoAssociatedData;
 
 /**
  * Roles Model
@@ -21,7 +20,7 @@ use App\Model\Rule\NoAssociatedData;
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
-class RolesTable extends Table
+class RolesTable extends BaseTable
 {
 
     /**
@@ -78,14 +77,7 @@ class RolesTable extends Table
     }
     
     public function buildRules(RulesChecker $rules){
-        foreach ($this->associations()->type('HasOne') + $this->associations()->type('HasMany') as $association) {
-            if ($association->dependent()) {
-                $rules->addDelete(new NoAssociatedData($association), 'NoAssociatedData', [
-                    'errorField' => 'error' ,
-                    'message'=>__('Registro ainda possui associação.')]);
-            }
-        }         
-
+        $rules = parent::buildRules($rules);
         return $rules;        
     }    
 }

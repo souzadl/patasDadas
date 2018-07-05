@@ -3,10 +3,9 @@ namespace App\Model\Table;
 
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
-use Cake\ORM\Table;
+use App\Model\Table\BaseTable;
 use Cake\Validation\Validator;
 use Cake\Core\Configure;
-use App\Model\Rule\NoAssociatedData;
 
 /**
  * Users Model
@@ -24,7 +23,7 @@ use App\Model\Rule\NoAssociatedData;
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
-class UsersTable extends Table
+class UsersTable extends BaseTable
 {
 
     /**
@@ -118,16 +117,9 @@ class UsersTable extends Table
      * @return \Cake\ORM\RulesChecker
      */
     public function buildRules(RulesChecker $rules){
+        $rules = parent::buildRules($rules);        
         $rules->add($rules->isUnique(['username']));
         $rules->add($rules->existsIn(['roles_id'], 'Roles'));
-
-        foreach ($this->associations()->type('HasOne') + $this->associations()->type('HasMany') as $association) {
-            if ($association->dependent()) {
-                $rules->addDelete(new NoAssociatedData($association), 'NoAssociatedData', [
-                    'errorField' => 'error' ,
-                    'message'=>__('Registro ainda possui associação.')]);
-            }
-        }         
         return $rules;
     }
     
