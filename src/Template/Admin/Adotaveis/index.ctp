@@ -6,10 +6,21 @@
 ?>
 <h4><?= __('Adotáveis') ?></h4>
 <?= $this->element('acao_add') ?>
+<?= $this->Form->create(NULL, [
+    'url' => ['controller' => 'Adotaveis', 'action' => 'index']
+]) ?> 
 <table class="table">
     <thead>
         <tr>
-            <th scope="col"><?= $this->Paginator->sort('nome') ?></th>
+            <th scope="col">
+                <?= $this->Paginator->sort('nome') ?>
+                <?= $this->Form->input('nome', [
+                    'label'=>false, 
+                    'value'=>$filtro['nome']?? '',
+                    'style'=>'width: 100px;'
+                        
+                ]) ?>
+            </th>
             <th scope="col"><?= $this->Paginator->sort('tipos_adotavel_id', ['label' => 'Tipo']) ?></th>                
             <th scope="col"><?= $this->Paginator->sort('active') ?></th>
             <th scope="col" class="actions"><?= __('Actions') ?></th>
@@ -27,3 +38,5 @@
     </tbody>
 </table>
 <?= $this->element('paginacao') ?>
+<?= $this->Form->button(__('Submit')) ?>
+<?= $this->Form->end() ?>

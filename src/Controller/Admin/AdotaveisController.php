@@ -106,14 +106,39 @@ class AdotaveisController extends AppController{
      *
      * @return \Cake\Http\Response|void
      */
-    public function index(){
-        $this->paginate['contain'] = ['TiposAdotaveis'];  
+    public function index(){   
+        $nome = $this->getParam("nome");
+        if($nome <> ''){
+            $this->paginate['conditions']['Adotaveis.nome like '] = $nome;
+            $filtro['nome'] = $nome;
+        }
         $this->paginate['order'] = ['Adotaveis.nome'];         
-        $adotaveis = $this->paginate($this->Adotaveis);
+        $this->paginate['contain'] = ['TiposAdotaveis'];          
+        $adotaveis = $this->paginate($this->Adotaveis);        
 
-        $this->set(compact('adotaveis'));        
+        $this->set(compact('adotaveis','filtro'));        
     }
-
+    
+    private function getParam($param){
+        if(array_key_exists($param, $this->request->getData())){
+            $valor = $this->getParamPost($param);
+        }else{
+            $valor = $this->getParamGet($param);
+        }
+        return trim($valor);
+    }
+    
+    private function getParamPost($param){
+        return trim($this->request->getData('nome'));
+    }
+    
+    private function getParamGet($param){
+        $parametros = $this->request->getAttribute('params');
+        $paramPassados = $parametros['?'] ?? array();
+        $valor =  $paramPassados[$param]?? '';
+        return trim($valor);
+    }
+    
     /**
      * View method
      *

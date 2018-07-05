@@ -63,4 +63,13 @@ div.date select[name*="year"]{
 /*Campos Data tipo dd/MM/yyyy*/
 
 
+.table th a{
+    float: left;
+}
+
+.table th div.form-group{
+    margin-bottom: 0px;
+}    
+
+
 
