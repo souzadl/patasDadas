@@ -23,7 +23,7 @@
             <td><?= $pessoa->has('user') ? h($pessoa->user->username) : '' ?></td>
             <td><?= $pessoa->has('role') ? $this->Html->link($pessoa->role->nome, ['controller' => 'Roles', 'action' => 'view', $pessoa->role->id]) : '' ?></td>
             <td><?= $this->SimOuNao($pessoa->active) ?></td>
-            <td class="actions"> <?= $this->element('acoes_lista', ['id' => $pessoa->id]) ?> </td>   
+            <td class="actions"> <?= $this->element('acoes_lista', ['id' => $pessoa->id, 'descDel' => $pessoa->nome]) ?> </td>   
         </tr>
         <?php endforeach; ?>
     </tbody>

@@ -21,7 +21,7 @@
             <td><?= h($adotavel->nome) ?></td>
             <td><?= $adotavel->has('tipos_adotavei') ? $this->Html->link($adotavel->tipos_adotavei->nome, ['controller' => 'TiposAdotaveis', 'action' => 'view', $adotavel->tipos_adotavei->id]) : '' ?></td>
             <td><?= $this->SimOuNao($adotavel->active); ?></td> 
-            <td class="actions"> <?= $this->element('acoes_lista', ['id' => $adotavel->id]) ?> </td>    
+            <td class="actions"> <?= $this->element('acoes_lista', ['id' => $adotavel->id, 'descDel' => $adotavel->nome]) ?> </td>    
         </tr>
         <?php endforeach; ?>
     </tbody>

@@ -22,9 +22,7 @@
             <td><?= h($tiposPadrinho->nome) ?></td>
             <td><?= $this->SimOuNao($tiposPadrinho->active) ?></td>            
             <td class="actions">
-                <?= $this->Html->link(__('View'), ['action' => 'view', $tiposPadrinho->id]) ?>
-                <?= $this->Html->link(__('Edit'), ['action' => 'edit', $tiposPadrinho->id]) ?>
-                <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $tiposPadrinho->id], ['confirm' => __('Are you sure you want to delete # {0}?', $tiposPadrinho->id)]) ?>
+                <?= $this->element('acoes_lista', ['id' => $tiposPadrinho->id, 'descDel' => $tiposPadrinho->nome]) ?>
             </td>
         </tr>
         <?php endforeach; ?>

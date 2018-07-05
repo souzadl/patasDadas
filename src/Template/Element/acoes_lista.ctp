@@ -13,4 +13,4 @@
             /*.__('Edit')*/, ['action' => 'edit', $id], ['escape'=>false]) : '' ?>
     <?= (in_array('delete', $acoesPermitidas) or in_array('all', $acoesPermitidas)) ? $this->Form->postLink(
             $this->Html->tag('i','',['class'=>'fas fa-trash-alt'])
-            /*.__('Delete')*/, ['action' => 'delete', $id], ['escape'=>false, 'confirm' => __('Confime a exclusão do registro # {0}?', $id)]) : '' ?>
+            /*.__('Delete')*/, ['action' => 'delete', $id], ['escape'=>false, 'confirm' => __('Confime a exclusão de {0}?', $descDel)]) : '' ?>

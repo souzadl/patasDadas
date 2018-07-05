@@ -20,7 +20,7 @@
             <td><?= $this->Number->format($acao->id) ?></td>
             <td><?= h($acao->nome) ?></td>
             <td class="actions">
-                <?= $this->element('acoes_lista', ['id' => $acao->id]) ?>
+                <?= $this->element('acoes_lista', ['id' => $acao->id, 'descDel' => $acao->nome]) ?>
             </td>
         </tr>
         <?php endforeach; ?>

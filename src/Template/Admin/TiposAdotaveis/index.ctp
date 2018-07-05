@@ -22,9 +22,7 @@
             <td><?= h($tipoAdotavel->nome) ?></td>
             <td><?= $this->SimOuNao($tipoAdotavel->active) ?></td>                
             <td class="actions">
-                <?= $this->Html->link(__('View'), ['action' => 'view', $tipoAdotavel->id]) ?>
-                <?= $this->Html->link(__('Edit'), ['action' => 'edit', $tipoAdotavel->id]) ?>
-                <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $tipoAdotavel->id], ['confirm' => __('Are you sure you want to delete # {0}?', $tipoAdotavel->id)]) ?>
+                <?= $this->element('acoes_lista', ['id' => $tipoAdotavel->id, 'descDel' => $tipoAdotavel->nome]) ?>
             </td>
         </tr>
         <?php endforeach; ?>
