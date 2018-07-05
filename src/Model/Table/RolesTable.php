@@ -5,6 +5,7 @@ use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use App\Model\Rule\NoAssociatedData;
 
 /**
  * Roles Model
@@ -42,7 +43,13 @@ class RolesTable extends Table
         $this->hasMany('Pessoas',[
             'dependent' => true,
             'foreignKey' => 'roles_id'
-        ]);                     
+        ]);   
+        
+        $this->hasMany('Users',[
+            'dependent' => true,
+            'foreignKey' => 'roles_id'
+        ]);          
+        
         $this->hasMany('PermissoesRoles',[
             'dependent' => true,
             'foreignKey' => 'roles_id'
@@ -69,4 +76,16 @@ class RolesTable extends Table
 
         return $validator;
     }
+    
+    public function buildRules(RulesChecker $rules){
+        foreach ($this->associations()->type('HasOne') + $this->associations()->type('HasMany') as $association) {
+            if ($association->dependent()) {
+                $rules->addDelete(new NoAssociatedData($association), 'NoAssociatedData', [
+                    'errorField' => 'error' ,
+                    'message'=>__('Registro ainda possui associação.')]);
+            }
+        }         
+
+        return $rules;        
+    }    
 }

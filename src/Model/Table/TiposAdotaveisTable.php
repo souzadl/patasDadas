@@ -91,7 +91,9 @@ class TiposAdotaveisTable extends Table
         
         foreach ($this->associations()->type('HasOne') + $this->associations()->type('HasMany') as $association) {
             if ($association->dependent()) {
-                $rules->addDelete(new NoAssociatedData($association), 'NoAssociatedData', ['errorField' => 'error' ,'message'=>'Registro ainda possui associação.']);
+                $rules->addDelete(new NoAssociatedData($association), 'NoAssociatedData', [
+                    'errorField' => 'error' ,
+                    'message'=>__('Registro ainda possui associação.')]);
             }
         }        
 

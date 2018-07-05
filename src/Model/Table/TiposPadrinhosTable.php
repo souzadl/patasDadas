@@ -5,6 +5,7 @@ use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use App\Model\Rule\NoAssociatedData;
 
 /**
  * TiposPadrinhos Model
@@ -45,6 +46,11 @@ class TiposPadrinhosTable extends Table
             'foreignKey' => 'users_id',
             'joinType' => 'INNER'
         ]);
+        
+        $this->hasMany('Padrinhos',[
+            'dependent' => true,
+            'foreignKey' => 'tipos_padrinhos_id'
+        ]);        
     }
 
     /**
@@ -83,6 +89,14 @@ class TiposPadrinhosTable extends Table
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->existsIn(['users_id'], 'Users'));
+        
+        foreach ($this->associations()->type('HasOne') + $this->associations()->type('HasMany') as $association) {
+            if ($association->dependent()) {
+                $rules->addDelete(new NoAssociatedData($association), 'NoAssociatedData', [
+                    'errorField' => 'error' ,
+                    'message'=>__('Registro ainda possui associação.')]);
+            }
+        }         
 
         return $rules;
     }

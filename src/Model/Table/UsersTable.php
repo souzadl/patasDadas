@@ -6,6 +6,7 @@ use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 use Cake\Core\Configure;
+use App\Model\Rule\NoAssociatedData;
 
 /**
  * Users Model
@@ -120,6 +121,13 @@ class UsersTable extends Table
         $rules->add($rules->isUnique(['username']));
         $rules->add($rules->existsIn(['roles_id'], 'Roles'));
 
+        foreach ($this->associations()->type('HasOne') + $this->associations()->type('HasMany') as $association) {
+            if ($association->dependent()) {
+                $rules->addDelete(new NoAssociatedData($association), 'NoAssociatedData', [
+                    'errorField' => 'error' ,
+                    'message'=>__('Registro ainda possui associação.')]);
+            }
+        }         
         return $rules;
     }
     
