@@ -3,7 +3,7 @@ namespace App\Model\Table;
 
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
-use Cake\ORM\Table;
+use App\Model\Table\BaseTable;
 use Cake\Validation\Validator;
 
 /**
@@ -26,7 +26,7 @@ use Cake\Validation\Validator;
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
-class PadrinhosTable extends Table
+class PadrinhosTable extends BaseTable
 {
 
     /**
@@ -61,9 +61,6 @@ class PadrinhosTable extends Table
             'foreignKey' => 'users_id',
             'joinType' => 'INNER'
         ]);
-        /*$this->hasMany('Padrinhos', [
-            'foreignKey' => 'padrinho_id'
-        ]);*/
     }
 
     /**
@@ -93,8 +90,8 @@ class PadrinhosTable extends Table
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
      * @return \Cake\ORM\RulesChecker
      */
-    public function buildRules(RulesChecker $rules)
-    {
+    public function buildRules(RulesChecker $rules){
+        $rules = parent::buildRules($rules); 
         $rules->add($rules->existsIn(['pessoas_id'], 'Pessoas'));
         $rules->add($rules->existsIn(['adotaveis_id'], 'Adotaveis'));
         $rules->add($rules->existsIn(['tipos_padrinhos_id'], 'TiposPadrinhos'));

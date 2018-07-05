@@ -5,7 +5,6 @@ use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use App\Model\Table\BaseTable;
 use Cake\Validation\Validator;
-use App\Model\Rule\NoAssociatedData;
 
 /**
  * TiposAdotaveis Model

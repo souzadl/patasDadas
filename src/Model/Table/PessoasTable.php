@@ -3,7 +3,7 @@ namespace App\Model\Table;
 
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
-use Cake\ORM\Table;
+use App\Model\Table\BaseTable;
 use Cake\Validation\Validator;
 use Cake\Core\Configure;
 
@@ -23,7 +23,7 @@ use Cake\Core\Configure;
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
-class PessoasTable extends Table
+class PessoasTable extends BaseTable
 {
 
     /**
@@ -90,8 +90,8 @@ class PessoasTable extends Table
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
      * @return \Cake\ORM\RulesChecker
      */
-    public function buildRules(RulesChecker $rules)
-    {
+    public function buildRules(RulesChecker $rules){
+        $rules = parent::buildRules($rules); 
         if(!Configure::read('debug')){
             $rules->add($rules->isUnique(['email'], __('Esse email já consta na base de dados.')));            
         }

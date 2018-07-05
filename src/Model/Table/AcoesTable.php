@@ -3,9 +3,8 @@ namespace App\Model\Table;
 
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
-use Cake\ORM\Table;
+use App\Model\Table\BaseTable;
 use Cake\Validation\Validator;
-use App\Model\Rule\NoAssociatedData;
 
 /**
  * Acoes Model
@@ -19,7 +18,7 @@ use App\Model\Rule\NoAssociatedData;
  * @method \App\Model\Entity\Aco[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\Aco findOrCreate($search, callable $callback = null, $options = [])
  */
-class AcoesTable extends Table
+class AcoesTable extends BaseTable
 {
 
     /**
@@ -69,11 +68,7 @@ class AcoesTable extends Table
     }
     
     public function buildRules(RulesChecker $rules){       
-        foreach ($this->associations()->type('HasOne') + $this->associations()->type('HasMany') as $association) {
-            if ($association->dependent()) {
-                $rules->addDelete(new NoAssociatedData($association), 'NoAssociatedData', ['errorField' => 'error' ,'message'=>'Registro ainda possui associação.']);
-            }
-        }        
+        $rules = parent::buildRules($rules);             
 
         return $rules;
     }    

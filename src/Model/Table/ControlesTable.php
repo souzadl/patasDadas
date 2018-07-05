@@ -3,9 +3,8 @@ namespace App\Model\Table;
 
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
-use Cake\ORM\Table;
+use App\Model\Table\BaseTable;
 use Cake\Validation\Validator;
-use App\Model\Rule\NoAssociatedData;
 
 /**
  * Controles Model
@@ -19,7 +18,7 @@ use App\Model\Rule\NoAssociatedData;
  * @method \App\Model\Entity\Controle[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\Controle findOrCreate($search, callable $callback = null, $options = [])
  */
-class ControlesTable extends Table
+class ControlesTable extends BaseTable
 {
 
     /**
@@ -68,8 +67,7 @@ class ControlesTable extends Table
         return $validator;
     }
     
-    public function findComPermissoes(Query $query, array $options) {
-        //return parent::findAll($query, $options);
+    /*public function findComPermissoes(Query $query, array $options) {
         if(is_array($options) and isset($options['conditions'])){
             $conditions = $options['conditions'];
             unset($options['conditions']);
@@ -78,19 +76,11 @@ class ControlesTable extends Table
         }
         return $query->contain(['Permissoes' => [
             'conditions' => $conditions
-            //'foreignKey' => false,
-            //'queryBuilder' => function ($q){
-            //    return $q->where('acoes_id in (select id from acoes)');
-            //}
         ]]);
-    }
+    }*/
     
     public function buildRules(RulesChecker $rules){       
-        foreach ($this->associations()->type('HasOne') + $this->associations()->type('HasMany') as $association) {
-            if ($association->dependent()) {
-                $rules->addDelete(new NoAssociatedData($association), 'NoAssociatedData', ['errorField' => 'error' ,'message'=>'Registro ainda possui associação.']);
-            }
-        }        
+        $rules = parent::buildRules($rules);        
 
         return $rules;
     }      

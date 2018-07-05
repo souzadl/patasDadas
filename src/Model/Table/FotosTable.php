@@ -3,7 +3,7 @@ namespace App\Model\Table;
 
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
-use Cake\ORM\Table;
+use App\Model\Table\BaseTable;
 use Cake\Validation\Validator;
 
 /**
@@ -23,7 +23,7 @@ use Cake\Validation\Validator;
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
-class FotosTable extends Table
+class FotosTable extends BaseTable
 {
 
     /**
@@ -84,8 +84,8 @@ class FotosTable extends Table
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
      * @return \Cake\ORM\RulesChecker
      */
-    public function buildRules(RulesChecker $rules)
-    {
+    public function buildRules(RulesChecker $rules){
+        $rules = parent::buildRules($rules); 
         $rules->add($rules->existsIn(['adotaveis_id'], 'Adotaveis'));
         $rules->add($rules->existsIn(['users_id'], 'Users'));
 

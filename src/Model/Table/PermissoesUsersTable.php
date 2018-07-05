@@ -3,7 +3,7 @@ namespace App\Model\Table;
 
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
-use Cake\ORM\Table;
+use App\Model\Table\BaseTable;
 use Cake\Validation\Validator;
 
 /**
@@ -22,7 +22,7 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\PermissoesUser[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\PermissoesUser findOrCreate($search, callable $callback = null, $options = [])
  */
-class PermissoesUsersTable extends Table
+class PermissoesUsersTable extends BaseTable
 {
 
     /**
@@ -60,8 +60,8 @@ class PermissoesUsersTable extends Table
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
      * @return \Cake\ORM\RulesChecker
      */
-    public function buildRules(RulesChecker $rules)
-    {
+    public function buildRules(RulesChecker $rules){
+        $rules = parent::buildRules($rules); 
         $rules->add($rules->existsIn(['acoes_id'], 'Acoes'));
         $rules->add($rules->existsIn(['controles_id'], 'Controles'));
         $rules->add($rules->existsIn(['users_id'], 'Users'));
