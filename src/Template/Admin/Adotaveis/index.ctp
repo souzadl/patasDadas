@@ -6,24 +6,26 @@
 ?>
 <h4><?= __('Adotáveis') ?></h4>
 <?= $this->element('acao_add') ?>
-<?= $this->Form->create(NULL, [
-    'url' => ['controller' => 'Adotaveis', 'action' => 'index']
-]) ?> 
+<?= $this->Form->create() ?>
 <table class="table">
     <thead>
         <tr>
             <th scope="col">
                 <?= $this->Paginator->sort('nome') ?>
-                <?= $this->Form->input('nome', [
-                    'label'=>false, 
-                    'value'=>$filtro['nome']?? '',
-                    'style'=>'width: 100px;'
-                        
-                ]) ?>
+                <?= $this->Form->input('filter_nome', ['type' => 'text', 'label'=>'', 'style'=>'width: 80%;']) ?>
             </th>
-            <th scope="col"><?= $this->Paginator->sort('tipos_adotavel_id', ['label' => 'Tipo']) ?></th>                
-            <th scope="col"><?= $this->Paginator->sort('active') ?></th>
-            <th scope="col" class="actions"><?= __('Actions') ?></th>
+            <th scope="col">
+                <?= $this->Paginator->sort('tipos_adotavel_id', ['label' => 'Tipo']) ?>
+                <?= $this->Form->input('filter_tipo', ['type' => 'select', 'label'=>'', 'style'=>'width: 80%;']) ?>
+            </th>                
+            <th scope="col">
+                <?= $this->Paginator->sort('active') ?>
+                <?= $this->Form->input('filter_active', ['type' => 'select', 'label'=>'', 'style'=>'width: 80%;']) ?>
+            </th>
+            <th scope="col" class="actions">
+                <?= __('Actions') ?>
+                <?= $this->Form->button('Filtrar', ['type' => 'submit']) ?>
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -37,6 +39,5 @@
         <?php endforeach; ?>
     </tbody>
 </table>
-<?= $this->element('paginacao') ?>
-<?= $this->Form->button(__('Submit')) ?>
 <?= $this->Form->end() ?>
+<?= $this->element('paginacao') ?>

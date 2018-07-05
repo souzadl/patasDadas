@@ -110,37 +110,26 @@ class AdotaveisController extends AppController{
      *
      * @return \Cake\Http\Response|void
      */
-    public function index(){   
-        $nome = $this->getParam("nome");
-        if($nome <> ''){
-            $this->paginate['conditions']['Adotaveis.nome like '] = $nome;
-            $filtro['nome'] = $nome;
-        }
+    public function index(){  
+        //https://github.com/brenoroosevelt/cakephp-filter
+        $this->loadComponent('BRFilter.Filter');
+        // add filter and options
+        $this->Filter->addFilter([
+            'filter_nome' => ['field' => 'Adotaveis.nome', 'operator' => 'LIKE', 'explode' => 'true'],
+            'filter_ativo' => ['field'=> 'Adotaveis.active', 'operator' => '=' ] 
+        ]);        
+        // get conditions
+        $conditions = $this->Filter->getConditions(['session'=>'filter']);
+        // set url for pagination
+    	$this->set('url', $this->Filter->getUrl());    	
+    	// apply conditions to pagination
+    	$this->paginate['conditions']	= $conditions['true'][0]; 
+        
         $this->paginate['order'] = ['Adotaveis.nome'];         
         $this->paginate['contain'] = ['TiposAdotaveis'];          
         $adotaveis = $this->paginate($this->Adotaveis);        
 
-        $this->set(compact('adotaveis','filtro'));        
-    }
-    
-    private function getParam($param){
-        if(array_key_exists($param, $this->request->getData())){
-            $valor = $this->getParamPost($param);
-        }else{
-            $valor = $this->getParamGet($param);
-        }
-        return trim($valor);
-    }
-    
-    private function getParamPost($param){
-        return trim($this->request->getData('nome'));
-    }
-    
-    private function getParamGet($param){
-        $parametros = $this->request->getAttribute('params');
-        $paramPassados = $parametros['?'] ?? array();
-        $valor =  $paramPassados[$param]?? '';
-        return trim($valor);
+        $this->set(compact('adotaveis'));        
     }
     
     /**

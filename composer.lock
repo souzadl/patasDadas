@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c267b48ce7e8479d046c84d265a0788a",
+    "content-hash": "a04cb867b8b03f653e2a6412689ede4b",
     "packages": [
         {
             "name": "aura/intl",
@@ -51,6 +51,40 @@
                 "localization"
             ],
             "time": "2017-01-20T05:00:11+00:00"
+        },
+        {
+            "name": "brenoroosevelt/cakephp-filter",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/brenoroosevelt/cakephp-filter.git",
+                "reference": "05c6cc7453d190b8660c26d7e058c4d2af038491"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/brenoroosevelt/cakephp-filter/zipball/05c6cc7453d190b8660c26d7e058c4d2af038491",
+                "reference": "05c6cc7453d190b8660c26d7e058c4d2af038491",
+                "shasum": ""
+            },
+            "require": {
+                "cakephp/cakephp": ">=3.3.2 <4.0.0",
+                "php": ">=5.5.9"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "*"
+            },
+            "type": "cakephp-plugin",
+            "autoload": {
+                "psr-4": {
+                    "BRFilter\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Filter plugin for CakePHP 3.x",
+            "time": "2017-01-25T19:00:04+00:00"
         },
         {
             "name": "cakephp/cakephp",

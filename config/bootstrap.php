@@ -230,7 +230,4 @@ if (Configure::read('debug')) {
     Plugin::load('DebugKit', ['bootstrap' => true]);
 }
 
-/*Cake\I18n\FrozenDate::setToStringFormat('dd/MM/yyyy');
-Cake\I18n\FrozenTime::setToStringFormat('dd/MM/yyyy - hh:mm:ss');
-Cake\I18n\Date::setToStringFormat('dd/MM/yyyy');
-Cake\I18n\Time::setToStringFormat('dd/MM/yyyy - hh:mm:ss');*/
+Plugin::load('BRFilter');
