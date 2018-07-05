@@ -15,6 +15,7 @@ use Cake\Filesystem\File;
 class AdotaveisController extends AppController{
     
     private $padrinhosDisponiveis;
+    private $adotantesDisponiveis;
     private $tiposAdotaveis;
     private $tiposPadrinhos;
     private $adotavel;
@@ -28,6 +29,8 @@ class AdotaveisController extends AppController{
         $this->loadModel('Pessoas');
         $this->padrinhosDisponiveis = $this->Pessoas->find('list')
             ->where(['roles_id =' => Configure::read('App.idRolePadrinho'), 'active =' => 1]);        
+        $this->adotantesDisponiveis = $this->Pessoas->find('list')
+            ->where(['roles_id =' => Configure::read('App.idRoleAdotante'), 'active =' => 1]);                
         $this->tiposAdotaveis = $this->Adotaveis->TiposAdotaveis->find('list')->where(['active =' => 1]);
         $this->tiposPadrinhos = $this->TiposPadrinhos->find('all')->where(['active =' => 1]);
         $this->adotavel = '';
@@ -36,6 +39,7 @@ class AdotaveisController extends AppController{
     private function renderForm($view = 'form', $layout = null) {
         $this->set('adotavel', $this->adotavel);
         $this->set('padrinhosDisponiveis', $this->padrinhosDisponiveis);
+        $this->set('adotantesDisponiveis', $this->adotantesDisponiveis);
         $this->set('tiposAdotaveis', $this->tiposAdotaveis);
         $this->set('tiposPadrinhos', $this->tiposPadrinhos);
         $this->set('action', $this->request->getParam('action'));
