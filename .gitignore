@@ -3,7 +3,6 @@
 /config/.env
 /logs/*
 /tmp/*
-/vendor/*
 /webroot/img/fotos/*
 
 # OS generated files #

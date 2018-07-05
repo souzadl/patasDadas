@@ -1,0 +1,24 @@
+{
+    "name": "brenoroosevelt/cakephp-filter",
+    "description": "Filter plugin for CakePHP 3.x",
+    "type": "cakephp-plugin",
+    "license": "MIT",
+    "require": {
+        "php": ">=5.5.9",
+        "cakephp/cakephp": ">=3.3.2 <4.0.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "BRFilter\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "BRFilter\\Test\\": "tests",
+            "Cake\\Test\\": "./vendor/cakephp/cakephp/tests"
+        }
+    }
+}
