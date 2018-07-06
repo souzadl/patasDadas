@@ -115,20 +115,23 @@ class AdotaveisController extends AppController{
         $this->loadComponent('BRFilter.Filter');
         // add filter and options
         $this->Filter->addFilter([
-            'filter_nome' => ['field' => 'Adotaveis.nome', 'operator' => 'LIKE', 'explode' => 'true'],
-            'filter_ativo' => ['field'=> 'Adotaveis.active', 'operator' => '=' ] 
+            'filter_nome' => ['field' => 'Adotaveis.nome', 'operator' => 'LIKE'/*, 'explode' => 'true'*/],
+            'filter_ativo' => ['field'=> 'Adotaveis.active', 'operator' => '=' ],
+            'filter_tipos_adotaveis_id' => ['field'=> 'Adotaveis.tipos_adotaveis_id', 'operator' => '=' ] 
         ]);        
         // get conditions
         $conditions = $this->Filter->getConditions(['session'=>'filter']);
+        //debug($conditions);
         // set url for pagination
     	$this->set('url', $this->Filter->getUrl());    	
     	// apply conditions to pagination
-    	$this->paginate['conditions']	= $conditions['true'][0]; 
+    	$this->paginate['conditions']	= $conditions; 
         
         $this->paginate['order'] = ['Adotaveis.nome'];         
         $this->paginate['contain'] = ['TiposAdotaveis'];          
-        $adotaveis = $this->paginate($this->Adotaveis);        
-
+        $adotaveis = $this->paginate($this->Adotaveis);   
+        
+        $this->set('tiposAdotaveis', $this->tiposAdotaveis);
         $this->set(compact('adotaveis'));        
     }
     

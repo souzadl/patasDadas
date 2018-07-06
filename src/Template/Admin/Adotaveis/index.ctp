@@ -6,25 +6,43 @@
 ?>
 <h4><?= __('Adotáveis') ?></h4>
 <?= $this->element('acao_add') ?>
-<?= $this->Form->create() ?>
+<?= $this->Form->create(NULL, ['id'=>'formFilter']) ?>
 <table class="table">
     <thead>
         <tr>
             <th scope="col">
-                <?= $this->Paginator->sort('nome') ?>
-                <?= $this->Form->input('filter_nome', ['type' => 'text', 'label'=>'', 'style'=>'width: 80%;']) ?>
+                <?= $this->Form->input('filter_nome', [
+                    'type' => 'text', 
+                    'label'=>$this->Paginator->sort('nome'), 
+                    'escape'=>false
+                    ]) ?>
             </th>
             <th scope="col">
-                <?= $this->Paginator->sort('tipos_adotavel_id', ['label' => 'Tipo']) ?>
-                <?= $this->Form->input('filter_tipo', ['type' => 'select', 'label'=>'', 'style'=>'width: 80%;']) ?>
+                <?= $this->Form->input('filter_tipos_adotaveis_id', [
+                    'type' => 'select', 
+                    'label'=>$this->Paginator->sort('tipos_adotaveis_id', ['label' => 'Tipo']), 
+                    'escape'=>false,
+                    'options'=>$tiposAdotaveis,
+                    'empty'=>'Selecione'
+                    ]) ?>
             </th>                
             <th scope="col">
-                <?= $this->Paginator->sort('active') ?>
-                <?= $this->Form->input('filter_active', ['type' => 'select', 'label'=>'', 'style'=>'width: 80%;']) ?>
+                <?= $this->Form->input('filter_ativo', [
+                    'type' => 'select', 
+                    'label'=>$this->Paginator->sort('active'), 
+                    'escape'=>false,
+                    'options'=>['1'=>'Sim','0'=>'Não'],
+                    'empty'=>'Selecione'
+                    ]) 
+                ?>
             </th>
             <th scope="col" class="actions">
                 <?= __('Actions') ?>
-                <?= $this->Form->button('Filtrar', ['type' => 'submit']) ?>
+                <?= $this->Html->link($this->Html->tag('i','',['class'=>'fas fa-search']), '#', [
+                    'escape'=>false,
+                    'id'=>'submitFilter',
+                    'style'=>'float: right;'
+                    ]) ?>
             </th>
         </tr>
     </thead>

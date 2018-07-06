@@ -1,3 +1,9 @@
+$(document).ready(function () {
+    $('#submitFilter').click(function(){
+        $('#formFilter').submit();
+    });
+});
+
 // Example starter JavaScript for disabling form submissions if there are invalid fields
 (function() {
   'use strict';
