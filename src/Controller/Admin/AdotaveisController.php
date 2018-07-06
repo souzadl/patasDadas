@@ -34,6 +34,7 @@ class AdotaveisController extends AppController{
         $this->tiposAdotaveis = $this->Adotaveis->TiposAdotaveis->find('list')->where(['active =' => 1]);
         $this->tiposPadrinhos = $this->TiposPadrinhos->find('all')->where(['active =' => 1]);
         $this->adotavel = '';
+        $this->label = 'Adotável';
     }
     
     private function renderForm($view = 'form', $layout = null) {
@@ -165,11 +166,11 @@ class AdotaveisController extends AppController{
             $this->setPadrinhos();
             $this->addFotosSelecionadas($this->request->getData('fotosSelecionadas'));
             if ($this->Adotaveis->save($this->adotavel)) {                             
-                $this->Flash->success(__('Adotável salvo.'));
+                $this->Flash->success(__('{0} saved.', $this->label));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('O Adotável não pode ser salvo. Por favor, tente novamente.'));
+            $this->Flash->error(__('{0} not saved.', $this->label));
         }    
         $this->renderForm();
     }
@@ -196,12 +197,12 @@ class AdotaveisController extends AppController{
                 $this->delFotosArmazenadas($this->request->getData('fotosArmazenadas'));
                 if ($this->Adotaveis->save($this->adotavel)) {
                     $this->Adotaveis->getConnection()->commit();
-                    $this->Flash->success(__('Adotável salvo.'));
+                    $this->Flash->success(__('{0} saved.', $this->label));
                     return $this->redirect(['action' => 'index']);
                 }   
             } catch(\Cake\ORM\Exception\PersistenceFailedException $e) {
                 $this->Adotaveis->getConnection()->rollback();
-                $this->Flash->error(__('Adotável não pode ser valvo. Por favor, tente novamente.'));
+                $this->Flash->error(__('{0} not saved.', $this->label));
             }                                  
         }
         $this->renderForm();
@@ -214,14 +215,13 @@ class AdotaveisController extends AppController{
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
-    {
+    public function delete($id = null){
         $this->request->allowMethod(['post', 'delete']);
         $adotavei = $this->Adotaveis->get($id);
         if ($this->Adotaveis->delete($adotavei)) {
-            $this->Flash->success(__('The adotavei has been deleted.'));
+            $this->Flash->success(__('{0} deleted.', $this->label));
         } else {
-            $this->Flash->error(__('The adotavei could not be deleted. Please, try again.'));
+            $this->Flash->error(__('{0} not deleted.', $this->label));
         }
 
         return $this->redirect(['action' => 'index']);

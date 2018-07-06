@@ -38,7 +38,7 @@
             </th>
             <th scope="col" class="actions">
                 <?= __('Actions') ?>
-                <?= $this->Html->link($this->Html->tag('i','',['class'=>'fas fa-search']), '#', [
+                <?= $this->Html->link($this->Html->tag('i','',['class'=>'fas fa-search', 'alt'=>__('Filtrar')]), '#', [
                     'escape'=>false,
                     'id'=>'submitFilter',
                     'style'=>'float: right;'

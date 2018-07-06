@@ -10,8 +10,12 @@ use App\Controller\AppController;
  *
  * @method \App\Model\Entity\TiposAdotavei[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
-class TiposAdotaveisController extends AppController
-{
+class TiposAdotaveisController extends AppController{
+    public function initialize() {
+        parent::initialize();
+        $this->label = 'Tipo Adotável';
+    }
+    
     private function renderForm($tipoAdotavel, $view = 'form', $layout = null) {
         $this->set('tipoAdotavel', $tipoAdotavel);
         $this->set('action', $this->request->getParam('action'));
@@ -60,11 +64,11 @@ class TiposAdotaveisController extends AppController
             $tipoAdotavel = $this->TiposAdotaveis->patchEntity($tipoAdotavel, $this->request->getData());
             $tipoAdotavel->users_id = $this->Auth->user()['id'];
             if ($this->TiposAdotaveis->save($tipoAdotavel)) {
-                $this->Flash->success(__('Tipo Adotável salvo.'));
+                $this->Flash->success(__('{0} saved.', $this->label));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('Tipo Adotável não pode ser salvo. Por favor, tente novamente.'));
+            $this->Flash->error(__('{0} not saved.', $this->label));
         }
         $this->renderForm($tipoAdotavel);
     }
@@ -84,11 +88,11 @@ class TiposAdotaveisController extends AppController
             $tipoAdotavel = $this->TiposAdotaveis->patchEntity($tipoAdotavel, $this->request->getData());
             $tipoAdotavel->users_id = $this->Auth->user()['id'];
             if ($this->TiposAdotaveis->save($tipoAdotavel)) {
-                $this->Flash->success(__('Tipo Adotável salvo.'));
+                $this->Flash->success(__('{0} saved.', $this->label));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('Tipo Adotável não pode ser salvo. Por favor, tente novamente.'));
+            $this->Flash->error(__('{0} not saved.', $this->label));
         }
         $this->renderForm($tipoAdotavel);
     }
@@ -105,14 +109,14 @@ class TiposAdotaveisController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $tipoAdotavel = $this->TiposAdotaveis->get($id);
         if ($this->TiposAdotaveis->delete($tipoAdotavel)) {
-            $this->Flash->success(__('Tipo Adotável excluído.'));
+            $this->Flash->success(__('{0} deleted.', $this->label));
         } else {
             foreach ($tipoAdotavel->errors() as $erro){
                 foreach ($erro as $index=>$mensagem){
                     $this->Flash->error(__($mensagem));
                 }  
             }
-            $this->Flash->error(__('Tipo Adotável não pode ser excluído. Por favor, tente novamente.'));
+            $this->Flash->error(__('{0} not deleted.', $this->label));
         }
 
         return $this->redirect(['action' => 'index']);

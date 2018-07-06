@@ -22,6 +22,7 @@ class PessoasController extends AppController{
     
     public function initialize() {
         parent::initialize();
+        $this->label = 'Pessoa';
         $this->loadModel('Users');
         $this->idsRolesUsuarios = array(Configure::read('App.idRoleAdmin'), 
             Configure::read('App.idRoleVoluntario'),
@@ -99,11 +100,11 @@ class PessoasController extends AppController{
                 $this->setActionUser($pessoa);
             }
             if ($this->Pessoas->save($pessoa)) {
-                $this->Flash->success(__('Pessoa salva.'));
+                $this->Flash->success(__('{0} saved.', $this->label));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('Pessoa não pode ser salva. Por favor, tente novamente.'));
+            $this->Flash->error(__('{0} not saved.', $this->label));
         }
         $this->renderForm($pessoa);
     }
@@ -130,11 +131,11 @@ class PessoasController extends AppController{
             $pessoa->user = (in_array($pessoa->roles_id, $this->idsRolesUsuarios)) ?
                 $this->Users->patchEntity($pessoa->user, $this->request->getData()) : NULL;
             if ($this->Pessoas->save($pessoa)) {
-                $this->Flash->success(__('Pessoa salva.'));
+                $this->Flash->success(__('{0} saved.', $this->label));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('Pessoa não pode ser salva. Por favor, tente novamente.'));
+            $this->Flash->error(__('{0} not saved.', $this->label));
         }
         $this->renderForm($pessoa);
     }
@@ -150,9 +151,9 @@ class PessoasController extends AppController{
         $this->request->allowMethod(['post', 'delete']);
         $pessoa = $this->Pessoas->get($id);
         if ($this->Pessoas->delete($pessoa)) {
-            $this->Flash->success(__('Pessoa excluída.'));
+            $this->Flash->success(__('{0} deleted.', $this->label));
         } else {
-            $this->Flash->error(__('Pessoa não foi excluída. Por favor, tente novamente'));
+            $this->Flash->error(__('{0} not deleted.', $this->label));
         }
 
         return $this->redirect(['action' => 'index']);

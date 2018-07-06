@@ -5,62 +5,16 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-06-18 20:56+0000\n"
-"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
-"Last-Translator: NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2012-10-22 10:52+0200\n"
+"PO-Revision-Date: 2012-12-05 16:23-0300\n"
+"Last-Translator: \n"
+"Language-Team: FSaldanha\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
-
-msgid "add"
-msgstr "Adicionar"
-
-msgid "edit"
-msgstr "Editar"
-
-msgid "Users"
-msgstr "Usuários"
-
-msgid "first"
-msgstr "primeiro"
-
-msgid "previous"
-msgstr "anterior"
-
-msgid "next"
-msgstr "próximo"
-
-msgid "last"
-msgstr "último"
-
-msgid "Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total"
-msgstr "Página {{page}} de {{pages}}, mostrando {{current}} registro(s) de um total de {{count}}"
-
-msgid "Actions"
-msgstr "Ações"
-
-msgid "New"
-msgstr "Novo"
-
-msgid "View"
-msgstr "Ver"
-
-msgid "Edit"
-msgstr "Editar"
-
-msgid "Editar"
-msgstr "Editado"
-
-msgid "Delete"
-msgstr "Excluir"
-
-msgid "Role"
-msgstr "Pesfil"
-
-msgid "Roles"
-msgstr "Pesfis"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: Portuguese\n"
+"X-Poedit-SourceCharset: UTF-8\n"
 
 msgid "Name"
 msgstr "Nome"
@@ -68,283 +22,329 @@ msgstr "Nome"
 msgid "Active"
 msgstr "Ativo"
 
+msgid "Roles"
+msgstr "Perfís"
 
+msgid "{0} updated."
+msgstr "{0} atualizado(a)."
 
-#: Controller/Component/AuthComponent.php:500
-msgid "You are not authorized to access that location."
-msgstr "Você não tem autorização para acessar essa ação."
+msgid "{0} saved."
+msgstr "{0} salvo(a)."
 
-#: Controller/Component/CsrfComponent.php:162
-#: Http/Middleware/CsrfProtectionMiddleware.php:190
-msgid "Missing CSRF token cookie"
-msgstr ""
+msgid "{0} not saved."
+msgstr "O {0} não pode ser salvo(a). Por favor, tente novamente."
 
-#: Controller/Component/CsrfComponent.php:166
-#: Http/Middleware/CsrfProtectionMiddleware.php:194
-msgid "CSRF token mismatch."
-msgstr ""
+msgid "{0} deleted."
+msgstr "O {0} foi excluído."
 
-#: Error/ExceptionRenderer.php:262
+msgid "{0} not deleted."
+msgstr "O {0} não pode ser excluído(a). Por favor, tente novamente."
+
+#: Error/ExceptionRenderer.php:205
 msgid "Not Found"
-msgstr ""
+msgstr "Não encontrado"
 
-#: Error/ExceptionRenderer.php:264
+#: Error/ExceptionRenderer.php:227
 msgid "An Internal Error Has Occurred."
-msgstr ""
+msgstr "Houve um problema com o sistema."
 
-#: Http/Response.php:2603
-msgid "The requested file contains `..` and will not be read."
-msgstr ""
+#: Model/Validator/CakeValidationSet.php:283
+msgid "This field cannot be left blank"
+msgstr "Este campo não pode ser deixado em branco"
 
-#: Http/Response.php:2624
+#: Network/CakeResponse.php:1217
 msgid "The requested file was not found"
+msgstr "O arquivo solicitado não foi encontrado"
+
+#: Utility/CakeNumber.php:94
+msgid "%d KB"
 msgstr ""
 
-#: I18n/Number.php:90
-msgid "{0,number,#,###.##} KB"
+#: Utility/CakeNumber.php:96
+msgid "%.2f MB"
 msgstr ""
 
-#: I18n/Number.php:92
-msgid "{0,number,#,###.##} MB"
+#: Utility/CakeNumber.php:98
+msgid "%.2f GB"
 msgstr ""
 
-#: I18n/Number.php:94
-msgid "{0,number,#,###.##} GB"
+#: Utility/CakeNumber.php:100
+msgid "%.2f TB"
 msgstr ""
 
-#: I18n/Number.php:96
-msgid "{0,number,#,###.##} TB"
-msgstr ""
+#: Utility/CakeNumber.php:92
+msgid "%d Byte"
+msgid_plural "%d Bytes"
+msgstr[0] "%d byte"
+msgstr[1] "%d bytes"
 
-#: I18n/Number.php:88
-msgid "{0,number,integer} Byte"
-msgid_plural "{0,number,integer} Bytes"
-msgstr[0] ""
-msgstr[1] ""
+#: Utility/CakeTime.php:383
+msgid "Today, %s"
+msgstr "Hoje, %s"
 
-#: I18n/RelativeTimeFormatter.php:80
-msgid "{0} from now"
-msgstr ""
+#: Utility/CakeTime.php:386
+msgid "Yesterday, %s"
+msgstr "Ontem, %s"
 
-#: I18n/RelativeTimeFormatter.php:80
-msgid "{0} ago"
-msgstr ""
+#: Utility/CakeTime.php:389
+msgid "Tomorrow, %s"
+msgstr "Amanhã, %s"
 
-#: I18n/RelativeTimeFormatter.php:83
-msgid "{0} after"
-msgstr ""
+#: Utility/CakeTime.php:394
+msgid "Sunday"
+msgstr "Domingo"
 
-#: I18n/RelativeTimeFormatter.php:83
-msgid "{0} before"
-msgstr ""
+#: Utility/CakeTime.php:395
+msgid "Monday"
+msgstr "Segunda"
 
-#: I18n/RelativeTimeFormatter.php:114
+#: Utility/CakeTime.php:396
+msgid "Tuesday"
+msgstr "Terça"
+
+#: Utility/CakeTime.php:397
+msgid "Wednesday"
+msgstr "Quarta"
+
+#: Utility/CakeTime.php:398
+msgid "Thursday"
+msgstr "Quinta"
+
+#: Utility/CakeTime.php:399
+msgid "Friday"
+msgstr "Sexta"
+
+#: Utility/CakeTime.php:400
+msgid "Saturday"
+msgstr "Sábado"
+
+#: Utility/CakeTime.php:406
+msgid "On %s %s"
+msgstr "Em %s %s"
+
+#: Utility/CakeTime.php:799
 msgid "just now"
-msgstr ""
+msgstr "agora"
 
-#: I18n/RelativeTimeFormatter.php:151
-msgid "about a second ago"
-msgstr ""
-
-#: I18n/RelativeTimeFormatter.php:152
-msgid "about a minute ago"
-msgstr ""
-
-#: I18n/RelativeTimeFormatter.php:153
-msgid "about an hour ago"
-msgstr ""
-
-#: I18n/RelativeTimeFormatter.php:154;332
-msgid "about a day ago"
-msgstr ""
-
-#: I18n/RelativeTimeFormatter.php:155;333
-msgid "about a week ago"
-msgstr ""
-
-#: I18n/RelativeTimeFormatter.php:156;334
-msgid "about a month ago"
-msgstr ""
-
-#: I18n/RelativeTimeFormatter.php:157;335
-msgid "about a year ago"
-msgstr ""
-
-#: I18n/RelativeTimeFormatter.php:168
-msgid "in about a second"
-msgstr ""
-
-#: I18n/RelativeTimeFormatter.php:169
-msgid "in about a minute"
-msgstr ""
-
-#: I18n/RelativeTimeFormatter.php:170
-msgid "in about an hour"
-msgstr ""
-
-#: I18n/RelativeTimeFormatter.php:171;346
-msgid "in about a day"
-msgstr ""
-
-#: I18n/RelativeTimeFormatter.php:172;347
-msgid "in about a week"
-msgstr ""
-
-#: I18n/RelativeTimeFormatter.php:173;348
-msgid "in about a month"
-msgstr ""
-
-#: I18n/RelativeTimeFormatter.php:174;349
-msgid "in about a year"
-msgstr ""
-
-#: I18n/RelativeTimeFormatter.php:304
-msgid "today"
-msgstr ""
-
-#: I18n/RelativeTimeFormatter.php:370
-msgid "%s ago"
-msgstr ""
-
-#: I18n/RelativeTimeFormatter.php:371
+#: Utility/CakeTime.php:803
 msgid "on %s"
+msgstr "em %s"
+
+#: Utility/CakeTime.php:847
+msgid "%s ago"
+msgstr "%s atrás"
+
+#: Utility/CakeTime.php:866;888
+msgid "days"
+msgstr "dias"
+
+#: Utility/CakeTime.php:148
+msgid "abday"
 msgstr ""
 
-#: I18n/RelativeTimeFormatter.php:47;126;316
-msgid "{0} year"
-msgid_plural "{0} years"
-msgstr[0] ""
-msgstr[1] ""
-
-#: I18n/RelativeTimeFormatter.php:51;129;319
-msgid "{0} month"
-msgid_plural "{0} months"
-msgstr[0] ""
-msgstr[1] ""
-
-#: I18n/RelativeTimeFormatter.php:57;132;322
-msgid "{0} week"
-msgid_plural "{0} weeks"
-msgstr[0] ""
-msgstr[1] ""
-
-#: I18n/RelativeTimeFormatter.php:59;135;325
-msgid "{0} day"
-msgid_plural "{0} days"
-msgstr[0] ""
-msgstr[1] ""
-
-#: I18n/RelativeTimeFormatter.php:64;138
-msgid "{0} hour"
-msgid_plural "{0} hours"
-msgstr[0] ""
-msgstr[1] ""
-
-#: I18n/RelativeTimeFormatter.php:68;141
-msgid "{0} minute"
-msgid_plural "{0} minutes"
-msgstr[0] ""
-msgstr[1] ""
-
-#: I18n/RelativeTimeFormatter.php:72;144
-msgid "{0} second"
-msgid_plural "{0} seconds"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ORM/RulesChecker.php:57
-msgid "This value is already in use"
+#: Utility/CakeTime.php:154
+msgid "day"
 msgstr ""
 
-#: ORM/RulesChecker.php:104
-msgid "This value does not exist"
+#: Utility/CakeTime.php:160
+msgid "d_t_fmt"
 msgstr ""
 
-#: ORM/RulesChecker.php:128
-msgid "The count does not match {0}{1}"
+#: Utility/CakeTime.php:182
+msgid "abmon"
 msgstr ""
 
-#: Utility/Text.php:917
-msgid "and"
+#: Utility/CakeTime.php:188
+msgid "mon"
 msgstr ""
 
-#: Validation/Validator.php:111
-msgid "This field is required"
+#: Utility/CakeTime.php:199
+msgid "am_pm"
 msgstr ""
 
-#: Validation/Validator.php:112
-msgid "This field cannot be left empty"
+#: Utility/CakeTime.php:206
+msgid "t_fmt_ampm"
 msgstr ""
 
-#: Validation/Validator.php:2054
-msgid "The provided value is invalid"
-msgstr "O valor informado é inválido"
-
-#: View/Helper/FormHelper.php:1097
-msgid "Edit {0}"
+#: Utility/CakeTime.php:220
+msgid "d_fmt"
 msgstr ""
 
-#: View/Helper/FormHelper.php:1099
-msgid "New {0}"
+#: Utility/CakeTime.php:226
+msgid "t_fmt"
 msgstr ""
 
-#: View/Helper/FormHelper.php:1986
+#: Utility/CakeTime.php:825
+msgid "%d year"
+msgid_plural "%d years"
+msgstr[0] "%d ano"
+msgstr[1] "%d anos"
+
+#: Utility/CakeTime.php:828
+msgid "%d month"
+msgid_plural "%d months"
+msgstr[0] "%d mês"
+msgstr[1] "%d meses"
+
+#: Utility/CakeTime.php:831
+msgid "%d week"
+msgid_plural "%d weeks"
+msgstr[0] "%d semana"
+msgstr[1] "%d semanas"
+
+#: Utility/CakeTime.php:834
+msgid "%d day"
+msgid_plural "%d days"
+msgstr[0] "%d dia"
+msgstr[1] "%d dias"
+
+#: Utility/CakeTime.php:837
+msgid "%d hour"
+msgid_plural "%d hours"
+msgstr[0] "%d hora"
+msgstr[1] "%d horas"
+
+#: Utility/CakeTime.php:840
+msgid "%d minute"
+msgid_plural "%d minutes"
+msgstr[0] "%d minuto"
+msgstr[1] "%d minutos"
+
+#: Utility/CakeTime.php:843
+msgid "%d second"
+msgid_plural "%d seconds"
+msgstr[0] "%d segundo"
+msgstr[1] "%d segundos"
+
+#: View/Helper/FormHelper.php:677
+msgid "Error in field %s"
+msgstr "Erro no campo %s"
+
+#: View/Helper/FormHelper.php:856 View/Scaffolds/form.ctp:44
+#: View/Scaffolds/index.ctp:80;87 View/Scaffolds/view.ctp:51;58;142
+msgid "New %s"
+msgstr "Novo(a) %s"
+
+#: View/Helper/FormHelper.php:862 View/Scaffolds/view.ctp:48;85
+msgid "Edit %s"
+msgstr "Editar %s"
+
+#: View/Helper/FormHelper.php:1683 View/Scaffolds/form.ctp:23
 msgid "Submit"
 msgstr "Enviar"
 
-#: View/Helper/HtmlHelper.php:815
-msgid "Home"
-msgstr ""
-
-#: View/Widget/DateTimeWidget.php:540
+#: View/Helper/FormHelper.php:2573
 msgid "January"
 msgstr "Janeiro"
 
-#: View/Widget/DateTimeWidget.php:541
+#: View/Helper/FormHelper.php:2574
 msgid "February"
 msgstr "Fevereiro"
 
-#: View/Widget/DateTimeWidget.php:542
+#: View/Helper/FormHelper.php:2575
 msgid "March"
 msgstr "Março"
 
-#: View/Widget/DateTimeWidget.php:543
+#: View/Helper/FormHelper.php:2576
 msgid "April"
 msgstr "Abril"
 
-#: View/Widget/DateTimeWidget.php:544
+#: View/Helper/FormHelper.php:2577
 msgid "May"
 msgstr "Maio"
 
-#: View/Widget/DateTimeWidget.php:545
+#: View/Helper/FormHelper.php:2578
 msgid "June"
-msgstr "Julho"
+msgstr "Junho"
 
-#: View/Widget/DateTimeWidget.php:546
+#: View/Helper/FormHelper.php:2579
 msgid "July"
 msgstr "Julho"
 
-#: View/Widget/DateTimeWidget.php:547
+#: View/Helper/FormHelper.php:2580
 msgid "August"
 msgstr "Agosto"
 
-#: View/Widget/DateTimeWidget.php:548
+#: View/Helper/FormHelper.php:2581
 msgid "September"
 msgstr "Setembro"
 
-#: View/Widget/DateTimeWidget.php:549
+#: View/Helper/FormHelper.php:2582
 msgid "October"
 msgstr "Outubro"
 
-#: View/Widget/DateTimeWidget.php:550
+#: View/Helper/FormHelper.php:2583
 msgid "November"
 msgstr "Novembro"
 
-#: View/Widget/DateTimeWidget.php:551
+#: View/Helper/FormHelper.php:2584
 msgid "December"
 msgstr "Dezembro"
 
-#: View/Helper/PaginatorHelper.php:1212
+#: View/Helper/PaginatorHelper.php:581
+msgid " of "
+msgstr " de "
+
+#: View/Scaffolds/form.ctp:27 View/Scaffolds/index.ctp:26;78
+#: View/Scaffolds/view.ctp:45
+msgid "Actions"
+msgstr "Ações"
+
+#: View/Scaffolds/form.ctp:31 View/Scaffolds/index.ctp:52
+#: View/Scaffolds/view.ctp:133
+msgid "Delete"
+msgstr "Excluir"
+
+#: View/Scaffolds/form.ctp:34
+msgid "Are you sure you want to delete # %s?"
+msgstr "Tem certeza de que deseja excluir # %s?"
+
+#: View/Scaffolds/form.ctp:37
+msgid "List"
+msgstr "Listar"
+
+#: View/Scaffolds/form.ctp:43 View/Scaffolds/index.ctp:86
+#: View/Scaffolds/view.ctp:50;57
+msgid "List %s"
+msgstr "Listar %s"
+
+#: View/Scaffolds/index.ctp:49 View/Scaffolds/view.ctp:131
 msgid "View"
+msgstr "Ver"
+
+#: View/Scaffolds/index.ctp:50 View/Scaffolds/view.ctp:132
+msgid "Edit"
+msgstr "Editar"
+
+#: View/Scaffolds/index.ctp:55 View/Scaffolds/view.ctp:49;133
+msgid "Are you sure you want to delete"
+msgstr "Tem certeza de que deseja excluir"
+
+#: View/Scaffolds/index.ctp:66
+msgid ""
+"Page {:page} of {:pages}, showing {:current} records out of {:count} total, "
+"starting on record {:start}, ending on {:end}"
 msgstr ""
+"Página {:page} de {:pages}, mostrando {:current} registros de um total de {:"
+"count}, começando no registro {:start}, terminando em {:end}"
+
+#: View/Scaffolds/index.ctp:71
+msgid "previous"
+msgstr "anterior"
+
+#: View/Scaffolds/index.ctp:73
+msgid "next"
+msgstr "próximo"
+
+#: View/Scaffolds/view.ctp:20
+msgid "View %s"
+msgstr "Ver %s"
+
+#: View/Scaffolds/view.ctp:49
+msgid "Delete %s"
+msgstr "Excluir %s"
+
+#: View/Scaffolds/view.ctp:70;105
+msgid "Related %s"
+msgstr "%s relacionados(as)"
 

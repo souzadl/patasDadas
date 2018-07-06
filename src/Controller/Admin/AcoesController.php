@@ -10,8 +10,11 @@ use App\Controller\AppController;
  *
  * @method \App\Model\Entity\Aco[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
-class AcoesController extends AppController
-{
+class AcoesController extends AppController{
+    public function initialize() {
+        parent::initialize();
+        $this->label = 'Ação';
+    }
 
     /**
      * Index method
@@ -50,11 +53,11 @@ class AcoesController extends AppController
         if ($this->request->is('post')) {
             $acao = $this->Acoes->patchEntity($acao, $this->request->getData());
             if ($this->Acoes->save($acao)) {
-                $this->Flash->success(__('Ação salva.'));
+                $this->Flash->success(__('{0} saved.', $this->label));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('Ação não pode ser salva. Por favor, tente novamente.'));
+            $this->Flash->error(__('{0} not saved.', $this->label));
         }
         $this->renderForm($acao);
     }
@@ -73,11 +76,11 @@ class AcoesController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $acao = $this->Acoes->patchEntity($acao, $this->request->getData());
             if ($this->Acoes->save($acao)) {
-                $this->Flash->success(__('Ação salva.'));
+                $this->Flash->success(__('{0} saved.', $this->label));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('Ação não pode ser salva. Por favor, tente novamente.'));
+            $this->Flash->error(__('{0} not saved.', $this->label));
         }
         $this->renderForm($acao);
     }
@@ -93,9 +96,9 @@ class AcoesController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $aco = $this->Acoes->get($id);
         if ($this->Acoes->delete($aco)) {
-            $this->Flash->success(__('Ação deletada.'));
+            $this->Flash->success(__('{0} deleted.', $this->label));
         } else {
-            $this->Flash->error(__('Ação não pode ser deletada. Por favor, tente novamente.'));
+            $this->Flash->error(__('{0} not deleted.', $this->label));
         }
 
         return $this->redirect(['action' => 'index']);

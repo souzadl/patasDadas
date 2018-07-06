@@ -30,6 +30,7 @@ class UsersController extends AppController{
     
     public function initialize() {
         parent::initialize();
+        $this->label = 'Usuário';
         $this->loadModel('Controles');
         $this->loadModel('Acoes');    
         $this->loadModel('PermissoesUsers');   
@@ -90,11 +91,11 @@ class UsersController extends AppController{
                     $this->getMailer('Admin')->send('novoUsuario', [$user]);
                 }
                 
-                $this->Flash->success(__('O usuário foi salvo.'));
+                $this->Flash->success(__('{0} saved.', $this->label));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('O usuário não pode ser salvo. Por favor, tente novamente.'));
+            $this->Flash->error(__('{0} not saved.', $this->label));
         }
         $this->renderForm($user);
     }
@@ -112,11 +113,11 @@ class UsersController extends AppController{
         if ($this->request->is(['patch', 'post', 'put'])) {
             $user = $this->Users->patchEntity($user, $this->request->getData());
             if ($this->Users->save($user)) {
-                $this->Flash->success(__('O usuário foi salvo.'));
+                $this->Flash->success(__('{0} saved.', $this->label));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('O usuário não pode ser salvo. Por favor, tente novamente.'));
+            $this->Flash->error(__('{0} not saved.', $this->label));
         }
         $this->renderForm($user);
     }
@@ -133,9 +134,9 @@ class UsersController extends AppController{
         $this->request->allowMethod(['post', 'delete']);
         $user = $this->Users->get($id);
         if ($this->Users->delete($user)) {
-            $this->Flash->success(__('The user has been deleted.'));
+            $this->Flash->success(__('{0} deleted.', $this->label));
         } else {
-            $this->Flash->error(__('The user could not be deleted. Please, try again.'));
+            $this->Flash->error(__('{0} not deleted.', $this->label));
         }
 
         return $this->redirect(['action' => 'index']);

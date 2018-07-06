@@ -10,8 +10,11 @@ use App\Controller\AppController;
  *
  * @method \App\Model\Entity\Controle[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
-class ControlesController extends AppController
-{
+class ControlesController extends AppController{
+    public function initialize() {
+        parent::initialize();
+        $this->label = 'Controle';
+    }    
 
     /**
      * Index method
@@ -50,11 +53,11 @@ class ControlesController extends AppController
         if ($this->request->is('post')) {
             $controle = $this->Controles->patchEntity($controle, $this->request->getData());
             if ($this->Controles->save($controle)) {
-                $this->Flash->success(__('Controle salvo.'));
+                $this->Flash->success(__('{0} saved.', $this->label));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('Controle não pode ser salvo. Por favor, tente novamente.'));
+            $this->Flash->error(__('{0} not saved.', $this->label));
         }
         $this->renderForm($controle);
     }
@@ -73,11 +76,11 @@ class ControlesController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $controle = $this->Controles->patchEntity($controle, $this->request->getData());
             if ($this->Controles->save($controle)) {
-                $this->Flash->success(__('Controle salvo.'));
+                $this->Flash->success(__('{0} saved.', $this->label));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('Controle não pode ser salvo. Por favor, tente novamente.'));
+            $this->Flash->error(__('{0} not saved.', $this->label));
         }
         $this->renderForm($controle);
     }
@@ -93,9 +96,9 @@ class ControlesController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $controle = $this->Controles->get($id);
         if ($this->Controles->delete($controle)) {
-            $this->Flash->success(__('Controle deletedo.'));
+            $this->Flash->success(__('{0} deleted.', $this->label));
         } else {
-            $this->Flash->error(__('Controle não pode ser deletado. Por favor, tente novamente.'));
+            $this->Flash->error(__('{0} not deleted.', $this->label));
         }
 
         return $this->redirect(['action' => 'index']);

@@ -10,8 +10,12 @@ use App\Controller\AppController;
  *
  * @method \App\Model\Entity\TiposPadrinho[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
-class TiposPadrinhosController extends AppController
-{
+class TiposPadrinhosController extends AppController{
+    public function initialize() {
+        parent::initialize();
+        $this->label = 'Tipo Padrinho';
+    }    
+    
     private function renderForm($tipoPadrinho, $view = 'form', $layout = null) {
         $this->set('tipoPadrinho', $tipoPadrinho);
         $this->set('action', $this->request->getParam('action'));
@@ -61,11 +65,11 @@ class TiposPadrinhosController extends AppController
             $tipoPadrinho = $this->TiposPadrinhos->patchEntity($tipoPadrinho, $this->request->getData());
             $tipoPadrinho->users_id = $this->Auth->user()['id'];
             if ($this->TiposPadrinhos->save($tipoPadrinho)) {
-                $this->Flash->success(__('The tipos padrinho has been saved.'));
+                $this->Flash->success(__('{0} saved.', $this->label));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The tipos padrinho could not be saved. Please, try again.'));
+            $this->Flash->error(__('{0} not saved.', $this->label));
         }
         
         $this->renderForm($tipoPadrinho);
@@ -85,11 +89,11 @@ class TiposPadrinhosController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $tipoPadrinho = $this->TiposPadrinhos->patchEntity($tipoPadrinho, $this->request->getData());
             if ($this->TiposPadrinhos->save($tipoPadrinho)) {
-                $this->Flash->success(__('The tipos padrinho has been saved.'));
+                $this->Flash->success(__('{0} saved.', $this->label));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The tipos padrinho could not be saved. Please, try again.'));
+            $this->Flash->error(__('{0} not saved.', $this->label));
         }
         $this->renderForm($tipoPadrinho);
     }
@@ -106,9 +110,9 @@ class TiposPadrinhosController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $tiposPadrinho = $this->TiposPadrinhos->get($id);
         if ($this->TiposPadrinhos->delete($tiposPadrinho)) {
-            $this->Flash->success(__('The tipos padrinho has been deleted.'));
+            $this->Flash->success(__('{0} deleted.', $this->label));
         } else {
-            $this->Flash->error(__('The tipos padrinho could not be deleted. Please, try again.'));
+            $this->Flash->error(__('{0} not deleted.', $this->label));            
         }
 
         return $this->redirect(['action' => 'index']);
