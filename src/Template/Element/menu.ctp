@@ -19,7 +19,7 @@
           <?= $this->Html->link(__('Home'), ['controller' => 'Home', 'action' => 'index'], ['class' => 'nav-link']) ?> 
         </li>
         <?php if($login): ?>                      
-            <li class="nav-item active"><?= $this->Html->link(__('Usuários'), ['controller' => 'Usuarios', 'action' => 'index'], ['class' => 'nav-link']) ?></li>
+            <li class="nav-item active"><?= $this->Html->link(__('Usuários'), ['controller' => 'Users', 'action' => 'index'], ['class' => 'nav-link']) ?></li>
             <li class="nav-item active"><?= $this->Html->link(__('Conteúdos'), ['controller' => 'Conteudos', 'action' => 'index'], ['class' => 'nav-link']) ?></li>            
             <li class="nav-item active"><?= $this->Html->link(__('Animais'), ['controller' => 'Animais', 'action' => 'index'], ['class' => 'nav-link']) ?></li>
             <li class="nav-item active"><?= $this->Html->link(__('Adoções'), ['controller' => 'Adocoes', 'action' => 'index'], ['class' => 'nav-link']) ?></li>

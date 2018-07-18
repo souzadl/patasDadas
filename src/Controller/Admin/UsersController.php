@@ -42,8 +42,8 @@ class UsersController extends AppController{
      * @return \Cake\Http\Response|void
      */
     public function index(){
-        $this->paginate['order'] = ['Pessoas.nome'];
-        $this->paginate['contain'] = ['Roles', 'Pessoas'];
+        $this->paginate['order'] = ['nome'];
+        //$this->paginate['contain'] = ['Roles', 'Pessoas'];
         $users = $this->paginate($this->Users);              
         $this->set(compact('users'));                 
     }
@@ -191,7 +191,6 @@ class UsersController extends AppController{
                 $this->Auth->setUser($user);
                 return $this->redirect($this->Auth->redirectUrl());
             }
-            die;
             $this->Flash->error(__('Inválido username ou password, tente novamente.'));
         }   
     }    
