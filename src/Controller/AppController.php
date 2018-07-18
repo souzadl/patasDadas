@@ -86,7 +86,9 @@ class AppController extends Controller{
     }
     
     public function isAuthorized($user){  
-        if($user['roles_id'] == Configure::read('App.idRoleSistema')){
+        $permitido = true; 
+        $this->set('acoesPermitidas', array('all'));
+        /*if($user['roles_id'] == Configure::read('App.idRoleSistema')){
             $permitido = true; 
             $this->set('acoesPermitidas', array('all'));
         }else{          
@@ -114,7 +116,7 @@ class AppController extends Controller{
                     $this->carregarAcoesPermitidasIndex($user, $controle->first());
                 }
             }
-        }  
+        }  */
         return $permitido;     
     }
     

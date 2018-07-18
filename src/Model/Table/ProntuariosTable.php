@@ -66,15 +66,7 @@ class ProntuariosTable extends Table {
         return $validator;
     }
 
-    /**
-     * Returns the database connection name to use by default.
-     *
-     * @return string
-     */
-    public static function defaultConnectionName() {
-        return 'patasdadaslegado';
-    }
-    
+        
     public function findByAnimal(Query $query, array $options){
         $animal = $options['animal'];
         $prontuario = $query->where(['id_animal' => $animal->id_animal]);

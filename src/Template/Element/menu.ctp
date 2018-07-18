@@ -55,7 +55,7 @@
                   <?= $this->Html->link(__('Controles'), ['controller' => 'Controles', 'action' => 'index'], ['class' => 'dropdown-item']) ?>
               </div>
             </li>-->                        
-            <li class="nav-item active"><?= $this->Html->link(__('Logout {0}', $username), ['controller' => 'Users', 'action' => 'logout'], ['class' => 'nav-link']) ?></li>
+            <li class="nav-item active"><?= $this->Html->link(__('Logout {0}', $login), ['controller' => 'Users', 'action' => 'logout'], ['class' => 'nav-link']) ?></li>
         <?php else: ?>
             <li class="nav-item active"><?= $this->Html->link(__('Login'), ['controller' => 'Users', 'action' => 'login'], ['class' => 'nav-link']) ?></li>
             <li class="nav-item active"><?= $this->Html->link(__('Cadastro'), ['controller' => 'Users', 'action' => 'add'], ['class' => 'nav-link']) ?></li>
