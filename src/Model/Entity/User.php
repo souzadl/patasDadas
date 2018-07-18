@@ -32,15 +32,11 @@ class User extends Entity
      * @var array
      */
     protected $_accessible = [
-        'name' => true,
+        'nome' => true,
         'email' => true,
-        'username' => true,
-        'password' => true,
-        'roles_id' => true,
-        'created' => true,
-        'modified' => true,
-        'active' => true,
-        'role' => true
+        'login' => true,
+        'senha' => true,
+        'ativo' => true
     ];
 
     /**
@@ -49,12 +45,12 @@ class User extends Entity
      * @var array
      */
     protected $_hidden = [
-        'password'
+        'senha'
     ];
     
-    protected function _setPassword($password){
-        if(strlen($password) > 0){
-            return (new DefaultPasswordHasher)->hash($password);
+    protected function _setSenha($senha){
+        if(strlen($senha) > 0){
+            return (new DefaultPasswordHasher)->hash($senha);
         }
     }   
     

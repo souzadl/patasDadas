@@ -59,8 +59,8 @@ class AppController extends Controller{
             'authenticate' => [
                 'Form' => [
                     'fields' => [
-                        'username' => 'username',
-                        'password' => 'password'
+                        'username' => 'login',
+                        'password' => 'senha'
                     ],
                     'finder' => 'auth'
                 ]
@@ -119,7 +119,7 @@ class AppController extends Controller{
     }
     
     public function beforeFilter(Event $event) {
-        $this->set('username', $this->Auth->user('username'));
+        $this->set('login', $this->Auth->user('login'));
     }
     
     private function carregarAcoesPermitidasIndex($user, $controle){

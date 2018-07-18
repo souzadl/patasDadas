@@ -125,6 +125,6 @@ class PadrinhosTable extends Table
      */
     public static function defaultConnectionName()
     {
-        return 'test';
+        return 'patasdadaslegado';
     }
 }

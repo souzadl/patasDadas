@@ -17,14 +17,14 @@ class UsersController extends AppController{
     
     public function beforeFilter(\Cake\Event\Event $event) {
         parent::beforeFilter($event);
-        $this->Auth->allow(['rememberPassword', 'changePassword']);
+        $this->Auth->allow(['rememberPassword', 'changePassword', 'add']);
     }
 
     
     private function renderForm($user, $view = 'form', $layout = null) {
         $this->set('user', $user);
         $this->set('action', $this->request->getParam('action'));
-        $this->set('roles', $this->Users->Roles->find('list')->where(['active =' => 1]));
+        //$this->set('roles', $this->Users->Roles->find('list')->where(['active =' => 1]));
         parent::render($view, $layout);
     }
     
@@ -71,25 +71,25 @@ class UsersController extends AppController{
      */
     public function add(){
         $user = $this->Users->newEntity();        
-        $user->pessoa = $this->Pessoas->newEntity();
+        //$user->pessoa = $this->Pessoas->newEntity();
         if ($this->request->is('post')) {            
             $user = $this->Users->patchEntity($user, $this->request->getData());
-            $user->pessoa = $this->Pessoas->patchEntity($user->pessoa, $this->request->getData());  
-            $idsSomentePessoas = array(Configure::read('App.idRolePadrinho'), 
-                Configure::read('App.idRoleAdotante'));
-            if(in_array($user->roles_id, $idsSomentePessoas)){                
+            //$user->pessoa = $this->Pessoas->patchEntity($user->pessoa, $this->request->getData());  
+            //$idsSomentePessoas = array(Configure::read('App.idRolePadrinho'), 
+            //    Configure::read('App.idRoleAdotante'));
+            //if(in_array($user->roles_id, $idsSomentePessoas)){                
                 //Cadastro apenas de pessoa
-                $salvo = $this->Pessoas->save($user->pessoa);
-            }else{
+            //    $salvo = $this->Pessoas->save($user->pessoa);
+            //}else{
                 //Cadastro de pessoa e usuário
                 $salvo = $this->Users->save($user);
-            }
+            //}
             
             if ($salvo) {
-                if(!Configure::read('debug') and !in_array($user->roles_id, $idsSomentePessoas)){
-                    $this->getMailer('User')->send('welcome', [$user]);
-                    $this->getMailer('Admin')->send('novoUsuario', [$user]);
-                }
+                //if(!Configure::read('debug') and !in_array($user->roles_id, $idsSomentePessoas)){
+                //    $this->getMailer('User')->send('welcome', [$user]);
+                //    $this->getMailer('Admin')->send('novoUsuario', [$user]);
+                //}
                 
                 $this->Flash->success(__('{0} saved.', $this->label));
 
@@ -191,6 +191,7 @@ class UsersController extends AppController{
                 $this->Auth->setUser($user);
                 return $this->redirect($this->Auth->redirectUrl());
             }
+            die;
             $this->Flash->error(__('Inválido username ou password, tente novamente.'));
         }   
     }    

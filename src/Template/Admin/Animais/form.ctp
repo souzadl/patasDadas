@@ -23,7 +23,9 @@
         <li class="nav-item">
             <a class="nav-link" id="contact-tab" data-toggle="tab" href="#legado" role="tab" aria-controls="legado" aria-selected="false">Legado</a>
         </li> 
-    </ul> 
+    </ul>
+    <?php include_once 'historicoPesoModal.php';?>
+
     <?= $this->Form->create($animai) ?>
     <fieldset <?= (isset($action) and $action === 'view') ? 'disabled' : ''; ?> > 
 
@@ -77,7 +79,54 @@
                 echo $this->Form->control('padrinho_pulgas', ['options' => $padrinhos]);
                 ?>
             </div>
-            <div class="tab-pane fade" id="prontuario" role="tabpanel" aria-labelledby="prontuario-tab"></div>
+            <div class="tab-pane fade" id="prontuario" role="tabpanel" aria-labelledby="prontuario-tab">
+                <div class="row">
+                    <div class="col">
+                        <label for="tableHistoricoPeso">Histórico Peso <a href="#" data-toggle="modal" data-target="#historicoPesoDialog"><i class="fa fa-plus-circle"></i></a></label>
+                        <table class="table" id="tableHistoricoPeso">
+                        <?php
+                        echo $this->Html->tableHeaders(['Data de aferição', 'Peso', '']);
+                        foreach($prontuario->historicospeso as $historico){
+                            echo $this->Html->tableCells([$historico->data_afericao, $historico->peso, '<a href="#" class="del" id="apagarHistoricoPeso/<?= $historico->id ?>"><i class="fa fa-trash"></i></a>']);    
+                        }
+                        ?>
+                        </table>
+                    </div>
+                    <div class="col">
+                        <label for="listaDoencasCronicas">Doenças Crônicas <a href="#" data-toggle="modal" data-target="#historicoPesoDialog"><i class="fa fa-plus-circle"></i></a></label>
+                        <ul id="listaDoencasCronicas">
+                        <?php foreach($prontuario->doencascronicas as $doenca): ?>                        
+                            <li><?=$doenca->descricao?> <a href="#" class="del" id="apagarHistoricoPeso/<?= $historico->id ?>"><i class="fa fa-trash"></i></a></li>
+                        <?php endforeach;?>
+                        </ul>
+
+                        <label for="listaAlimentacoesEspeciais">Alimentações Especiais <a href="#" data-toggle="modal" data-target="#alimentacaoEspecialDialog"><i class="fa fa-plus-circle"></i></a></label>
+                        <ul id="listaAlimentacoesEspeciais">
+                        <?php foreach($prontuario->alimentacoesespeciais as $alimentacao): ?>                        
+                            <li><?=$alimentacao->descricao?> <a href="#" class="del" id="apagarHistoricoPeso/<?= $historico->id ?>"><i class="fa fa-trash"></i></a></li>
+                        <?php endforeach;?>                            
+                        </ul>
+
+                        <label for="listaDeficienciasFisicas">Deficiências Físicas <a href="#" data-toggle="modal" data-target="#deficienciaFisicaDialog"><i class="fa fa-plus-circle"></i></a></label>
+                        <ul id="listaDeficienciasFisicas">
+                        <?php foreach($prontuario->deficienciasfisicas as $deficiencia): ?>                        
+                            <li><?=$deficiencia->descricao?> <a href="#" class="del" id="apagarHistoricoPeso/<?= $historico->id ?>"><i class="fa fa-trash"></i></a></li>
+                        <?php endforeach;?>                             
+                        </ul>                        
+                    </div>
+                </div>
+                <label for="tableMedicacoes">Medicações <a href="#" data-toggle="modal" data-target="#medicacaoDialog"><i class="fa fa-plus-circle"></i></a></label>
+                <table class="table" id="tableMedicacoes">
+                <?php
+                echo $this->Html->tableHeaders(['Medicação', 'Uso', 'Dosagem', 'Frequência', 'Contínuo', 'Início', 'Término']);
+                foreach($prontuario->medicacoes as $medicacao){
+                    echo $this->Html->tableCells([$medicacao->descricao, 
+                        $medicacao->uso, $medicacao->dosagem, $medicacao->frequencia, 
+                        $medicacao->continuo, $medicacao->inicio, $medicacao->termino]);    
+                }
+                ?>
+                </table>                                    
+            </div>
             <div class="tab-pane fade" id="legado" role="tabpanel" aria-labelledby="legado-tab">
                 <?php
                 echo $this->Form->control('tratamento', ['disabled']);

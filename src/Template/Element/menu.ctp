@@ -18,9 +18,27 @@
         <li class="nav-item active">
           <?= $this->Html->link(__('Home'), ['controller' => 'Home', 'action' => 'index'], ['class' => 'nav-link']) ?> 
         </li>
-        <?php if($username): ?>                      
-            <li class="nav-item active"><?= $this->Html->link(__('Pessoas'), ['controller' => 'Pessoas', 'action' => 'index'], ['class' => 'nav-link']) ?></li>
+        <?php if($login): ?>                      
+            <li class="nav-item active"><?= $this->Html->link(__('Usuários'), ['controller' => 'Usuarios', 'action' => 'index'], ['class' => 'nav-link']) ?></li>
+            <li class="nav-item active"><?= $this->Html->link(__('Conteúdos'), ['controller' => 'Conteudos', 'action' => 'index'], ['class' => 'nav-link']) ?></li>            
             <li class="nav-item active"><?= $this->Html->link(__('Animais'), ['controller' => 'Animais', 'action' => 'index'], ['class' => 'nav-link']) ?></li>
+            <li class="nav-item active"><?= $this->Html->link(__('Adoções'), ['controller' => 'Adocoes', 'action' => 'index'], ['class' => 'nav-link']) ?></li>
+            <li class="nav-item active"><?= $this->Html->link(__('Apadrinhamento'), ['controller' => 'Apadrinhamento', 'action' => 'index'], ['class' => 'nav-link']) ?></li>
+            <li class="nav-item active"><?= $this->Html->link(__('Pedidos'), ['controller' => 'Pedidos', 'action' => 'index'], ['class' => 'nav-link']) ?></li>
+            <li class="nav-item active"><?= $this->Html->link(__('Produtos'), ['controller' => 'Produtos', 'action' => 'index'], ['class' => 'nav-link']) ?></li>
+            <li class="nav-item active"><?= $this->Html->link(__('Eventos'), ['controller' => 'Eventos', 'action' => 'index'], ['class' => 'nav-link']) ?></li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="cadastros" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?= _('Cadastros')?></a>            
+                <div class="dropdown-menu" aria-labelledby="cadastros">
+                    <?= $this->Html->link(__('Parceiros'), ['controller' => 'Parceiros', 'action' => 'index'], ['class' => 'dropdown-item']) ?>
+                    <?= $this->Html->link(__('Pontos de Coleta'), ['controller' => 'PontosColeta', 'action' => 'index'], ['class' => 'dropdown-item']) ?>
+                    <?= $this->Html->link(__('Mídias'), ['controller' => 'Midias', 'action' => 'index'], ['class' => 'dropdown-item']) ?>
+                    <?= $this->Html->link(__('Perguntas e Respostas'), ['controller' => 'PerguntasRespostas', 'action' => 'index'], ['class' => 'dropdown-item']) ?>
+                    <?= $this->Html->link(__('Pessoas'), ['controller' => 'Pessoas', 'action' => 'index'], ['class' => 'dropdown-item']) ?>
+                    <?= $this->Html->link(__('Padrinhos'), ['controller' => 'Padrinhos', 'action' => 'index'], ['class' => 'dropdown-item']) ?>
+                </div>
+            </li>
+            <!--
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?= _('Tipos')?></a>
               <div class="dropdown-menu" aria-labelledby="dropdown01">
@@ -36,11 +54,11 @@
                   <?= $this->Html->link(__('Ações'), ['controller' => 'Acoes', 'action' => 'index'], ['class' => 'dropdown-item']) ?>
                   <?= $this->Html->link(__('Controles'), ['controller' => 'Controles', 'action' => 'index'], ['class' => 'dropdown-item']) ?>
               </div>
-            </li>                        
+            </li>-->                        
             <li class="nav-item active"><?= $this->Html->link(__('Logout {0}', $username), ['controller' => 'Users', 'action' => 'logout'], ['class' => 'nav-link']) ?></li>
         <?php else: ?>
             <li class="nav-item active"><?= $this->Html->link(__('Login'), ['controller' => 'Users', 'action' => 'login'], ['class' => 'nav-link']) ?></li>
-            <li class="nav-item active"><?= $this->Html->link(__('Cadastro'), ['controller' => 'Pessoas', 'action' => 'addPublic'], ['class' => 'nav-link']) ?></li>
+            <li class="nav-item active"><?= $this->Html->link(__('Cadastro'), ['controller' => 'Users', 'action' => 'add'], ['class' => 'nav-link']) ?></li>
             <li class="nav-item active"><?= $this->Html->link(__('Relembrar Password'), ['controller' => 'Users', 'action' => 'rememberPassword'], ['class' => 'nav-link']) ?></li>
         <?php endif; ?>
       </ul>

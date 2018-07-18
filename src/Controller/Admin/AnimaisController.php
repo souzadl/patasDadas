@@ -17,6 +17,8 @@ class AnimaisController extends AppController {
     public function initialize() {
         parent::initialize();
         $this->loadModel('Padrinhos');
+        $this->loadModel('Prontuarios');
+        $this->loadModel('HistoricosPesos');
         $this->padrinhos = $this->Padrinhos->find('list')->order('nome');
     }
 
@@ -31,9 +33,15 @@ class AnimaisController extends AppController {
         $this->set(compact('animais'));
     }
     
-    private function renderForm($animal, $view = 'edit', $layout = null) {
+    private function renderForm($animal, $view = 'form', $layout = null) {
+        $prontuario = $this->Prontuarios->find('byAnimal', [
+            'animal' => $animal,
+            'contain' => ['HistoricosPeso', 'DoencasCronicas', 'AlimentacoesEspeciais', 'DeficienciasFisicas', 'Medicacoes']
+        ]); 
+        
         $this->set('animai', $animal);
-        $this->set('padrinhos', $this->padrinhos);
+        $this->set('padrinhos', $this->padrinhos);        
+        $this->set('prontuario', $prontuario);  
         $this->set('action', $this->request->getParam('action'));
         parent::render($view, $layout);
     }
@@ -71,6 +79,21 @@ class AnimaisController extends AppController {
         }
         $this->renderForm($animai);
     }
+    
+    public function addHistoricoPeso(){
+        $this->autoRender = false;
+        $idAnimal = $this->request->getData('id_animal');
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $historico = $this->HistoricosPesos->newEntity();
+            $historico = $this->HistoricosPesos->patchEntity($historico, $this->request->getData());
+            if($this->HistoricosPesos->save($historico)){
+                $this->Flash->success(__('Histórico de peso salvo.'));
+            }else{
+                $this->Flash->error(__('Histórico de peso não salvo.'));
+            }
+        }
+        return $this->redirect(['action' => 'edit', $idAnimal]);
+    }
 
     /**
      * Edit method
@@ -80,9 +103,7 @@ class AnimaisController extends AppController {
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
     public function edit($id = null) {
-        $animai = $this->Animais->get($id, [
-            'contain' => ['Padrinhos']
-        ]);
+        $animai = $this->Animais->get($id);                                        
         
         if ($this->request->is(['patch', 'post', 'put'])) {
             $animai = $this->Animais->patchEntity($animai, $this->request->getData());

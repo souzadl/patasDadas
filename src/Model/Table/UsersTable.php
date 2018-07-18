@@ -36,11 +36,11 @@ class UsersTable extends BaseTable
     {
         parent::initialize($config);
 
-        $this->setTable('users');
-        $this->setDisplayField('name');
-        $this->setPrimaryKey('id');
+        $this->setTable('usuarios');
+        $this->setDisplayField('nome');
+        $this->setPrimaryKey('id_usuario');
 
-        $this->addBehavior('Timestamp');
+        /*$this->addBehavior('Timestamp');
 
         $this->belongsTo('Pessoas', [
             'foreignKey' => 'pessoas_id',
@@ -55,7 +55,7 @@ class UsersTable extends BaseTable
         $this->hasMany('PermissoesUsers',[
             'dependent' => true,
             'foreignKey' => 'users_id'
-        ]);
+        ]);*/
     }
 
     /**
@@ -67,36 +67,36 @@ class UsersTable extends BaseTable
     public function validationDefault(Validator $validator)
     {
         $validator
-            ->integer('id')
-            ->allowEmpty('id', 'create');
+            ->integer('id_usuario')
+            ->allowEmpty('id_usuario', 'create');
 
-        /*$validator
-            ->scalar('name')
-            ->maxLength('name', 200)
-            ->requirePresence('name', 'create')
-            ->notEmpty('name');
+        $validator
+            ->scalar('nome')
+            ->maxLength('nome', 200)
+            ->requirePresence('nome', 'create')
+            ->notEmpty('nome');
 
         $validator
             ->email('email')
             ->requirePresence('email', 'create')
-            ->notEmpty('email');*/
+            ->notEmpty('email');
 
         $validator
-            ->scalar('username')
-            ->maxLength('username', 100)
-            ->requirePresence('username', 'create')
-            ->notEmpty('username');
+            ->scalar('login')
+            ->maxLength('login', 100)
+            ->requirePresence('login', 'create')
+            ->notEmpty('login');
 
         $validator
-            ->scalar('password')
-            ->requirePresence('password', 'create')
-            ->notEmpty('password');
+            ->scalar('senha')
+            ->requirePresence('senha', 'create')
+            ->notEmpty('senha');
         
         $validator
             ->add(
-                'confirm_password', 
+                'confirm_senha', 
                 'compareWith',[
-                    'rule' => ['compareWith', 'password'],
+                    'rule' => ['compareWith', 'senha'],
                     'message' => 'Passwords not equal.'
                 ]
             );
@@ -118,16 +118,16 @@ class UsersTable extends BaseTable
      */
     public function buildRules(RulesChecker $rules){
         $rules = parent::buildRules($rules);        
-        $rules->add($rules->isUnique(['username']));
-        $rules->add($rules->existsIn(['roles_id'], 'Roles'));
+        $rules->add($rules->isUnique(['login']));
+        //$rules->add($rules->existsIn(['roles_id'], 'Roles'));
         return $rules;
     }
     
     public function findAuth(\Cake\ORM\Query $query, array $options){
         $query
-            ->select(['id', 'username', 'password', 'Pessoas.nome', 'roles_id'])
-            ->where(['Users.active' => 1])
-            ->contain('Pessoas');
+            ->select(['id_usuario', 'login', 'senha'])
+            ->where(['Usuarios.ativo' => 'S']);
+            //->contain('Pessoas');
 
         return $query;    
     }

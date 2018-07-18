@@ -49,6 +49,9 @@ class AnimaisTable extends Table {
         $this->belongsTo('padrinhos')
             ->setForeignKey('padrinho_pulgas')
             ->bindingKey('id_padrinho');
+        
+        $this->hasOne('prontuarios')
+            ->setForeignKey('id_animal');
     }
 
     /**
@@ -207,7 +210,7 @@ class AnimaisTable extends Table {
      * @return string
      */
     public static function defaultConnectionName() {
-        return 'test';
+        return 'patasdadaslegado';
     }
 
 
