@@ -6,16 +6,20 @@ use Cake\ORM\Entity;
 /**
  * Padrinho Entity
  *
- * @property int $id
- * @property int $padrinho_id
- * @property int $adotaveis_id
- * @property int $tipos_padrinhos_id
- * @property \Cake\I18n\FrozenTime $created
- * @property \Cake\I18n\FrozenTime $modified
- * @property bool $active
- * @property int $users_id
+ * @property int $id_padrinho
+ * @property \Cake\I18n\FrozenTime $data_alteracao
+ * @property string $nome
+ * @property string $email
+ * @property string $telefone
+ * @property string $cpf
+ * @property string $rg
+ * @property string $endereco
+ * @property string $cidade
+ * @property string $estado
+ * @property string $cep
+ * @property string $facebook
  *
- * @property \App\Model\Entity\Padrinho[] $padrinhos
+ * @property \App\Model\Entity\Pessoa $pessoa
  * @property \App\Model\Entity\Adotavei $adotavei
  * @property \App\Model\Entity\TiposPadrinho $tipos_padrinho
  * @property \App\Model\Entity\User $user
@@ -33,14 +37,18 @@ class Padrinho extends Entity
      * @var array
      */
     protected $_accessible = [
-        'padrinho_id' => true,
-        'adotaveis_id' => true,
-        'tipos_padrinhos_id' => true,
-        'created' => true,
-        'modified' => true,
-        'active' => true,
-        'users_id' => true,
-        'padrinhos' => true,
+        'data_alteracao' => true,
+        'nome' => true,
+        'email' => true,
+        'telefone' => true,
+        'cpf' => true,
+        'rg' => true,
+        'endereco' => true,
+        'cidade' => true,
+        'estado' => true,
+        'cep' => true,
+        'facebook' => true,
+        'pessoa' => true,
         'adotavei' => true,
         'tipos_padrinho' => true,
         'user' => true

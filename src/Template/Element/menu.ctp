@@ -20,7 +20,7 @@
         </li>
         <?php if($username): ?>                      
             <li class="nav-item active"><?= $this->Html->link(__('Pessoas'), ['controller' => 'Pessoas', 'action' => 'index'], ['class' => 'nav-link']) ?></li>
-            <li class="nav-item active"><?= $this->Html->link(__('Adotáveis'), ['controller' => 'Adotaveis', 'action' => 'index'], ['class' => 'nav-link']) ?></li>
+            <li class="nav-item active"><?= $this->Html->link(__('Animais'), ['controller' => 'Animais', 'action' => 'index'], ['class' => 'nav-link']) ?></li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?= _('Tipos')?></a>
               <div class="dropdown-menu" aria-labelledby="dropdown01">

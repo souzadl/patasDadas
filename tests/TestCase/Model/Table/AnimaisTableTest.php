@@ -1,22 +1,22 @@
 <?php
 namespace App\Test\TestCase\Model\Table;
 
-use App\Model\Table\PadrinhosTable;
+use App\Model\Table\AnimaisTable;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
- * App\Model\Table\PadrinhosTable Test Case
+ * App\Model\Table\AnimaisTable Test Case
  */
-class PadrinhosTableTest extends TestCase
+class AnimaisTableTest extends TestCase
 {
 
     /**
      * Test subject
      *
-     * @var \App\Model\Table\PadrinhosTable
+     * @var \App\Model\Table\AnimaisTable
      */
-    public $Padrinhos;
+    public $Animais;
 
     /**
      * Fixtures
@@ -24,11 +24,7 @@ class PadrinhosTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.padrinhos',
-        'app.pessoas',
-        'app.adotaveis',
-        'app.tipos_padrinhos',
-        'app.users'
+        'app.animais'
     ];
 
     /**
@@ -39,8 +35,8 @@ class PadrinhosTableTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $config = TableRegistry::getTableLocator()->exists('Padrinhos') ? [] : ['className' => PadrinhosTable::class];
-        $this->Padrinhos = TableRegistry::getTableLocator()->get('Padrinhos', $config);
+        $config = TableRegistry::getTableLocator()->exists('Animais') ? [] : ['className' => AnimaisTable::class];
+        $this->Animais = TableRegistry::getTableLocator()->get('Animais', $config);
     }
 
     /**
@@ -50,7 +46,7 @@ class PadrinhosTableTest extends TestCase
      */
     public function tearDown()
     {
-        unset($this->Padrinhos);
+        unset($this->Animais);
 
         parent::tearDown();
     }
@@ -76,11 +72,11 @@ class PadrinhosTableTest extends TestCase
     }
 
     /**
-     * Test buildRules method
+     * Test defaultConnectionName method
      *
      * @return void
      */
-    public function testBuildRules()
+    public function testDefaultConnectionName()
     {
         $this->markTestIncomplete('Not implemented yet.');
     }

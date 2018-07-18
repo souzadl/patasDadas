@@ -3,17 +3,11 @@ namespace App\Model\Table;
 
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
-use App\Model\Table\BaseTable;
+use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
  * Padrinhos Model
- *
- * @property \App\Model\Table\PadrinhosTable|\Cake\ORM\Association\BelongsTo $Padrinhos
- * @property \App\Model\Table\AdotaveisTable|\Cake\ORM\Association\BelongsTo $Adotaveis
- * @property \App\Model\Table\TiposPadrinhosTable|\Cake\ORM\Association\BelongsTo $TiposPadrinhos
- * @property \App\Model\Table\UsersTable|\Cake\ORM\Association\BelongsTo $Users
- * @property \App\Model\Table\PadrinhosTable|\Cake\ORM\Association\HasMany $Padrinhos
  *
  * @method \App\Model\Entity\Padrinho get($primaryKey, $options = [])
  * @method \App\Model\Entity\Padrinho newEntity($data = null, array $options = [])
@@ -23,10 +17,8 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\Padrinho patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\Padrinho[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\Padrinho findOrCreate($search, callable $callback = null, $options = [])
- *
- * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
-class PadrinhosTable extends BaseTable
+class PadrinhosTable extends Table
 {
 
     /**
@@ -40,27 +32,8 @@ class PadrinhosTable extends BaseTable
         parent::initialize($config);
 
         $this->setTable('padrinhos');
-        $this->setDisplayField('id');
-        $this->setPrimaryKey('id');
-
-        $this->addBehavior('Timestamp');
-
-        $this->belongsTo('Pessoas', [
-            'foreignKey' => 'pessoas_id',
-            'joinType' => 'INNER'
-        ]);
-        $this->belongsTo('Adotaveis', [
-            'foreignKey' => 'adotaveis_id',
-            'joinType' => 'INNER'
-        ]);
-        $this->belongsTo('TiposPadrinhos', [
-            'foreignKey' => 'tipos_padrinhos_id',
-            'joinType' => 'INNER'
-        ]);
-        $this->belongsTo('Users', [
-            'foreignKey' => 'users_id',
-            'joinType' => 'INNER'
-        ]);
+        $this->setDisplayField('nome');
+        $this->setPrimaryKey('id_padrinho');
     }
 
     /**
@@ -72,13 +45,61 @@ class PadrinhosTable extends BaseTable
     public function validationDefault(Validator $validator)
     {
         $validator
-            ->integer('id')
-            ->allowEmpty('id', 'create');
+            ->integer('id_padrinho')
+            ->allowEmpty('id_padrinho', 'create');
 
         $validator
-            ->boolean('active')
-            ->requirePresence('active', 'create')
-            ->notEmpty('active');
+            ->dateTime('data_alteracao')
+            ->allowEmpty('data_alteracao');
+
+        $validator
+            ->scalar('nome')
+            ->maxLength('nome', 45)
+            ->allowEmpty('nome');
+
+        $validator
+            ->email('email')
+            ->allowEmpty('email');
+
+        $validator
+            ->scalar('telefone')
+            ->maxLength('telefone', 20)
+            ->allowEmpty('telefone');
+
+        $validator
+            ->scalar('cpf')
+            ->maxLength('cpf', 20)
+            ->allowEmpty('cpf');
+
+        $validator
+            ->scalar('rg')
+            ->maxLength('rg', 20)
+            ->allowEmpty('rg');
+
+        $validator
+            ->scalar('endereco')
+            ->maxLength('endereco', 500)
+            ->allowEmpty('endereco');
+
+        $validator
+            ->scalar('cidade')
+            ->maxLength('cidade', 45)
+            ->allowEmpty('cidade');
+
+        $validator
+            ->scalar('estado')
+            ->maxLength('estado', 2)
+            ->allowEmpty('estado');
+
+        $validator
+            ->scalar('cep')
+            ->maxLength('cep', 12)
+            ->allowEmpty('cep');
+
+        $validator
+            ->scalar('facebook')
+            ->maxLength('facebook', 300)
+            ->allowEmpty('facebook');
 
         return $validator;
     }
@@ -90,13 +111,20 @@ class PadrinhosTable extends BaseTable
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
      * @return \Cake\ORM\RulesChecker
      */
-    public function buildRules(RulesChecker $rules){
-        $rules = parent::buildRules($rules); 
-        $rules->add($rules->existsIn(['pessoas_id'], 'Pessoas'));
-        $rules->add($rules->existsIn(['adotaveis_id'], 'Adotaveis'));
-        $rules->add($rules->existsIn(['tipos_padrinhos_id'], 'TiposPadrinhos'));
-        $rules->add($rules->existsIn(['users_id'], 'Users'));
+    public function buildRules(RulesChecker $rules)
+    {
+        $rules->add($rules->isUnique(['email']));
 
         return $rules;
+    }
+
+    /**
+     * Returns the database connection name to use by default.
+     *
+     * @return string
+     */
+    public static function defaultConnectionName()
+    {
+        return 'test';
     }
 }
