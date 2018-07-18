@@ -30,9 +30,11 @@ class HistoricosPesoTable extends Table {
     public function initialize(array $config) {
         parent::initialize($config);
 
-        $this->setTable('historicos_peso');
+        $this->setTable('historicos_pesos');
         $this->setDisplayField('peso');
         $this->setPrimaryKey('id');
+        
+        $this->hasOne('prontuarios');
     }
 
     /**

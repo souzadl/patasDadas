@@ -68,8 +68,8 @@ class ProntuariosTable extends Table {
 
         
     public function findByAnimal(Query $query, array $options){
-        $animal = $options['animal'];
-        $prontuario = $query->where(['id_animal' => $animal->id_animal]);
+        $id_animal = $options['id_animal'];
+        $prontuario = $query->where(['id_animal' => $id_animal]);
         return $prontuario->first();
     }
 

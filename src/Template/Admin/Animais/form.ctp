@@ -86,8 +86,10 @@
                         <table class="table" id="tableHistoricoPeso">
                         <?php
                         echo $this->Html->tableHeaders(['Data de aferição', 'Peso', '']);
-                        foreach($prontuario->historicospeso as $historico){
-                            echo $this->Html->tableCells([$historico->data_afericao, $historico->peso, '<a href="#" class="del" id="apagarHistoricoPeso/<?= $historico->id ?>"><i class="fa fa-trash"></i></a>']);    
+                        if(isset($prontuario->historicospeso)){
+                            foreach($prontuario->historicospeso as $historico){
+                                echo $this->Html->tableCells([$historico->data_afericao, $historico->peso, '<a href="#" class="del" id="apagarHistoricoPeso/<?= $historico->id ?>"><i class="fa fa-trash"></i></a>']);    
+                            }
                         }
                         ?>
                         </table>
@@ -95,23 +97,23 @@
                     <div class="col">
                         <label for="listaDoencasCronicas">Doenças Crônicas <a href="#" data-toggle="modal" data-target="#historicoPesoDialog"><i class="fa fa-plus-circle"></i></a></label>
                         <ul id="listaDoencasCronicas">
-                        <?php foreach($prontuario->doencascronicas as $doenca): ?>                        
+                        <?php if(isset($prontuario->doencascronicas)){ foreach($prontuario->doencascronicas as $doenca): ?>                        
                             <li><?=$doenca->descricao?> <a href="#" class="del" id="apagarHistoricoPeso/<?= $historico->id ?>"><i class="fa fa-trash"></i></a></li>
-                        <?php endforeach;?>
+                        <?php endforeach;}?>
                         </ul>
 
                         <label for="listaAlimentacoesEspeciais">Alimentações Especiais <a href="#" data-toggle="modal" data-target="#alimentacaoEspecialDialog"><i class="fa fa-plus-circle"></i></a></label>
                         <ul id="listaAlimentacoesEspeciais">
-                        <?php foreach($prontuario->alimentacoesespeciais as $alimentacao): ?>                        
+                        <?php if(isset($prontuario->alimentacoesespeciais)){ foreach($prontuario->alimentacoesespeciais as $alimentacao): ?>                        
                             <li><?=$alimentacao->descricao?> <a href="#" class="del" id="apagarHistoricoPeso/<?= $historico->id ?>"><i class="fa fa-trash"></i></a></li>
-                        <?php endforeach;?>                            
+                        <?php endforeach;}?>                            
                         </ul>
 
                         <label for="listaDeficienciasFisicas">Deficiências Físicas <a href="#" data-toggle="modal" data-target="#deficienciaFisicaDialog"><i class="fa fa-plus-circle"></i></a></label>
                         <ul id="listaDeficienciasFisicas">
-                        <?php foreach($prontuario->deficienciasfisicas as $deficiencia): ?>                        
+                        <?php if(isset($prontuario->deficienciasfisicas)){ foreach($prontuario->deficienciasfisicas as $deficiencia): ?>                        
                             <li><?=$deficiencia->descricao?> <a href="#" class="del" id="apagarHistoricoPeso/<?= $historico->id ?>"><i class="fa fa-trash"></i></a></li>
-                        <?php endforeach;?>                             
+                        <?php endforeach;}?>                             
                         </ul>                        
                     </div>
                 </div>
@@ -119,10 +121,12 @@
                 <table class="table" id="tableMedicacoes">
                 <?php
                 echo $this->Html->tableHeaders(['Medicação', 'Uso', 'Dosagem', 'Frequência', 'Contínuo', 'Início', 'Término']);
-                foreach($prontuario->medicacoes as $medicacao){
-                    echo $this->Html->tableCells([$medicacao->descricao, 
-                        $medicacao->uso, $medicacao->dosagem, $medicacao->frequencia, 
-                        $medicacao->continuo, $medicacao->inicio, $medicacao->termino]);    
+                if(isset($prontuario->deficienciasfisicas)){
+                    foreach($prontuario->medicacoes as $medicacao){
+                        echo $this->Html->tableCells([$medicacao->descricao, 
+                            $medicacao->uso, $medicacao->dosagem, $medicacao->frequencia, 
+                            $medicacao->continuo, $medicacao->inicio, $medicacao->termino]);    
+                    }
                 }
                 ?>
                 </table>                                    

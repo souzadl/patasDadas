@@ -35,7 +35,7 @@ class AnimaisController extends AppController {
     
     private function renderForm($animal, $view = 'form', $layout = null) {
         $prontuario = $this->Prontuarios->find('byAnimal', [
-            'animal' => $animal,
+            'id_animal' => $animal->id_animal,
             'contain' => ['HistoricosPeso', 'DoencasCronicas', 'AlimentacoesEspeciais', 'DeficienciasFisicas', 'Medicacoes']
         ]); 
         
@@ -80,12 +80,34 @@ class AnimaisController extends AppController {
         $this->renderForm($animai);
     }
     
-    public function addHistoricoPeso(){
+    private function addProntuario($idAnimal){
         $this->autoRender = false;
+        $prontuario = $this->Prontuarios->newEntity();
+        $prontuario->id_animal = $idAnimal;
+        if($this->Prontuarios->save($prontuario)){
+            return $prontuario;
+        }
+    }
+    
+    
+    
+    public function addHistoricoPeso(){
+        //$this->autoRender = false;
         $idAnimal = $this->request->getData('id_animal');
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $historico = $this->HistoricosPesos->newEntity();
+            $prontuario = $this->Prontuarios->find('byAnimal', [
+                'id_animal' => $idAnimal
+            ]);
+            if(!$prontuario){
+                $prontuario = $this->addProntuario($idAnimal);
+            }
+            
+            $historico = $this->HistoricosPesos->newEntity();            
             $historico = $this->HistoricosPesos->patchEntity($historico, $this->request->getData());
+            $historico->prontuario_id = $prontuario->id;
+            //$historico->prontuarios = $this->Prontuarios->newEntity(); 
+            //$historico->prontuarios = $this->Prontuarios->patchEntity($historico->prontuarios, $this->request->getData());
+            
             if($this->HistoricosPesos->save($historico)){
                 $this->Flash->success(__('Histórico de peso salvo.'));
             }else{
