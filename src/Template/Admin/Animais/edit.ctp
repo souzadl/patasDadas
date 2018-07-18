@@ -19,7 +19,10 @@
         </li>
         <li class="nav-item">
             <a class="nav-link" id="contact-tab" data-toggle="tab" href="#prontuario" role="tab" aria-controls="prontuario" aria-selected="false">Prontuário</a>
-        </li>                
+        </li>  
+        <li class="nav-item">
+            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#legado" role="tab" aria-controls="legado" aria-selected="false">Legado</a>
+        </li> 
     </ul> 
     <?= $this->Form->create($animai) ?>
     <fieldset <?= (isset($action) and $action === 'view') ? 'disabled' : ''; ?> > 
@@ -62,7 +65,7 @@
                 echo $this->Form->control('temperamento');
                 echo $this->Form->control('observacao');
                 echo $this->Form->control('observacao_privada');
-                echo $this->Form->control('tratamento');
+                
                 ?>
             </div>
             <div class="tab-pane fade" id="fotos" role="tabpanel" aria-labelledby="fotos-tab"></div>
@@ -75,20 +78,18 @@
                 ?>
             </div>
             <div class="tab-pane fade" id="prontuario" role="tabpanel" aria-labelledby="prontuario-tab"></div>
+            <div class="tab-pane fade" id="legado" role="tabpanel" aria-labelledby="legado-tab">
+                <?php
+                echo $this->Form->control('tratamento', ['disabled']);
+                echo $this->Form->control('check_castrado', ['disabled']);
+                echo $this->Form->control('check_vermifugado', ['disabled']);
+                echo $this->Form->control('check_vacinado', ['disabled']);
+                echo $this->Form->control('data_castracao', ['empty' => true, 'disabled']);
+                echo $this->Form->control('data_vacinacao', ['empty' => true, 'disabled']);
+                echo $this->Form->control('data_vermifugacao', ['empty' => true, 'disabled']);
+                ?>
+            </div>
         </div>
-        <?php
-
-            //echo $this->Form->control('data_cadastro', ['empty' => true]);
-            //echo $this->Form->control('data_alteracao', ['empty' => true]);            
-            /*echo $this->Form->control('data_castracao', ['empty' => true]);
-            echo $this->Form->control('data_vacinacao', ['empty' => true]);
-            echo $this->Form->control('data_vermifugacao', ['empty' => true]);   
-         
-
-            echo $this->Form->control('check_castrado');
-            echo $this->Form->control('check_vermifugado');
-            echo $this->Form->control('check_vacinado');*/
-        ?>
     </fieldset>
     <?= $this->Form->button(__('Submit'), [(isset($action) and $action === 'view') ? 'disabled' : '']) ?>
     <?= $this->Form->end() ?>
