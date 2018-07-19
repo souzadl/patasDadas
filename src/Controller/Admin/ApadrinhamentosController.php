@@ -19,8 +19,8 @@ class ApadrinhamentosController extends AppController {
      * @return \Cake\Http\Response|void
      */
     public function index() {
-        $this->paginate['contain'] = ['Animais', 'Padrinhos'];  
-        $this->paginate['order'] = ['Animais.nome'];
+        $this->paginate['contain'] = ['Animais', 'Padrinhos', 'ApadrinhamentosTipos'];  
+        $this->paginate['order'] = ['Apadrinhamentos.id_apadrinhamento'=>'desc'];
         $apadrinhamentos = $this->paginate($this->Apadrinhamentos);
 
         $this->set(compact('apadrinhamentos'));

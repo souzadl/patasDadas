@@ -38,6 +38,8 @@ class ApadrinhamentosTable extends Table {
             ->foreignKey('id_animal');
         $this->belongsTo('padrinhos')
             ->foreignKey('id_padrinho');
+        $this->belongsTo('apadrinhamentostipos')
+            ->foreignKey('id_apadrinhamento_tipo');
     }
 
     /**
