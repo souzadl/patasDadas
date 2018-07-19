@@ -20,7 +20,7 @@
         </li>
         <?php if($login): ?>                      
             <li class="nav-item active"><?= $this->Html->link(__('Usuários'), ['controller' => 'Users', 'action' => 'index'], ['class' => 'nav-link']) ?></li>
-            <li class="nav-item active"><?= $this->Html->link(__('Conteúdos'), ['controller' => 'Conteudos', 'action' => 'index'], ['class' => 'nav-link']) ?></li>            
+            <li class="nav-item active"><?= $this->Html->link(__('Conteúdos'), ['controller' => 'Conteudos', 'action' => 'edit', 1], ['class' => 'nav-link']) ?></li>            
             <li class="nav-item active"><?= $this->Html->link(__('Animais'), ['controller' => 'Animais', 'action' => 'index'], ['class' => 'nav-link']) ?></li>
             <li class="nav-item active"><?= $this->Html->link(__('Adoções'), ['controller' => 'Adocoes', 'action' => 'index'], ['class' => 'nav-link']) ?></li>
             <li class="nav-item active"><?= $this->Html->link(__('Apadrinhamento'), ['controller' => 'Apadrinhamentos', 'action' => 'index'], ['class' => 'nav-link']) ?></li>
