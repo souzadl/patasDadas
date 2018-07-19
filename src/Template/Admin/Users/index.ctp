@@ -22,8 +22,7 @@
             <td><?= h($user->login) ?></td>            
             <td><?= h($user->ativo) ?></td>
             <td class="actions">
-                <?= $this->element('acoes_lista', ['id' => $user->id_usuario, 'descDel' => $user->login]) ?>
-                <?= $this->element('acao_permissao', ['id' => $user->id_usuario]) ?>              
+                <?= $this->element('acoes_lista', ['id' => $user->id_usuario, 'descDel' => $user->login]) ?>                            
             </td>
         </tr>
         <?php endforeach; ?>

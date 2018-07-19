@@ -12,14 +12,14 @@
             //echo $this->Form->control('nome', ['value'=>$user->pessoa->nome, 'required'=>true]);
             //echo $this->Form->control('email', ['value'=>$user->pessoa->email, 'required'=>true]);
             //echo $this->Form->control('roles_id', ['options' => $roles]);                                 
-            if($action === 'add'){
-                echo $this->Form->control('nome');
-                echo $this->Form->control('email');
+            echo $this->Form->control('nome');
+            echo $this->Form->control('email');
+            if ($action != 'edit'){
                 echo $this->Form->control('login');
-                echo $this->Form->control('senha');
-                echo $this->Form->control('confirm_senha');
             }
-            //echo $this->Form->control('active');
+            echo $this->Form->control('senha', ['value'=>'']);
+            echo $this->Form->control('confirm_senha', ['label'=>'Confirme Senha']);
+            echo $this->Form->control('ativo', ['type'=>'checkbox', 'checked'=>($user->ativo == 'S' ? true : false)]);
         ?>    
     </fieldset>   
     <?= $this->Form->button(__('Submit'), [(isset($action) and $action === 'view') ? 'disabled' : '']) ?>
