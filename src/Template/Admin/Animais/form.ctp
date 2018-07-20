@@ -24,7 +24,15 @@
             <a class="nav-link" id="contact-tab" data-toggle="tab" href="#legado" role="tab" aria-controls="legado" aria-selected="false">Legado</a>
         </li> 
     </ul>
-    <?php include_once 'historicoPesoModal.php';?>
+    <?php include_once 'historicoPesoModal.ctp';?>
+    <?php include_once 'doencaCronicaModal.ctp';?>
+    <?php include_once 'alimentacaoEspecialModal.ctp';?>
+    <?php include_once 'deficienciaFisicaModal.ctp';?>
+    <?php include_once 'medicacaoModal.ctp';?>
+    <?php include_once 'vacinaModal.ctp';?>
+    <?php include_once 'serestoModal.ctp';?>
+    <?php include_once 'vermifugoModal.ctp';?>
+    <?php include_once 'alteracaoModal.ctp';?>
 
     <?= $this->Form->create($animai) ?>
     <fieldset <?= (isset($action) and $action === 'view') ? 'disabled' : ''; ?> > 
@@ -82,54 +90,16 @@
             <div class="tab-pane fade" id="prontuario" role="tabpanel" aria-labelledby="prontuario-tab">
                 <div class="row">
                     <div class="col">
-                        <label for="tableHistoricoPeso">Histórico Peso <a href="#" data-toggle="modal" data-target="#historicoPesoDialog"><i class="fa fa-plus-circle"></i></a></label>
-                        <table class="table" id="tableHistoricoPeso">
-                        <?php
-                        echo $this->Html->tableHeaders(['Data de aferição', 'Peso', '']);
-                        if(isset($prontuario->historicospeso)){
-                            foreach($prontuario->historicospeso as $historico){
-                                echo $this->Html->tableCells([$historico->data_afericao, $historico->peso, '<a href="#" class="del" id="apagarHistoricoPeso/<?= $historico->id ?>"><i class="fa fa-trash"></i></a>']);    
-                            }
-                        }
-                        ?>
-                        </table>
+                        <?php include_once 'historicoPeso.ctp';?>
                     </div>
                     <div class="col">
-                        <label for="listaDoencasCronicas">Doenças Crônicas <a href="#" data-toggle="modal" data-target="#historicoPesoDialog"><i class="fa fa-plus-circle"></i></a></label>
-                        <ul id="listaDoencasCronicas">
-                        <?php if(isset($prontuario->doencascronicas)){ foreach($prontuario->doencascronicas as $doenca): ?>                        
-                            <li><?=$doenca->descricao?> <a href="#" class="del" id="apagarHistoricoPeso/<?= $historico->id ?>"><i class="fa fa-trash"></i></a></li>
-                        <?php endforeach;}?>
-                        </ul>
-
-                        <label for="listaAlimentacoesEspeciais">Alimentações Especiais <a href="#" data-toggle="modal" data-target="#alimentacaoEspecialDialog"><i class="fa fa-plus-circle"></i></a></label>
-                        <ul id="listaAlimentacoesEspeciais">
-                        <?php if(isset($prontuario->alimentacoesespeciais)){ foreach($prontuario->alimentacoesespeciais as $alimentacao): ?>                        
-                            <li><?=$alimentacao->descricao?> <a href="#" class="del" id="apagarHistoricoPeso/<?= $historico->id ?>"><i class="fa fa-trash"></i></a></li>
-                        <?php endforeach;}?>                            
-                        </ul>
-
-                        <label for="listaDeficienciasFisicas">Deficiências Físicas <a href="#" data-toggle="modal" data-target="#deficienciaFisicaDialog"><i class="fa fa-plus-circle"></i></a></label>
-                        <ul id="listaDeficienciasFisicas">
-                        <?php if(isset($prontuario->deficienciasfisicas)){ foreach($prontuario->deficienciasfisicas as $deficiencia): ?>                        
-                            <li><?=$deficiencia->descricao?> <a href="#" class="del" id="apagarHistoricoPeso/<?= $historico->id ?>"><i class="fa fa-trash"></i></a></li>
-                        <?php endforeach;}?>                             
-                        </ul>                        
+                        <?php include_once 'doencasCronicas.ctp';?>
+                        <?php include_once 'alimentacoesEspeciais.ctp';?>
+                        <?php include_once 'deficienciasFisicas.ctp';?>                      
                     </div>
                 </div>
-                <label for="tableMedicacoes">Medicações <a href="#" data-toggle="modal" data-target="#medicacaoDialog"><i class="fa fa-plus-circle"></i></a></label>
-                <table class="table" id="tableMedicacoes">
-                <?php
-                echo $this->Html->tableHeaders(['Medicação', 'Uso', 'Dosagem', 'Frequência', 'Contínuo', 'Início', 'Término']);
-                if(isset($prontuario->deficienciasfisicas)){
-                    foreach($prontuario->medicacoes as $medicacao){
-                        echo $this->Html->tableCells([$medicacao->descricao, 
-                            $medicacao->uso, $medicacao->dosagem, $medicacao->frequencia, 
-                            $medicacao->continuo, $medicacao->inicio, $medicacao->termino]);    
-                    }
-                }
-                ?>
-                </table>                                    
+                <?php include_once 'medicacoes.ctp';?>   
+                <?php include_once 'checklist.ctp';?> 
             </div>
             <div class="tab-pane fade" id="legado" role="tabpanel" aria-labelledby="legado-tab">
                 <?php
