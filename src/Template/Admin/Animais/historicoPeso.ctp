@@ -15,7 +15,11 @@
             echo $this->Html->tableHeaders(['Data de aferição', 'Peso', '']);
             if(isset($prontuario->historicospeso)){
                 foreach($prontuario->historicospeso as $historico){
-                    echo $this->Html->tableCells([$historico->data_afericao, $historico->peso, '<a href="#" class="del" id="apagarHistoricoPeso/<?= $historico->id ?>"><i class="fa fa-trash"></i></a>']);    
+                    echo $this->Html->tableCells([$historico->data_afericao, $historico->peso,                        
+                        $this->Form->postLink($this->Html->tag('i','',['class'=>'fas fa-trash-alt']),
+                            ['action' => 'deleteHistoricoPeso', $historico->id, $prontuario->id_animal], 
+                            ['escape'=>false, 'confirm' => __('Confime a exclusão de {0}?', $historico->data_afericao)])
+                    ]);    
                 }
             }
             ?>

@@ -12,7 +12,7 @@
     <div class="card-body">
         <ul id="listaDoencasCronicas">
             <?php if(isset($prontuario->doencascronicas)){ foreach($prontuario->doencascronicas as $doenca): ?>                        
-            <li><?=$doenca->descricao?> <a href="#" class="del" id="apagarHistoricoPeso/<?= $historico->id ?>"><i class="fa fa-trash"></i></a></li>
+            <li><?=$doenca->descricao?> <a href="#" class="del" id="deleteDoencaCronica/<?= $doenca->id ?>"><i class="fa fa-trash"></i></a></li>
             <?php endforeach;}?>
         </ul>
     </div>

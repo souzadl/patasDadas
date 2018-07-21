@@ -17,8 +17,7 @@ class AnimaisController extends AppController {
     public function initialize() {
         parent::initialize();
         $this->loadModel('Padrinhos');
-        $this->loadModel('Prontuarios');
-        $this->loadModel('HistoricosPesos');
+        $this->loadModel('Prontuarios');                
         $this->padrinhos = $this->Padrinhos->find('list')->order('nome');
     }
 
@@ -36,7 +35,11 @@ class AnimaisController extends AppController {
     private function renderForm($animal, $view = 'form', $layout = null) {
         $prontuario = $this->Prontuarios->find('byAnimal', [
             'id_animal' => $animal->id_animal,
-            'contain' => ['HistoricosPeso', 'DoencasCronicas', 'AlimentacoesEspeciais', 'DeficienciasFisicas', 'Medicacoes']
+            'contain' => ['HistoricosPeso' => ['sort'=>['HistoricosPeso.data_afericao']], 
+                'DoencasCronicas', 
+                'AlimentacoesEspeciais', 
+                'DeficienciasFisicas', 
+                'Medicacoes']
         ]); 
         
         $this->set('animai', $animal);
@@ -88,33 +91,54 @@ class AnimaisController extends AppController {
             return $prontuario;
         }
     }
-    
-    
-    
-    public function addHistoricoPeso(){
-        //$this->autoRender = false;
-        $idAnimal = $this->request->getData('id_animal');
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $prontuario = $this->Prontuarios->find('byAnimal', [
+
+    private function getProntuarioParaAnimal($idAnimal){
+        $prontuario = $this->Prontuarios->find('byAnimal', [
                 'id_animal' => $idAnimal
             ]);
-            if(!$prontuario){
-                $prontuario = $this->addProntuario($idAnimal);
-            }
+        if(!$prontuario){
+            $prontuario = $this->addProntuario($idAnimal);
+        }
+        return $prontuario;
+    }
+    
+    public function addHistoricoPeso(){
+        $this->addGenerico('HistoricosPeso', 'Histórico Peso');
+    }
+    
+    public function addDoencaCronica(){
+        $this->addGenerico('DoencasCronicas', 'Doença crônica');
+    }
+    
+    public function addAlimentacaoEspecial(){
+        $this->addGenerico('AlimentacoesEspeciais', 'Alimentação especial');
+    }
+    
+    public function addDeficienciaFisica(){
+        $this->addGenerico('DeficienciasFisicas', 'Deficiência física');
+    }
+    
+    public function addMedicacao(){
+        $this->addGenerico('Medicacoes', 'Medicação');
+    }
+    
+    private function addGenerico($model, $label){
+        $idAnimal = $this->request->getData('id_animal');
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $prontuario = $this->getProntuarioParaAnimal($idAnimal); 
             
-            $historico = $this->HistoricosPesos->newEntity();            
-            $historico = $this->HistoricosPesos->patchEntity($historico, $this->request->getData());
-            $historico->prontuario_id = $prontuario->id;
-            //$historico->prontuarios = $this->Prontuarios->newEntity(); 
-            //$historico->prontuarios = $this->Prontuarios->patchEntity($historico->prontuarios, $this->request->getData());
-            
-            if($this->HistoricosPesos->save($historico)){
-                $this->Flash->success(__('Histórico de peso salvo.'));
+            $this->loadModel($model);
+            $entidade = $this->$model->patchEntity($this->$model->newEntity(), 
+                $this->request->getData());
+            $entidade->prontuario_id = $prontuario->id;
+                        
+            if($this->$model->save($entidade)){
+                $this->Flash->success(__($label.' salva.'));
             }else{
-                $this->Flash->error(__('Histórico de peso não salvo.'));
+                $this->Flash->error(__($label.' não salva.'));
             }
         }
-        return $this->redirect(['action' => 'edit', $idAnimal]);
+        return $this->redirect(['action' => 'edit', $idAnimal]);         
     }
 
     /**
@@ -146,16 +170,22 @@ class AnimaisController extends AppController {
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null) {
+    private function delete($id, $model, $label) {
         $this->request->allowMethod(['post', 'delete']);
-        $animai = $this->Animais->get($id);
-        if ($this->Animais->delete($animai)) {
-            $this->Flash->success(__('The animai has been deleted.'));
+        $this->loadModel($model);
+        $entidade = $this->$model->get($id);
+        if ($this->$model->delete($entidade)) {
+            $this->Flash->success(__($label.' deletado.'));
         } else {
-            $this->Flash->error(__('The animai could not be deleted. Please, try again.'));
+            $this->Flash->error(__($label.' não deletado.'));
         }
 
-        return $this->redirect(['action' => 'index']);
+        //return $this->redirect(['action' => 'index']);
+    }
+    
+    public function deleteHistoricoPeso($id = null, $id_animal = null){
+        $this->delete($id, 'HistoricosPeso', 'Histórico peso');
+        return $this->redirect(['action' => 'edit', $id_animal]);
     }
 
 }
