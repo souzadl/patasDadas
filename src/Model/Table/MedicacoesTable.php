@@ -1,10 +1,9 @@
 <?php
 namespace App\Model\Table;
 
-use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
-use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Cake\I18n\Time;
 
 /**
  * Medicacoes Model
@@ -20,7 +19,7 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\Medicaco[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\Medicaco findOrCreate($search, callable $callback = null, $options = [])
  */
-class MedicacoesTable extends Table
+class MedicacoesTable extends BaseTable
 {
 
     /**
@@ -101,7 +100,29 @@ class MedicacoesTable extends Table
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->existsIn(['prontuario_id'], 'Prontuarios'));
-
+        $rules->add(
+            function($entity, $options){
+                $inicio = new Time($entity->inicio);
+                $termino  = new Time($entity->termino);
+                return !($termino < $inicio);
+            },
+            'terminoMenorQueInicio',
+            [
+                'errorField' => 'termino',
+                'message' => 'Término não pode ser menor que início.'
+            ]
+        );
+        $rules->addDelete(
+            function($entity, $options){
+                $inicio = new Time($entity->inicio);
+                $termino  = new Time($entity->termino);
+                return !($inicio->isPast() or $termino->isPast());
+            }, 
+            'medicacaoEmAplicacaoOuTerminada',
+            [
+                'errorField' => 'medicacao',
+                'message' => 'Medicação está sento aplicada ou já foi concluída, não pode ser excluída.']
+            );
         return $rules;
     }
 

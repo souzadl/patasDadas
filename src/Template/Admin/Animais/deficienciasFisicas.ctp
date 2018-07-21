@@ -11,9 +11,14 @@
     </div>
     <div class="card-body">
         <ul id="listaDeficienciasFisicas">
-        <?php if(isset($prontuario->deficienciasfisicas)){ foreach($prontuario->deficienciasfisicas as $deficiencia): ?>                        
-            <li><?=$deficiencia->descricao?> <a href="#" class="del" id="apagarHistoricoPeso/<?= $historico->id ?>"><i class="fa fa-trash"></i></a></li>
-        <?php endforeach;}?>                             
+            <?php if(isset($prontuario->deficienciasfisicas)){ foreach($prontuario->deficienciasfisicas as $deficiencia): ?>                        
+            <li>
+                <?=$deficiencia->descricao?> 
+                <?= $this->Form->postLink($this->Html->tag('i','',['class'=>'fas fa-trash-alt']),
+                    ['action' => 'deleteDeficienciaFisica', $deficiencia->id, $prontuario->id_animal], 
+                    ['escape'=>false, 'confirm' => __('Confime a exclusão de {0}?', $deficiencia->descricao)])?>
+            </li>
+            <?php endforeach;}?>                             
         </ul>  
     </div>
 </div>

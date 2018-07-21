@@ -12,7 +12,12 @@
     <div class="card-body">
         <ul id="listaDoencasCronicas">
             <?php if(isset($prontuario->doencascronicas)){ foreach($prontuario->doencascronicas as $doenca): ?>                        
-            <li><?=$doenca->descricao?> <a href="#" class="del" id="deleteDoencaCronica/<?= $doenca->id ?>"><i class="fa fa-trash"></i></a></li>
+            <li>
+                <?=$doenca->descricao?> 
+                <?= $this->Form->postLink($this->Html->tag('i','',['class'=>'fas fa-trash-alt']),
+                    ['action' => 'deleteDoencaCronica', $doenca->id, $prontuario->id_animal], 
+                    ['escape'=>false, 'confirm' => __('Confime a exclusão de {0}?', $doenca->descricao)])?>
+            </li>
             <?php endforeach;}?>
         </ul>
     </div>

@@ -19,7 +19,9 @@
                     $medicacao->uso, $medicacao->dosagem, $medicacao->frequencia, 
                     ($medicacao->continuo == 1 ? 'Sim' : 'Não'), 
                     $medicacao->inicio, $medicacao->termino,
-                    '<a href="#" class="del" id="deleteMedicacao/'.$medicacao->id.'"><i class="fa fa-trash"></i></a>']);    
+                    $this->Form->postLink($this->Html->tag('i','',['class'=>'fas fa-trash-alt']),
+                        ['action' => 'deleteMedicacao', $medicacao->id, $prontuario->id_animal], 
+                        ['escape'=>false, 'confirm' => __('Confime a exclusão de {0}?', $medicacao->descricao)])]);    
             }
         }
         ?>

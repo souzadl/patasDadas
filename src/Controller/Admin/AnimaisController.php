@@ -123,6 +123,7 @@ class AnimaisController extends AppController {
     }
     
     private function addGenerico($model, $label){
+        $this->autoRender = false;
         $idAnimal = $this->request->getData('id_animal');
         if ($this->request->is(['patch', 'post', 'put'])) {
             $prontuario = $this->getProntuarioParaAnimal($idAnimal); 
@@ -131,14 +132,26 @@ class AnimaisController extends AppController {
             $entidade = $this->$model->patchEntity($this->$model->newEntity(), 
                 $this->request->getData());
             $entidade->prontuario_id = $prontuario->id;
-                        
+                 
+            $retorno = array();
             if($this->$model->save($entidade)){
                 $this->Flash->success(__($label.' salva.'));
+                $retorno['status'] = 'success';
+                $retorno['redirect'] = $this->redirect(['action' => 'edit', $idAnimal]);
+                echo json_encode($retorno);
+                //return $this->redirect(['action' => 'edit', $idAnimal]); 
             }else{
-                $this->Flash->error(__($label.' não salva.'));
+                
+                $retorno['status'] = 'error';
+                $retorno['errors'] = $entidade->getErrors();
+                echo json_encode($retorno);
+                /*foreach ($entidade->getErrors() as $erros){
+                    foreach($erros as $idError=>$descErro){
+                        $this->Flash->error(__($descErro));
+                    }
+                } */
             }
-        }
-        return $this->redirect(['action' => 'edit', $idAnimal]);         
+        }                
     }
 
     /**
@@ -176,16 +189,40 @@ class AnimaisController extends AppController {
         $entidade = $this->$model->get($id);
         if ($this->$model->delete($entidade)) {
             $this->Flash->success(__($label.' deletado.'));
-        } else {
-            $this->Flash->error(__($label.' não deletado.'));
+        } else {            
+            foreach ($entidade->getErrors() as $erros){
+                foreach($erros as $idError=>$descErro){
+                    $this->Flash->error(__($descErro));
+                }
+            }       
+            
         }
 
         //return $this->redirect(['action' => 'index']);
     }
     
-    public function deleteHistoricoPeso($id = null, $id_animal){
-        //$ids = explode('#', $idString);
+    public function deleteHistoricoPeso($id = null, $id_animal = null){
         $this->delete($id, 'HistoricosPeso', 'Histórico peso');
+        return $this->redirect(['action' => 'edit', $id_animal]);
+    }
+    
+    public function deleteDoencaCronica($id = null, $id_animal = null){
+        $this->delete($id, 'DoencasCronicas', 'Doença crônica');
+        return $this->redirect(['action' => 'edit', $id_animal]);
+    }
+    
+    public function deleteAlimentacaoEspecial($id = null, $id_animal = null){
+        $this->delete($id, 'AlimentacoesEspeciais', 'Alimentação especial');
+        return $this->redirect(['action' => 'edit', $id_animal]);
+    }
+    
+    public function deleteDeficienciaFisica($id = null, $id_animal = null){
+        $this->delete($id, 'DeficienciasFisicas', 'Deficiência física');
+        return $this->redirect(['action' => 'edit', $id_animal]);
+    }
+    
+    public function deleteMedicacao($id = null, $id_animal = null){
+        $this->delete($id, 'Medicacoes', 'Medicacao');
         return $this->redirect(['action' => 'edit', $id_animal]);
     }
 

@@ -22,7 +22,7 @@
                 echo $this->Form->control('uso', ['label'=>'Uso', 'required'=>'required']);
                 echo $this->Form->control('dosagem', ['label'=>'Dosagem', 'required'=>'required']);
                 echo $this->Form->control('frequencia', ['label'=>'Frequência', 'required'=>'required']);
-                echo $this->Form->control('continuo', ['label'=>'Contínuo', 'type'=>'checkbox', 'required'=>'required']);
+                echo $this->Form->control('continuo', ['label'=>'Contínuo', 'type'=>'checkbox']);
                 echo $this->Form->control('inicio', ['label'=>'Início', 'type'=>'date', 'required'=>'required']);
                 echo $this->Form->control('termino', ['label'=>'Término', 'type'=>'date', 'required'=>'required']);
                 echo $this->Form->button(__('Submit'));
