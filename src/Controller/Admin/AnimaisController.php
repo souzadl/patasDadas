@@ -183,7 +183,8 @@ class AnimaisController extends AppController {
         //return $this->redirect(['action' => 'index']);
     }
     
-    public function deleteHistoricoPeso($id = null, $id_animal = null){
+    public function deleteHistoricoPeso($id = null, $id_animal){
+        //$ids = explode('#', $idString);
         $this->delete($id, 'HistoricosPeso', 'Histórico peso');
         return $this->redirect(['action' => 'edit', $id_animal]);
     }
