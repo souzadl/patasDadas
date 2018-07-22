@@ -18,7 +18,7 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\DoencasCronica[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\DoencasCronica findOrCreate($search, callable $callback = null, $options = [])
  */
-class DoencasCronicasTable extends Table
+class DoencasCronicasTable extends BaseTable
 {
 
     /**
@@ -34,6 +34,12 @@ class DoencasCronicasTable extends Table
         $this->setTable('doencas_cronicas');
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
+        
+        $this->belongsTo('Prontuarios', [
+            'foreignKey' => 'prontuario_id',
+            'joinType' => 'INNER'
+        ]);       
+        
     }
 
     /**
@@ -61,5 +67,10 @@ class DoencasCronicasTable extends Table
         return $validator;
     }
 
-
+    public function buildRules(RulesChecker $rules) {
+        $rules = parent::buildRules($rules);
+        $rules->add($rules->isUnique(['descricao', 'prontuario_id']));
+        $rules->add($rules->existsIn(['prontuario_id'], 'Prontuarios'));
+        return $rules;
+    }
 }

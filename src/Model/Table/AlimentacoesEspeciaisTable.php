@@ -20,7 +20,7 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\AlimentacoesEspeciai[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\AlimentacoesEspeciai findOrCreate($search, callable $callback = null, $options = [])
  */
-class AlimentacoesEspeciaisTable extends Table
+class AlimentacoesEspeciaisTable extends BaseTable
 {
 
     /**
@@ -72,6 +72,8 @@ class AlimentacoesEspeciaisTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
+        $rules = parent::buildRules($rules);
+        $rules->add($rules->isUnique(['descricao', 'prontuario_id']));
         $rules->add($rules->existsIn(['prontuario_id'], 'Prontuarios'));
 
         return $rules;

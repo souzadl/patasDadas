@@ -39,6 +39,9 @@ class ProntuariosTable extends Table {
         $this->hasMany('alimentacoesespeciais');
         $this->hasMany('deficienciasfisicas');
         $this->hasMany('medicacoes');
+        $this->hasMany('serestos');
+        $this->hasMany('vermifugos');
+        $this->hasMany('vacinas');
     }
 
     /**

@@ -15,10 +15,10 @@
             </div>           
             <div class="modal-body">
                 <?php 
-                echo $this->Form->create('', ['action'=>'addVacina']);
+                echo $this->Form->create('', ['action'=>'addSeresto']);
                 echo $this->Form->control('id_animal', ['type'=>'hidden', 'value'=>$animai->id_animal]);
                 echo $this->Form->control('prontuario_id', ['type'=>'hidden', 'value'=>$prontuario->id ?? 0]);
-                echo $this->Form->control('data', ['label'=>'Data', 'type'=>'date', 'required'=>'required']);
+                echo $this->Form->control('data_aplicacao', ['label'=>'Data', 'type'=>'date', 'required'=>'required']);
                 echo $this->Form->button(__('Submit'));
                 echo $this->Form->end()
                 ?>

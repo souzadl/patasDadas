@@ -99,6 +99,7 @@ class MedicacoesTable extends BaseTable
      */
     public function buildRules(RulesChecker $rules)
     {
+        $rules = parent::buildRules($rules);
         $rules->add($rules->existsIn(['prontuario_id'], 'Prontuarios'));
         $rules->add(
             function($entity, $options){

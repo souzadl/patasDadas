@@ -19,7 +19,7 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\HistoricosPeso[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\HistoricosPeso findOrCreate($search, callable $callback = null, $options = [])
  */
-class HistoricosPesoTable extends Table {
+class HistoricosPesoTable extends BaseTable {
 
     /**
      * Initialize method
@@ -67,5 +67,12 @@ class HistoricosPesoTable extends Table {
         return $validator;
     }
 
+    public function buildRules(RulesChecker $rules)
+    {
+        $rules = parent::buildRules($rules);
+        $rules->add($rules->existsIn(['prontuario_id'], 'Prontuarios'));
+
+        return $rules;
+    }
 
 }

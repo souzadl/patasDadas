@@ -7,20 +7,21 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * DeficienciasFisicas Model
+ * Vermifugos Model
  *
  * @property \App\Model\Table\ProntuariosTable|\Cake\ORM\Association\BelongsTo $Prontuarios
+ * @property \App\Model\Table\AnimaisTable|\Cake\ORM\Association\BelongsToMany $Animais
  *
- * @method \App\Model\Entity\DeficienciasFisica get($primaryKey, $options = [])
- * @method \App\Model\Entity\DeficienciasFisica newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\DeficienciasFisica[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\DeficienciasFisica|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\DeficienciasFisica|bool saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\DeficienciasFisica patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\DeficienciasFisica[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\DeficienciasFisica findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\Vermifugo get($primaryKey, $options = [])
+ * @method \App\Model\Entity\Vermifugo newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\Vermifugo[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\Vermifugo|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Vermifugo|bool saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Vermifugo patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\Vermifugo[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\Vermifugo findOrCreate($search, callable $callback = null, $options = [])
  */
-class DeficienciasFisicasTable extends BaseTable
+class VermifugosTable extends BaseTable
 {
 
     /**
@@ -33,13 +34,18 @@ class DeficienciasFisicasTable extends BaseTable
     {
         parent::initialize($config);
 
-        $this->setTable('deficiencias_fisicas');
+        $this->setTable('vermifugos');
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
         $this->belongsTo('Prontuarios', [
             'foreignKey' => 'prontuario_id',
             'joinType' => 'INNER'
+        ]);
+        $this->belongsToMany('Animais', [
+            'foreignKey' => 'vermifugo_id',
+            'targetForeignKey' => 'animai_id',
+            'joinTable' => 'animais_vermifugos'
         ]);
     }
 
@@ -56,9 +62,14 @@ class DeficienciasFisicasTable extends BaseTable
             ->allowEmpty('id', 'create');
 
         $validator
-            ->scalar('descricao')
-            ->maxLength('descricao', 200)
-            ->allowEmpty('descricao');
+            ->date('data_aplicacao')
+            ->requirePresence('data_aplicacao', 'create')
+            ->notEmpty('data_aplicacao');
+
+        $validator
+            ->scalar('nome')
+            ->maxLength('nome', 45)
+            ->allowEmpty('nome');
 
         return $validator;
     }
@@ -73,11 +84,9 @@ class DeficienciasFisicasTable extends BaseTable
     public function buildRules(RulesChecker $rules)
     {
         $rules = parent::buildRules($rules);
-        $rules->add($rules->isUnique(['descricao', 'prontuario_id']));
+        $rules->add($rules->isUnique(['data_aplicacao', 'prontuario_id']));
         $rules->add($rules->existsIn(['prontuario_id'], 'Prontuarios'));
 
         return $rules;
     }
-
-
 }

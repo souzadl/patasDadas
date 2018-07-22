@@ -7,20 +7,21 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * DeficienciasFisicas Model
+ * Vacinas Model
  *
  * @property \App\Model\Table\ProntuariosTable|\Cake\ORM\Association\BelongsTo $Prontuarios
+ * @property \App\Model\Table\AnimaisTable|\Cake\ORM\Association\BelongsToMany $Animais
  *
- * @method \App\Model\Entity\DeficienciasFisica get($primaryKey, $options = [])
- * @method \App\Model\Entity\DeficienciasFisica newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\DeficienciasFisica[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\DeficienciasFisica|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\DeficienciasFisica|bool saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\DeficienciasFisica patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\DeficienciasFisica[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\DeficienciasFisica findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\Vacina get($primaryKey, $options = [])
+ * @method \App\Model\Entity\Vacina newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\Vacina[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\Vacina|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Vacina|bool saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Vacina patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\Vacina[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\Vacina findOrCreate($search, callable $callback = null, $options = [])
  */
-class DeficienciasFisicasTable extends BaseTable
+class VacinasTable extends BaseTable
 {
 
     /**
@@ -33,7 +34,7 @@ class DeficienciasFisicasTable extends BaseTable
     {
         parent::initialize($config);
 
-        $this->setTable('deficiencias_fisicas');
+        $this->setTable('vacinas');
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
@@ -56,9 +57,14 @@ class DeficienciasFisicasTable extends BaseTable
             ->allowEmpty('id', 'create');
 
         $validator
-            ->scalar('descricao')
-            ->maxLength('descricao', 200)
-            ->allowEmpty('descricao');
+            ->date('data_aplicacao')
+            ->requirePresence('data_aplicacao', 'create')
+            ->notEmpty('data_aplicacao');
+
+        $validator
+            ->scalar('nome')
+            ->maxLength('nome', 45)
+            ->allowEmpty('nome');
 
         return $validator;
     }
@@ -73,11 +79,9 @@ class DeficienciasFisicasTable extends BaseTable
     public function buildRules(RulesChecker $rules)
     {
         $rules = parent::buildRules($rules);
-        $rules->add($rules->isUnique(['descricao', 'prontuario_id']));
+        $rules->add($rules->isUnique(['data_aplicacao', 'nome', 'prontuario_id']));
         $rules->add($rules->existsIn(['prontuario_id'], 'Prontuarios'));
 
         return $rules;
     }
-
-
 }

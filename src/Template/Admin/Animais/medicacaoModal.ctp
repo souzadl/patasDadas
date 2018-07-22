@@ -15,7 +15,7 @@
             </div>           
             <div class="modal-body">
                 <?php 
-                echo $this->Form->create('', ['action'=>'addMedicacao']);
+                echo $this->Form->create('', ['action'=>'addMedicacao', 'id'=>'medicacaoForm']);
                 echo $this->Form->control('id_animal', ['type'=>'hidden', 'value'=>$animai->id_animal]);
                 echo $this->Form->control('prontuario_id', ['type'=>'hidden', 'value'=>$prontuario->id ?? 0]);
                 echo $this->Form->control('descricao', ['label'=>'Medicação', 'required'=>'required']);

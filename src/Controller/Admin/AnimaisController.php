@@ -39,7 +39,10 @@ class AnimaisController extends AppController {
                 'DoencasCronicas', 
                 'AlimentacoesEspeciais', 
                 'DeficienciasFisicas', 
-                'Medicacoes']
+                'Medicacoes',
+                'Serestos',
+                'Vermifugos',
+                'Vacinas']
         ]); 
         
         $this->set('animai', $animal);
@@ -122,6 +125,18 @@ class AnimaisController extends AppController {
         $this->addGenerico('Medicacoes', 'Medicação');
     }
     
+    public function addSeresto(){
+        $this->addGenerico('Serestos', 'Seresto');
+    }
+    
+    public function addVermifugo(){
+        $this->addGenerico('Vermifugos', 'Vermífugo');
+    }
+    
+    public function addVacina(){
+        $this->addGenerico('Vacinas', 'Vacína');
+    }
+    
     private function addGenerico($model, $label){
         $this->autoRender = false;
         $idAnimal = $this->request->getData('id_animal');
@@ -137,7 +152,7 @@ class AnimaisController extends AppController {
             if($this->$model->save($entidade)){
                 $this->Flash->success(__($label.' salva.'));
                 $retorno['status'] = 'success';
-                $retorno['redirect'] = $this->redirect(['action' => 'edit', $idAnimal]);
+                //$retorno['redirect'] = $this->redirect(['action' => 'edit', $idAnimal]);
                 echo json_encode($retorno);
                 //return $this->redirect(['action' => 'edit', $idAnimal]); 
             }else{
