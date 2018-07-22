@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Controller\AppController;
+use Cake\I18n\Time;
 
 /**
  * Animais Controller
@@ -42,14 +43,54 @@ class AnimaisController extends AppController {
                 'Medicacoes',
                 'Serestos',
                 'Vermifugos',
-                'Vacinas']
+                'Vacinas',
+                'AlteracoesSaudes']
         ]); 
+        
+        $prontuario->proximoSeresto = $this->getProximoSeresto($prontuario->serestos);
+        $prontuario->proximaSerestoCor = $this->getProximaDataCor($prontuario->proximoSeresto);
+        $prontuario->proximaVacina = $this->getProximaVacina($prontuario->vacinas);
+        $prontuario->proximaVacinaCor = $this->getProximaDataCor($prontuario->proximaVacina);
         
         $this->set('animai', $animal);
         $this->set('padrinhos', $this->padrinhos);        
         $this->set('prontuario', $prontuario);  
         $this->set('action', $this->request->getParam('action'));
         parent::render($view, $layout);
+    }
+    
+    private function getProximaDataCor(Time $data){
+        $cor = 'green';
+        if($data->isPast()){
+            $cor = 'red';
+        }
+        if($data->isThisMonth()){
+            $cor = 'yellow';
+        }
+        return $cor;
+    }
+    
+    private function getProximoSeresto($serestos){
+        $ultimo = end($serestos);
+        $data = '';
+        if($ultimo){
+            $data = $ultimo->data_aplicacao;           
+        } 
+        $proximo = new Time($data);
+        $proximo->addMonth(2);
+        return $proximo;
+    }
+    
+    private function getProximaVacina($vacinas){
+        $ultimo = end($vacinas);
+        $data = '';
+        if($ultimo){
+            $data = $ultimo->data_aplicacao;           
+        }        
+        $proximo = new Time($data);
+        //Regra para a próxima vacina: mais 2 meses
+        $proximo->addMonth(2);
+        return $proximo;        
     }
 
     /**
@@ -137,6 +178,10 @@ class AnimaisController extends AppController {
         $this->addGenerico('Vacinas', 'Vacína');
     }
     
+    public function addAlteracao(){
+        $this->addGenerico('AlteracoesSaudes', 'Alteração de Saúde');
+    }
+    
     private function addGenerico($model, $label){
         $this->autoRender = false;
         $idAnimal = $this->request->getData('id_animal');
@@ -153,18 +198,12 @@ class AnimaisController extends AppController {
                 $this->Flash->success(__($label.' salva.'));
                 $retorno['status'] = 'success';
                 //$retorno['redirect'] = $this->redirect(['action' => 'edit', $idAnimal]);
-                echo json_encode($retorno);
-                //return $this->redirect(['action' => 'edit', $idAnimal]); 
+                echo json_encode($retorno); 
             }else{
                 
                 $retorno['status'] = 'error';
                 $retorno['errors'] = $entidade->getErrors();
                 echo json_encode($retorno);
-                /*foreach ($entidade->getErrors() as $erros){
-                    foreach($erros as $idError=>$descErro){
-                        $this->Flash->error(__($descErro));
-                    }
-                } */
             }
         }                
     }
@@ -237,8 +276,18 @@ class AnimaisController extends AppController {
     }
     
     public function deleteMedicacao($id = null, $id_animal = null){
-        $this->delete($id, 'Medicacoes', 'Medicacao');
+        $this->delete($id, 'Medicacoes', 'Medicação');
         return $this->redirect(['action' => 'edit', $id_animal]);
+    }
+    
+    public function deleteVacina($id = null, $id_animal = null){
+        $this->delete($id, 'Vacinas', 'Vacina');
+        return $this->redirect(['action' => 'edit', $id_animal]);        
+    }
+    
+    public function deleteSeresto($id = null, $id_animal = null){
+        $this->delete($id, 'Serestos', 'Seresto');
+        return $this->redirect(['action' => 'edit', $id_animal]);        
     }
 
 }

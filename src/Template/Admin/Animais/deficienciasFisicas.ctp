@@ -10,9 +10,9 @@
         Deficiências Físicas <a href="#" data-toggle="modal" data-target="#deficienciaFisicaDialog"><i class="fa fa-plus-circle"></i></a>
     </div>
     <div class="card-body">
-        <ul id="listaDeficienciasFisicas">
+        <ul class="list-group">
             <?php if(isset($prontuario->deficienciasfisicas)){ foreach($prontuario->deficienciasfisicas as $deficiencia): ?>                        
-            <li>
+            <li class="list-group-item">
                 <?=$deficiencia->descricao?> 
                 <?= $this->Form->postLink($this->Html->tag('i','',['class'=>'fas fa-trash-alt']),
                     ['action' => 'deleteDeficienciaFisica', $deficiencia->id, $prontuario->id_animal], 

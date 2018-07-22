@@ -10,9 +10,9 @@
         Alimentações Especiais <a href="#" data-toggle="modal" data-target="#alimentacaoEspecialDialog"><i class="fa fa-plus-circle"></i></a>
     </div>
     <div class="card-body">
-        <ul id="listaAlimentacoesEspeciais">
+        <ul class="list-group">
             <?php if(isset($prontuario->alimentacoesespeciais)){ foreach($prontuario->alimentacoesespeciais as $alimentacao): ?>                        
-            <li>
+            <li class="list-group-item">
                 <?=$alimentacao->descricao?> 
                 <?= $this->Form->postLink($this->Html->tag('i','',['class'=>'fas fa-trash-alt']),
                     ['action' => 'deleteAlimentacaoEspecial', $alimentacao->id, $prontuario->id_animal], 
