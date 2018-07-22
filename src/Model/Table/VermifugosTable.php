@@ -42,11 +42,6 @@ class VermifugosTable extends BaseTable
             'foreignKey' => 'prontuario_id',
             'joinType' => 'INNER'
         ]);
-        $this->belongsToMany('Animais', [
-            'foreignKey' => 'vermifugo_id',
-            'targetForeignKey' => 'animai_id',
-            'joinTable' => 'animais_vermifugos'
-        ]);
     }
 
     /**

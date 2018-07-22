@@ -12,7 +12,7 @@
             <h5 class="mb-0">
                 <i class="fa fa-circle fa-fw" style="color: <?= ($alteracoes->status == 'P') ? 'yellow' : 'green'?>;"></i>
                 <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse<?=$alteracoes->id?>" aria-expanded="false" aria-controls="collapse<?=$alteracoes->id?>">
-                  <?=substr($alteracoes->descricao, 0, 10).'...'?>
+                    <?=$alteracoes->descricao?>
                 </button>
                 <?= $this->Form->postLink($this->Html->tag('i','',['class'=>'fas fa-trash-alt']),
                     ['action' => 'deleteAlteracao', $alteracoes->id, $prontuario->id_animal], 
@@ -22,7 +22,11 @@
 
         <div id="collapse<?=$alteracoes->id?>" class="collapse" aria-labelledby="heading<?=$alteracoes->id?>" data-parent="#accordion">
             <div class="card-body">
-                teste
+                <?=($alteracoes->status == 'P') ? 'Pendente' : 'Resolvido'?>
+                <?php if(isset($alteracoes->alteracoessaudesobservacoes)){  foreach($alteracoes->alteracoessaudesobservacoes as $obs):?>
+                <?=$obs->data?>
+                <?=$obs->obs?>
+                <?php endforeach;}?>
             </div>
         </div>
     </div>

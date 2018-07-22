@@ -12,14 +12,39 @@
     <div class="card-body">     
         <div class="row">
             <div class="col">
-                <?= $this->Form->control('apto_adocao', ['type'=>'checkbox', 'label'=>'Apto para Adoção']);?>
-                <?= $this->Form->control('apto_evento', ['type'=>'checkbox', 'label'=>'Apto para Evento']);?>
+                <?= $this->Form->control('apto_adocao', ['type'=>'checkbox', 'label'=>'Apto para Adoção']);?>                
             </div>
             <div class="col">
-                <?= $this->Form->control('castrado_pelo_patas', ['label'=>'Castrado Pelo Patas', 'type'=>'checkbox']) ?>
-                <?= $this->Form->control('clinica', ['label'=>'Clínica', 'type'=>'select']) ?>
+                <?= $this->Form->control('apto_evento', ['type'=>'checkbox', 'label'=>'Apto para Evento']);?>
             </div>
         </div>    
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-header">
+                        Alterações de Saúde <a href="#" data-toggle="modal" data-target="#alteracaoDialog"><i class="fa fa-plus-circle"></i></a>
+                    </div>
+                    <div class="card-body">
+                        <?php include_once "alteracoesSaude.ctp"?>                      
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card">
+                    <div class="card-header">
+                        Castração
+                    </div>
+                    <div class="card-body">
+                        <?= $this->Form->control('castrado', ['type'=>'radio', 
+                            'options'=>['P' => 'Pelo Patas', 'T' => 'Por Terceiro'],
+                            'templates' => ['nestingLabel'=>'{{hidden}}<div class="custom-control custom-radio">{{input}}<label{{attrs}} class="custom-control-label">{{text}}</label></div>']
+                        ]) ?>
+                        <?= $this->Form->control('clinica_castracao', ['label'=>'Clínica', 'type'=>'select']) ?>
+                        <?= $this->Form->control('data_castracao', ['label' => 'Data Castração', 'type'=>'date']) ?>
+                    </div>
+                </div>
+            </div>
+        </div> 
         <div class="row">
             <div class="col">
                 <div class="card">
@@ -67,7 +92,7 @@
                         Vermífugo <a href="#" data-toggle="modal" data-target="#vermifugoDialog"><i class="fa fa-plus-circle"></i></a>
                     </div>
                     <div class="card-body">
-                        <i class="fa fa-circle fa-fw" style="color: yellow;"></i> Próxima: 00/00/0000
+                        <i class="fa fa-circle fa-fw" style="color: <?=$prontuario->proximoVermifugoCor?>;"></i> Próxima: <?=$prontuario->proximoVermifugo->format('d/m/Y')?>
                         <ul class="list-group">
                             <?php if(isset($prontuario->vermifugos)){ foreach ($prontuario->vermifugos as $vermifugo):?>
                             <li class="list-group-item">
@@ -80,17 +105,7 @@
                         </ul>                       
                     </div>
                 </div>
-            </div>
-            <div class="col">
-                <div class="card">
-                    <div class="card-header">
-                        Alterações de Saúde <a href="#" data-toggle="modal" data-target="#alteracaoDialog"><i class="fa fa-plus-circle"></i></a>
-                    </div>
-                    <div class="card-body">
-                        <?php include_once "alteracoesSaude.ctp"?>                      
-                    </div>
-                </div>
-            </div>            
+            </div>          
 
         </div>
     </div>

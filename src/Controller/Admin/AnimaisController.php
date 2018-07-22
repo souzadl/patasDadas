@@ -36,7 +36,10 @@ class AnimaisController extends AppController {
     private function renderForm($animal, $view = 'form', $layout = null) {
         $prontuario = $this->Prontuarios->find('byAnimal', [
             'id_animal' => $animal->id_animal,
-            'contain' => ['HistoricosPeso' => ['sort'=>['HistoricosPeso.data_afericao']], 
+            'contain' => [
+                'HistoricosPeso' => [
+                    'sort' => ['HistoricosPeso.data_afericao']
+                ], 
                 'DoencasCronicas', 
                 'AlimentacoesEspeciais', 
                 'DeficienciasFisicas', 
@@ -44,13 +47,16 @@ class AnimaisController extends AppController {
                 'Serestos',
                 'Vermifugos',
                 'Vacinas',
-                'AlteracoesSaudes']
+                'AlteracoesSaudes' => ['AlteracoesSaudesObservacoes']
+            ]
         ]); 
         
-        $prontuario->proximoSeresto = $this->getProximoSeresto($prontuario->serestos);
+        $prontuario->proximoSeresto = $this->getProximaData($prontuario->serestos);
         $prontuario->proximaSerestoCor = $this->getProximaDataCor($prontuario->proximoSeresto);
-        $prontuario->proximaVacina = $this->getProximaVacina($prontuario->vacinas);
+        $prontuario->proximaVacina = $this->getProximaData($prontuario->vacinas);
         $prontuario->proximaVacinaCor = $this->getProximaDataCor($prontuario->proximaVacina);
+        $prontuario->proximoVermifugo = $this->getProximaData($prontuario->vermifugos);
+        $prontuario->proximoVermifugoCor = $this->getProximaDataCor($prontuario->proximoVermifugo);
         
         $this->set('animai', $animal);
         $this->set('padrinhos', $this->padrinhos);        
@@ -70,29 +76,17 @@ class AnimaisController extends AppController {
         return $cor;
     }
     
-    private function getProximoSeresto($serestos){
-        $ultimo = end($serestos);
+    private function getProximaData($entidades){
+        $ultimo = end($entidades);
         $data = '';
         if($ultimo){
             $data = $ultimo->data_aplicacao;           
-        } 
+        }
         $proximo = new Time($data);
         $proximo->addMonth(2);
         return $proximo;
     }
     
-    private function getProximaVacina($vacinas){
-        $ultimo = end($vacinas);
-        $data = '';
-        if($ultimo){
-            $data = $ultimo->data_aplicacao;           
-        }        
-        $proximo = new Time($data);
-        //Regra para a próxima vacina: mais 2 meses
-        $proximo->addMonth(2);
-        return $proximo;        
-    }
-
     /**
      * View method
      *
@@ -288,6 +282,11 @@ class AnimaisController extends AppController {
     public function deleteSeresto($id = null, $id_animal = null){
         $this->delete($id, 'Serestos', 'Seresto');
         return $this->redirect(['action' => 'edit', $id_animal]);        
+    }
+    
+    public function deleteVermifugo($id = null, $id_animal = null){
+        $this->delete($id, 'Vermifugos', 'Vermífugo');
+        return $this->redirect(['action' => 'edit', $id_animal]);          
     }
 
 }

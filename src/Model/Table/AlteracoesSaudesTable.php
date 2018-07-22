@@ -41,6 +41,8 @@ class AlteracoesSaudesTable extends BaseTable
             'foreignKey' => 'prontuario_id',
             'joinType' => 'INNER'
         ]);
+        
+        $this->hasMany('AlteracoesSaudesObservacoes');
     }
 
     /**
