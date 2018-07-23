@@ -6,6 +6,7 @@ use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Cake\I18n\Time;
 
 /**
  * Prontuarios Model
@@ -20,6 +21,10 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\Prontuario findOrCreate($search, callable $callback = null, $options = [])
  */
 class ProntuariosTable extends Table {
+    const VALIDADE_SERESTO = 8; //MESES
+    const VALIDADE_VERMIFUGO = 4; //MESES
+    const VALIDADE_VACINA_ADULTO = 12; //MESES
+    const VALIDADE_VACINA_FILHOTE = 21; //DIAS
 
     /**
      * Initialize method
@@ -75,6 +80,35 @@ class ProntuariosTable extends Table {
         $id_animal = $options['id_animal'];
         $prontuario = $query->where(['id_animal' => $id_animal]);
         return $prontuario->first();
+    }
+    
+    
+    private function proximo($entidades, $inc, $tipo='meses'){
+        $data = (count($entidades) > 0) ? end($entidades)->data_aplicacao : '';
+        $proximo = new Time($data);
+        if($tipo === 'meses'){
+            $proximo->addMonth($inc);
+        }else{
+            $proximo->addDays($inc);
+        }
+        return $proximo;
+    }
+    
+    public function proximoSeresto($entidades){
+        return $this->proximo($entidades, ProntuariosTable::VALIDADE_SERESTO);
+    }
+    
+    public function proximaVacina($entidades, $filhote = false){
+        if($filhote){
+            $data = $this->proximo($entidades, ProntuariosTable::VALIDADE_VACINA_FILHOTE, 'dias');
+        }else{
+            $data = $this->proximo($entidades, ProntuariosTable::VALIDADE_VACINA_ADULTO);
+        }
+        return $data;
+    }
+    
+    public function proximoVermifugo($entidades){
+        return $this->proximo($entidades, ProntuariosTable::VALIDADE_VERMIFUGO);
     }
 
 }

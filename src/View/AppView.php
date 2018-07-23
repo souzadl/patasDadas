@@ -38,6 +38,7 @@ class AppView extends View
     {
         $this->loadHelper('Paginator', ['templates' => 'paginator-templates']);
         $this->loadHelper('Form', ['templates' => 'form-templates']);
+        $this->loadHelper('CorAviso');
     }
     
     protected function SimOuNao($var){

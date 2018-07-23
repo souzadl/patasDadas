@@ -20,6 +20,7 @@ class AnimaisController extends AppController {
         $this->loadModel('Padrinhos');
         $this->loadModel('Prontuarios');                
         $this->padrinhos = $this->Padrinhos->find('list')->order('nome');
+        
     }
 
     /**
@@ -51,12 +52,9 @@ class AnimaisController extends AppController {
             ]
         ]); 
         
-        $prontuario->proximoSeresto = $this->getProximaData($prontuario->serestos);
-        $prontuario->proximaSerestoCor = $this->getProximaDataCor($prontuario->proximoSeresto);
-        $prontuario->proximaVacina = $this->getProximaData($prontuario->vacinas);
-        $prontuario->proximaVacinaCor = $this->getProximaDataCor($prontuario->proximaVacina);
-        $prontuario->proximoVermifugo = $this->getProximaData($prontuario->vermifugos);
-        $prontuario->proximoVermifugoCor = $this->getProximaDataCor($prontuario->proximoVermifugo);
+        $prontuario->proximoSeresto = $this->Prontuarios->proximoSeresto($prontuario->serestos);
+        $prontuario->proximaVacina = $this->Prontuarios->proximaVacina($prontuario->vacinas, true);
+        $prontuario->proximoVermifugo = $this->Prontuarios->proximoVermifugo($prontuario->vermifugos);
         
         $this->set('animai', $animal);
         $this->set('padrinhos', $this->padrinhos);        
@@ -64,28 +62,7 @@ class AnimaisController extends AppController {
         $this->set('action', $this->request->getParam('action'));
         parent::render($view, $layout);
     }
-    
-    private function getProximaDataCor(Time $data){
-        $cor = 'green';
-        if($data->isPast()){
-            $cor = 'red';
-        }
-        if($data->isThisMonth()){
-            $cor = 'yellow';
-        }
-        return $cor;
-    }
-    
-    private function getProximaData($entidades){
-        $ultimo = end($entidades);
-        $data = '';
-        if($ultimo){
-            $data = $ultimo->data_aplicacao;           
-        }
-        $proximo = new Time($data);
-        $proximo->addMonth(2);
-        return $proximo;
-    }
+  
     
     /**
      * View method

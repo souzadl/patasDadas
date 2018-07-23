@@ -52,7 +52,7 @@
                         Vacinas <a href="#" data-toggle="modal" data-target="#vacinaDialog"><i class="fa fa-plus-circle"></i></a>
                     </div>
                     <div class="card-body">
-                        <i class="fa fa-circle fa-fw" style="color: <?=$prontuario->proximaVacinaCor?>;"></i> Próxima:  <?=$prontuario->proximaVacina->format('d/m/Y')?>
+                        <i class="fa fa-circle fa-fw" style="color: <?=$this->CorAviso->getNome($prontuario->proximaVacina)?>;"></i> Próxima:  <?=$prontuario->proximaVacina->format('d/m/Y')?>
                         <ul class="list-group">
                             <?php if(isset($prontuario->vacinas)){ foreach ($prontuario->vacinas as $vacina):?>
                             <li class="list-group-item">
@@ -71,8 +71,8 @@
                     <div class="card-header">
                         Seresto <a href="#" data-toggle="modal" data-target="#serestoDialog"><i class="fa fa-plus-circle"></i></a>
                     </div>
-                    <div class="card-body">
-                        <i class="fa fa-circle fa-fw" style="color: <?=$prontuario->proximaSerestoCor?>;"></i> Próxima: <?=$prontuario->proximoSeresto->format('d/m/Y')?>
+                    <div class="card-body"> 
+                        <i class="fa fa-circle fa-fw" style="color: <?=$this->CorAviso->getNome($prontuario->proximoSeresto)?>;"></i> Próxima: <?=$prontuario->proximoSeresto->format('d/m/Y')?>
                         <ul class="list-group">
                             <?php if(isset($prontuario->serestos)){ foreach ($prontuario->serestos as $seresto):?>
                             <li class="list-group-item">
@@ -92,7 +92,7 @@
                         Vermífugo <a href="#" data-toggle="modal" data-target="#vermifugoDialog"><i class="fa fa-plus-circle"></i></a>
                     </div>
                     <div class="card-body">
-                        <i class="fa fa-circle fa-fw" style="color: <?=$prontuario->proximoVermifugoCor?>;"></i> Próxima: <?=$prontuario->proximoVermifugo->format('d/m/Y')?>
+                        <i class="fa fa-circle fa-fw" style="color: <?=$this->CorAviso->getNome($prontuario->proximoVermifugo)?>;"></i> Próxima: <?=$prontuario->proximoVermifugo->format('d/m/Y')?>
                         <ul class="list-group">
                             <?php if(isset($prontuario->vermifugos)){ foreach ($prontuario->vermifugos as $vermifugo):?>
                             <li class="list-group-item">
