@@ -1,0 +1,1 @@
+ALTER TABLE `animais` ADD `filhote` BOOLEAN NOT NULL AFTER `data_nascimento`;

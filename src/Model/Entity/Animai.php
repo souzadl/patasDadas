@@ -56,6 +56,7 @@ class Animai extends Entity
         'tipo' => true,
         'nome' => true,
         'data_nascimento' => true,
+        'filhote' => true,
         'data_aparicao' => true,
         'local_aparicao' => true,
         'sexo' => true,

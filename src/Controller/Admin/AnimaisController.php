@@ -53,7 +53,7 @@ class AnimaisController extends AppController {
         ]); 
         
         $prontuario->proximoSeresto = $this->Prontuarios->proximoSeresto($prontuario->serestos);
-        $prontuario->proximaVacina = $this->Prontuarios->proximaVacina($prontuario->vacinas, true);
+        $prontuario->proximaVacina = $this->Prontuarios->proximaVacina($prontuario->vacinas, $animal->filhote);
         $prontuario->proximoVermifugo = $this->Prontuarios->proximoVermifugo($prontuario->vermifugos);
         
         $this->set('animai', $animal);
