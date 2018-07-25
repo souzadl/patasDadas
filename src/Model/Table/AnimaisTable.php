@@ -204,6 +204,12 @@ class AnimaisTable extends Table {
         return $validator;
     }
 
+    
+    public function findByCondicao($query, array $options){
+        $query
+            ->where(['Animais.condicao' => $options['condicao']]);
+        return $query; 
+    }
 
 
 }

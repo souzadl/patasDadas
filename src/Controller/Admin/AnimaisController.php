@@ -30,6 +30,9 @@ class AnimaisController extends AppController {
      */
     public function index() {
         $this->paginate['order'] = ['Animais.nome'];
+        if(is_array($this->request->getParam('pass')) and isset($this->request->getParam('pass')[0])){
+            $this->paginate['finder'] = ['ByCondicao' => ['condicao' => $this->request->getParam('pass')[0]]];
+        }
         $animais = $this->paginate($this->Animais);        
         $this->set(compact('animais'));
     }

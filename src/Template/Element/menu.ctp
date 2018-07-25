@@ -21,7 +21,17 @@
         <?php if($login): ?>                      
             <li class="nav-item active"><?= $this->Html->link(__('Usuários'), ['controller' => 'Users', 'action' => 'index'], ['class' => 'nav-link']) ?></li>
             <li class="nav-item active"><?= $this->Html->link(__('Conteúdos'), ['controller' => 'Conteudos', 'action' => 'edit', 1], ['class' => 'nav-link']) ?></li>            
-            <li class="nav-item active"><?= $this->Html->link(__('Animais'), ['controller' => 'Animais', 'action' => 'index'], ['class' => 'nav-link']) ?></li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="animais" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?= _('Animais')?></a> 
+                <div class="dropdown-menu" aria-labelledby="animais">
+                    <?= $this->Html->link(__('Todos'), ['controller' => 'Animais', 'action' => 'index'], ['class' => 'nav-link']) ?>
+                    <?= $this->Html->link(__('Adotados'), ['controller' => 'Animais', 'action' => 'index', 'A'], ['class' => 'nav-link']) ?>
+                    <?= $this->Html->link(__('Disponíveis'), ['controller' => 'Animais', 'action' => 'index', 'DI'], ['class' => 'nav-link']) ?>
+                    <?= $this->Html->link(__('Indisponível'), ['controller' => 'Animais', 'action' => 'index', 'I'], ['class' => 'nav-link']) ?>
+                    <?= $this->Html->link(__('Desaparecidos'), ['controller' => 'Animais', 'action' => 'index', 'D'], ['class' => 'nav-link']) ?>
+                    <?= $this->Html->link(__('Óbito'), ['controller' => 'Animais', 'action' => 'index', 'O'], ['class' => 'nav-link']) ?>
+                </div>
+            </li>
             <li class="nav-item active"><?= $this->Html->link(__('Adoções'), ['controller' => 'Adocoes', 'action' => 'index'], ['class' => 'nav-link']) ?></li>
             <li class="nav-item active"><?= $this->Html->link(__('Apadrinhamento'), ['controller' => 'Apadrinhamentos', 'action' => 'index'], ['class' => 'nav-link']) ?></li>
             <li class="nav-item active"><?= $this->Html->link(__('Pedidos'), ['controller' => 'Pedidos', 'action' => 'index'], ['class' => 'nav-link']) ?></li>
