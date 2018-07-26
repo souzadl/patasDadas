@@ -9,6 +9,27 @@ $(document).ready(function () {
         $('div.error').removeClass('error');
         
     });
+    
+    $('select[name=status_alteracao]').change(function(){
+        var origem = window.location.href;
+        var destino = origem.split("edit")[0];
+        $.post( destino+"editAlteracao", { id: $(this).data('id'), status: $(this).val() })
+            .done(function( data ) {
+                var retorno = JSON.parse(data);
+                if(retorno['status'] === 'success'){                    
+                    window.location.href = origem;
+                }
+            });
+    });
+    
+    $('a[data-toggle=modal], button[data-toggle=modal]').click(function(){
+        var data_id = '';
+        if (typeof $(this).data('id') !== 'undefined') {
+            data_id = $(this).data('id');
+        }
+        $('#codModal').val(data_id);
+    });
+        
   
     $("form").submit(function(e){         
         try{            

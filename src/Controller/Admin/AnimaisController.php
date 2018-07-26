@@ -168,8 +168,24 @@ class AnimaisController extends AppController {
         $this->addGenericoNivel2($this->Alteracoes, $alteracao, 'Alteração de Saúde');
     }
     
+    public function editAlteracao(){
+        $this->autoRender = false;
+        $this->loadModel("Alteracoes"); 
+        //debug($alteracao);
+        $alteracao = $this->Alteracoes->patchEntity($this->Alteracoes->get($this->request->getData('id')), 
+            $this->request->getData());  
+        //debug($alteracao);die();
+        $this->salvarModal($this->Alteracoes, $alteracao, 'Alteração de Saúde');
+    }
+    
     public function addAlteracaoDetalhe(){
-        $this->addGenericoNivel1('AlteracoesDetalhes', 'Detalhe da Alteração de Saúde');
+        $this->autoRender = false;
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $this->loadModel('AlteracoesDetalhes');
+            $entidade = $this->AlteracoesDetalhes->patchEntity($this->AlteracoesDetalhes->newEntity(), 
+                $this->request->getData());               
+            $this->salvarModal($this->AlteracoesDetalhes, $entidade, 'Detalhes Alteração de Saúde');
+        }  
     }
     
     private function addGenericoNivel1($model, $label){
@@ -185,17 +201,21 @@ class AnimaisController extends AppController {
         if ($this->request->is(['patch', 'post', 'put'])) {
             $prontuario = $this->getProntuarioParaAnimal($idAnimal); 
             $entidade->prontuario_id = $prontuario->id;                 
-            $retorno = array();
-            if($model->save($entidade)){
-                $this->Flash->success(__($label.' salva.'));
-                $retorno['status'] = 'success';
-                echo json_encode($retorno); 
-            }else{                
-                $retorno['status'] = 'error';
-                $retorno['errors'] = $entidade->getErrors();
-                echo json_encode($retorno);
-            }
+            $this->salvarModal($model, $entidade, $label);
         }                
+    }
+    
+    private function salvarModal($model, $entidade, $label){
+        $retorno = array();
+        if($model->save($entidade)){
+            $this->Flash->success(__($label.' salva.'));
+            $retorno['status'] = 'success';
+            echo json_encode($retorno); 
+        }else{                
+            $retorno['status'] = 'error';
+            $retorno['errors'] = $entidade->getErrors();
+            echo json_encode($retorno);
+        }        
     }
 
     /**

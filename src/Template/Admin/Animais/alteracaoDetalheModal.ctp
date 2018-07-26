@@ -16,8 +16,7 @@
             <div class="modal-body">
                 <?php 
                 echo $this->Form->create('', ['action'=>'addAlteracaoDetalhe']);
-                echo $this->Form->control('id_animal', ['type'=>'hidden', 'value'=>$animai->id_animal]);
-                echo $this->Form->control('prontuario_id', ['type'=>'hidden', 'value'=>$prontuario->id ?? 0]);
+                echo $this->Form->control('alteracoes_id', ['type'=>'hidden', 'value'=>'', 'id'=>'codModal']);
                 echo $this->Form->control('data', ['label'=>'Data', 'type'=>'date', 'required'=>'required']);
                 echo $this->Form->control('obs', ['label'=>'Observação', 'type'=>'textarea', 'required'=>'required']);
                 echo $this->Form->button(__('Submit'));

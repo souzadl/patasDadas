@@ -27,7 +27,7 @@ class AlteracoesDetalhe extends Entity
     protected $_accessible = [
         'data' => true,
         'obs' => true,
-        'alteracao_id' => true,
+        'alteracoes_id' => true,
         'alteracao' => true
     ];
 }

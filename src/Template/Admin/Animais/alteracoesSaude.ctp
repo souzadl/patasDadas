@@ -23,19 +23,18 @@
 
         <div id="collapse<?=$alteracao->id?>" class="collapse" aria-labelledby="heading<?=$alteracao->id?>" data-parent="#accordion">
             <div class="card-body">
-                <?=$this->Form->Control('status_alteracao',['label'=>'Status','type'=>'select','options'=>['R'=>'Resolvido','P'=>'Pendente'],'value'=>$alteracao->status])?>
-                <a href="#" data-toggle="modal" data-target="#alteracaoDetalheDialog"><i class="fa fa-plus-circle"></i></a>
-                <?php if(isset($alteracao->alteracoes_detalhes)){  foreach($alteracao->alteracoes_detalhes as $detalhe):?>
-                <div class="row">
-                    <div class="col">
-                        <?=$this->Form->Control('data',['value'=>$detalhe->data,'type'=>'date'])?>
-                    </div>
-                    <div class="col">
-                        <?=$this->Form->Control('obs',['value'=>$detalhe->obs])?>
-                    </div>
-                </div>           
-                
-                <?php endforeach;}?>
+                <?=$this->Form->Control('status_alteracao',['data-id'=>$alteracao->id,'label'=>'Status','type'=>'select','options'=>['R'=>'Resolvido','P'=>'Pendente'],'value'=>$alteracao->status])?>
+                <a href="#" data-toggle="modal" data-id="<?=$alteracao->id?>" data-target="#alteracaoDetalheDialog"><i class="fa fa-plus-circle"></i></a>
+                <table class="table">
+                    <?php
+                    echo $this->Html->tableHeaders(['Data', 'Obs']);
+                    if(isset($alteracao->alteracoes_detalhes)){  
+                        foreach($alteracao->alteracoes_detalhes as $detalhe){
+                            echo $this->Html->tableCells([$detalhe->data, $detalhe->obs]);   
+                        }
+                    }
+                    ?>
+                </table>
             </div>
         </div>
     </div>
