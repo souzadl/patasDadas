@@ -51,7 +51,7 @@ class AnimaisController extends AppController {
                 'Serestos',
                 'Vermifugos',
                 'Vacinas',
-                'AlteracoesSaudes' => ['AlteracoesSaudesObservacoes']
+                'Mudancas' => ['Detalhes']
             ]
         ]); 
         
@@ -121,60 +121,64 @@ class AnimaisController extends AppController {
     }
     
     public function addHistoricoPeso(){
-        $this->addGenerico('HistoricosPeso', 'Histórico Peso');
+        $this->addGenericoNivel1('HistoricosPeso', 'Histórico Peso');
     }
     
     public function addDoencaCronica(){
-        $this->addGenerico('DoencasCronicas', 'Doença crônica');
+        $this->addGenericoNivel1('DoencasCronicas', 'Doença crônica');
     }
     
     public function addAlimentacaoEspecial(){
-        $this->addGenerico('AlimentacoesEspeciais', 'Alimentação especial');
+        $this->addGenericoNivel1('AlimentacoesEspeciais', 'Alimentação especial');
     }
     
     public function addDeficienciaFisica(){
-        $this->addGenerico('DeficienciasFisicas', 'Deficiência física');
+        $this->addGenericoNivel1('DeficienciasFisicas', 'Deficiência física');
     }
     
     public function addMedicacao(){
-        $this->addGenerico('Medicacoes', 'Medicação');
+        $this->addGenericoNivel1('Medicacoes', 'Medicação');
     }
     
     public function addSeresto(){
-        $this->addGenerico('Serestos', 'Seresto');
+        $this->addGenericoNivel1('Serestos', 'Seresto');
     }
     
     public function addVermifugo(){
-        $this->addGenerico('Vermifugos', 'Vermífugo');
+        $this->addGenericoNivel1('Vermifugos', 'Vermífugo');
     }
     
     public function addVacina(){
-        $this->addGenerico('Vacinas', 'Vacína');
+        $this->addGenericoNivel1('Vacinas', 'Vacína');
     }
     
     public function addAlteracao(){
-        $this->addGenerico('AlteracoesSaudes', 'Alteração de Saúde');
+        $this->loadModel("Mudancas");
+        $mudanca = $this->Mudancas->patchEntity($this->Mudancas->newEntity(), $this->request->getData());
+        $mudanca->detalhes = array();
+        $mudanca->detalhes[] = $this->Mudancas->Detalhes->patchEntity($this->Mudancas->Detalhes->newEntity(), $this->request->getData());
+        $this->addGenericoNivel2($this->Mudancas, $mudanca, 'Alteração de Saúde');
     }
     
-    private function addGenerico($model, $label){
+    private function addGenericoNivel1($model, $label){
+        $this->loadModel($model);
+        $entidade = $this->$model->patchEntity($this->$model->newEntity(), 
+            $this->request->getData());
+        $this->addGenericoNivel2($this->$model, $entidade, $label);
+    }
+    
+    private function addGenericoNivel2($model, $entidade, $label){
         $this->autoRender = false;
         $idAnimal = $this->request->getData('id_animal');
         if ($this->request->is(['patch', 'post', 'put'])) {
             $prontuario = $this->getProntuarioParaAnimal($idAnimal); 
-            
-            $this->loadModel($model);
-            $entidade = $this->$model->patchEntity($this->$model->newEntity(), 
-                $this->request->getData());
-            $entidade->prontuario_id = $prontuario->id;
-                 
+            $entidade->prontuario_id = $prontuario->id;                 
             $retorno = array();
-            if($this->$model->save($entidade)){
+            if($model->save($entidade)){
                 $this->Flash->success(__($label.' salva.'));
                 $retorno['status'] = 'success';
-                //$retorno['redirect'] = $this->redirect(['action' => 'edit', $idAnimal]);
                 echo json_encode($retorno); 
-            }else{
-                
+            }else{                
                 $retorno['status'] = 'error';
                 $retorno['errors'] = $entidade->getErrors();
                 echo json_encode($retorno);
@@ -267,6 +271,11 @@ class AnimaisController extends AppController {
     public function deleteVermifugo($id = null, $id_animal = null){
         $this->delete($id, 'Vermifugos', 'Vermífugo');
         return $this->redirect(['action' => 'edit', $id_animal]);          
+    }
+    
+    public function deleteAlteracao($id = null, $id_animal = null){
+        $this->delete($id, 'Mudancas', 'Alterações de Saúde');
+        return $this->redirect(['action' => 'edit', $id_animal]);           
     }
 
 }

@@ -47,7 +47,7 @@ class ProntuariosTable extends Table {
         $this->hasMany('serestos');
         $this->hasMany('vermifugos');
         $this->hasMany('vacinas');
-        $this->hasMany('alteracoessaudes');
+        $this->hasMany('mudancas');
     }
 
     /**

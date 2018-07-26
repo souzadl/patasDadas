@@ -7,20 +7,20 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * AlteracoesSaudes Model
+ * Mudancas Model
  *
  * @property \App\Model\Table\ProntuariosTable|\Cake\ORM\Association\BelongsTo $Prontuarios
  *
- * @method \App\Model\Entity\AlteracoesSaude get($primaryKey, $options = [])
- * @method \App\Model\Entity\AlteracoesSaude newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\AlteracoesSaude[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\AlteracoesSaude|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\AlteracoesSaude|bool saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\AlteracoesSaude patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\AlteracoesSaude[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\AlteracoesSaude findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\Mudanca get($primaryKey, $options = [])
+ * @method \App\Model\Entity\Mudanca newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\Mudanca[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\Mudanca|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Mudanca|bool saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Mudanca patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\Mudanca[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\Mudanca findOrCreate($search, callable $callback = null, $options = [])
  */
-class AlteracoesSaudesTable extends BaseTable
+class MudancasTable extends Table
 {
 
     /**
@@ -33,7 +33,7 @@ class AlteracoesSaudesTable extends BaseTable
     {
         parent::initialize($config);
 
-        $this->setTable('alteracoes_saudes');
+        $this->setTable('mudancas');
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
@@ -42,7 +42,9 @@ class AlteracoesSaudesTable extends BaseTable
             'joinType' => 'INNER'
         ]);
         
-        $this->hasMany('AlteracoesSaudesObservacoes');
+        $this->hasMany('Detalhes')
+            ->setForeignKey('mudancas_id')
+            ->setDependent(true);
     }
 
     /**
@@ -79,8 +81,6 @@ class AlteracoesSaudesTable extends BaseTable
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules = parent::buildRules($rules);
-        //$rules->add($rules->isUnique(['data_aplicacao', 'nome', 'prontuario_id']));    
         $rules->add($rules->existsIn(['prontuario_id'], 'Prontuarios'));
 
         return $rules;

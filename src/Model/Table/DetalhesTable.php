@@ -7,20 +7,20 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * AlteracoesSaudesObservacoes Model
+ * Detalhes Model
  *
- * @property \App\Model\Table\AlteracoesSaudesTable|\Cake\ORM\Association\BelongsTo $AlteracoesSaudes
+ * @property \App\Model\Table\MudancasTable|\Cake\ORM\Association\BelongsTo $Mudancas
  *
- * @method \App\Model\Entity\AlteracoesSaudesObservaco get($primaryKey, $options = [])
- * @method \App\Model\Entity\AlteracoesSaudesObservaco newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\AlteracoesSaudesObservaco[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\AlteracoesSaudesObservaco|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\AlteracoesSaudesObservaco|bool saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\AlteracoesSaudesObservaco patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\AlteracoesSaudesObservaco[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\AlteracoesSaudesObservaco findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\Detalhe get($primaryKey, $options = [])
+ * @method \App\Model\Entity\Detalhe newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\Detalhe[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\Detalhe|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Detalhe|bool saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Detalhe patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\Detalhe[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\Detalhe findOrCreate($search, callable $callback = null, $options = [])
  */
-class AlteracoesSaudesObservacoesTable extends BaseTable
+class DetalhesTable extends Table
 {
 
     /**
@@ -33,12 +33,12 @@ class AlteracoesSaudesObservacoesTable extends BaseTable
     {
         parent::initialize($config);
 
-        $this->setTable('alteracoes_saudes_observacoes');
+        $this->setTable('detalhes');
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
-        $this->belongsTo('AlteracoesSaudes', [
-            'foreignKey' => 'alteracoes_saude_id',
+        $this->belongsTo('Mudancas', [
+            'foreignKey' => 'mudancas_id',
             'joinType' => 'INNER'
         ]);
     }
@@ -76,7 +76,7 @@ class AlteracoesSaudesObservacoesTable extends BaseTable
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['alteracoes_saude_id'], 'AlteracoesSaudes'));
+        $rules->add($rules->existsIn(['mudancas_id'], 'Mudancas'));
 
         return $rules;
     }

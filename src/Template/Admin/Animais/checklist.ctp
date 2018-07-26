@@ -19,7 +19,7 @@
             </div>
         </div>    
         <div class="row">
-            <div class="col">
+            <div class="col-7">
                 <div class="card">
                     <div class="card-header">
                         Alterações de Saúde <a href="#" data-toggle="modal" data-target="#alteracaoDialog"><i class="fa fa-plus-circle"></i></a>

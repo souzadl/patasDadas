@@ -4,16 +4,16 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * AlteracoesSaudesObservaco Entity
+ * Mudanca Entity
  *
  * @property int $id
- * @property \Cake\I18n\FrozenDate $data
- * @property string $obs
- * @property int $alterações_saude_id
+ * @property string $descricao
+ * @property string $status
+ * @property int $prontuario_id
  *
- * @property \App\Model\Entity\AlteracoesSaude $alteracoes_saude
+ * @property \App\Model\Entity\Prontuario $prontuario
  */
-class AlteracoesSaudesObservaco extends Entity
+class Mudanca extends Entity
 {
 
     /**
@@ -26,9 +26,9 @@ class AlteracoesSaudesObservaco extends Entity
      * @var array
      */
     protected $_accessible = [
-        'data' => true,
-        'obs' => true,
-        'alteracoes_saude_id' => true,
-        'alteracoes_saude' => true
+        'descricao' => true,
+        'status' => true,
+        'prontuario_id' => true,
+        'prontuario' => true
     ];
 }
