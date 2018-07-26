@@ -33,6 +33,7 @@
     <?php include_once 'serestoModal.ctp';?>
     <?php include_once 'vermifugoModal.ctp';?>
     <?php include_once 'alteracaoModal.ctp';?>
+    <?php include_once 'alteracaoDetalheModal.ctp';?>
 
     <?= $this->Form->create($animai) ?>
     <fieldset <?= (isset($action) and $action === 'view') ? 'disabled' : ''; ?> > 

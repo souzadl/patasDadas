@@ -7,20 +7,18 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * Mudancas Model
+ * Alteracoes Model
  *
- * @property \App\Model\Table\ProntuariosTable|\Cake\ORM\Association\BelongsTo $Prontuarios
- *
- * @method \App\Model\Entity\Mudanca get($primaryKey, $options = [])
- * @method \App\Model\Entity\Mudanca newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\Mudanca[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\Mudanca|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Mudanca|bool saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Mudanca patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\Mudanca[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\Mudanca findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\Alteraco get($primaryKey, $options = [])
+ * @method \App\Model\Entity\Alteraco newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\Alteraco[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\Alteraco|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Alteraco|bool saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Alteraco patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\Alteraco[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\Alteraco findOrCreate($search, callable $callback = null, $options = [])
  */
-class MudancasTable extends Table
+class AlteracoesTable extends Table
 {
 
     /**
@@ -33,17 +31,17 @@ class MudancasTable extends Table
     {
         parent::initialize($config);
 
-        $this->setTable('mudancas');
+        $this->setTable('alteracoes');
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
-
+        
         $this->belongsTo('Prontuarios', [
             'foreignKey' => 'prontuario_id',
             'joinType' => 'INNER'
         ]);
-        
-        $this->hasMany('Detalhes')
-            ->setForeignKey('mudancas_id')
+		
+	$this->hasMany('AlteracoesDetalhes')
+            ->setForeignKey('alteracoes_id')
             ->setDependent(true);
     }
 
@@ -71,7 +69,7 @@ class MudancasTable extends Table
 
         return $validator;
     }
-
+    
     /**
      * Returns a rules checker object that will be used for validating
      * application integrity.

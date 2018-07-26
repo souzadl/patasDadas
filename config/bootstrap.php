@@ -211,6 +211,7 @@ Type::build('timestamp')
 //Inflector::rules('irregular', ['red' => 'redlings']);
 //Inflector::rules('uninflected', ['dontinflectme']);
 //Inflector::rules('transliteration', ['/å/' => 'aa']);
+Inflector::rules('singular', ['/oes$/' => 'ao']);
 
 /*
  * Plugins need to be loaded manually, you can either load them one by one or all of them in a single call

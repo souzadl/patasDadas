@@ -51,7 +51,7 @@ class AnimaisController extends AppController {
                 'Serestos',
                 'Vermifugos',
                 'Vacinas',
-                'Mudancas' => ['Detalhes']
+                'Alteracoes' => ['AlteracoesDetalhes']
             ]
         ]); 
         
@@ -160,11 +160,16 @@ class AnimaisController extends AppController {
     }
     
     public function addAlteracao(){
-        $this->loadModel("Mudancas");
-        $mudanca = $this->Mudancas->patchEntity($this->Mudancas->newEntity(), $this->request->getData());
-        $mudanca->detalhes = array();
-        $mudanca->detalhes[] = $this->Mudancas->Detalhes->patchEntity($this->Mudancas->Detalhes->newEntity(), $this->request->getData());
-        $this->addGenericoNivel2($this->Mudancas, $mudanca, 'Alteração de Saúde');
+        $this->loadModel("Alteracoes");
+        $alteracao = $this->Alteracoes->patchEntity($this->Alteracoes->newEntity(), 
+            $this->request->getData(),
+            ['associated' => ['AlteracoesDetalhes']]
+        );
+        $this->addGenericoNivel2($this->Alteracoes, $alteracao, 'Alteração de Saúde');
+    }
+    
+    public function addAlteracaoDetalhe(){
+        $this->addGenericoNivel1('AlteracoesDetalhes', 'Detalhe da Alteração de Saúde');
     }
     
     private function addGenericoNivel1($model, $label){

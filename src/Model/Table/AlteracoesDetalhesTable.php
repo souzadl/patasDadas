@@ -7,20 +7,20 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * Detalhes Model
+ * AlteracoesDetalhes Model
  *
- * @property \App\Model\Table\MudancasTable|\Cake\ORM\Association\BelongsTo $Mudancas
+ * @property \App\Model\Table\AlteracoesTable|\Cake\ORM\Association\BelongsTo $Alteracoes
  *
- * @method \App\Model\Entity\Detalhe get($primaryKey, $options = [])
- * @method \App\Model\Entity\Detalhe newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\Detalhe[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\Detalhe|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Detalhe|bool saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Detalhe patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\Detalhe[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\Detalhe findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\AlteracoesDetalhe get($primaryKey, $options = [])
+ * @method \App\Model\Entity\AlteracoesDetalhe newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\AlteracoesDetalhe[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\AlteracoesDetalhe|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\AlteracoesDetalhe|bool saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\AlteracoesDetalhe patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\AlteracoesDetalhe[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\AlteracoesDetalhe findOrCreate($search, callable $callback = null, $options = [])
  */
-class DetalhesTable extends Table
+class AlteracoesDetalhesTable extends Table
 {
 
     /**
@@ -33,12 +33,12 @@ class DetalhesTable extends Table
     {
         parent::initialize($config);
 
-        $this->setTable('detalhes');
+        $this->setTable('alteracoes_detalhes');
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
-        $this->belongsTo('Mudancas', [
-            'foreignKey' => 'mudancas_id',
+        $this->belongsTo('Alteracoes', [
+            'foreignKey' => 'alteracoes_id',
             'joinType' => 'INNER'
         ]);
     }
@@ -76,7 +76,7 @@ class DetalhesTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['mudancas_id'], 'Mudancas'));
+        $rules->add($rules->existsIn(['alteracoes_id'], 'Alteracoes'));
 
         return $rules;
     }
