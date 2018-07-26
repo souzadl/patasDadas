@@ -55,9 +55,16 @@ class AnimaisController extends AppController {
             ]
         ]); 
         
-        $prontuario->proximoSeresto = $this->Prontuarios->proximoSeresto($prontuario->serestos);
-        $prontuario->proximaVacina = $this->Prontuarios->proximaVacina($prontuario->vacinas, $animal->filhote);
-        $prontuario->proximoVermifugo = $this->Prontuarios->proximoVermifugo($prontuario->vermifugos);
+        if(isset($prontuario)){
+            $prontuario->proximoSeresto = $this->Prontuarios->proximoSeresto($prontuario->serestos);
+            $prontuario->proximaVacina = $this->Prontuarios->proximaVacina($prontuario->vacinas, $animal->filhote);
+            $prontuario->proximoVermifugo = $this->Prontuarios->proximoVermifugo($prontuario->vermifugos);
+        }else{
+            $prontuario = $this->Prontuarios->newEntity();
+            $prontuario->proximoSeresto = Time::today();
+            $prontuario->proximaVacina = Time::today();
+            $prontuario->proximoVermifugo = Time::today();           
+        }
         
         $this->set('animai', $animal);
         $this->set('padrinhos', $this->padrinhos);        
