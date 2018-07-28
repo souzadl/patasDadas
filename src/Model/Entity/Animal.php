@@ -82,7 +82,7 @@ class Animal extends Entity
         'check_castrado' => true,
         'check_vermifugado' => true,
         'check_vacinado' => true,
-        'prontuarios' => true
+        'prontuario' => true
     ];
     
 }

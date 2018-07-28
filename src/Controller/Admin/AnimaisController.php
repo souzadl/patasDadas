@@ -42,8 +42,7 @@ class AnimaisController extends AppController {
             $animal->prontuario->proximoSeresto = $this->Prontuarios->proximoSeresto($animal->prontuario->serestos);
             $animal->prontuario->proximaVacina = $this->Prontuarios->proximaVacina($animal->prontuario->vacinas, $animal->filhote);
             $animal->prontuario->proximoVermifugo = $this->Prontuarios->proximoVermifugo($animal->prontuario->vermifugos);          
-        }     
-        
+        }  
         $this->set('animal', $animal);
         $this->set('padrinhos', $this->padrinhos);        
         //$this->set('prontuario', $prontuario);  
@@ -216,16 +215,34 @@ class AnimaisController extends AppController {
                     'Serestos',
                     'Vermifugos',
                     'Vacinas',
-                    'Alteracoes' => ['AlteracoesDetalhes']
+                    'Alteracoes' => ['AlteracoesDetalhes'],
+                    'Castracoes'
                 ]
             ]
-        ]);     
-        
+        ]);    
+    /*$data = array();
+   $data['prontuario']['apto_adocao'] = 1;
+   $data['prontuario']['castracao']['castrado_por_patas'] = 1;
+
+   $animal = $this->Animais->patchEntity($animal, $data, [
+                'associated' => ['Prontuarios' => [
+                    'associated' => ['Castracoes']
+                    ]
+                ]
+            ]);
+   debug($animal);
+   die;*/
         
         if ($this->request->is(['patch', 'post', 'put'])) {
+            //debug($this->request->getData('castracao'));
             $animal = $this->Animais->patchEntity($animal, $this->request->getData(), [
-                'associated' => ['Prontuarios']
+                'associated' => ['Prontuarios' => [
+                    'associated' => ['Castracoes']
+                    ]
+                ]
             ]);
+            //debug($animal->prontuario);
+            //die;
             if ($this->Animais->save($animal)) {
                 $this->Flash->success(__('Animal salvo.'));
 

@@ -35,12 +35,13 @@
                         Castração
                     </div>
                     <div class="card-body">
-                        <?= $this->Form->control('castrado', ['type'=>'radio', 
-                            'options'=>['P' => 'Pelo Patas', 'T' => 'Por Terceiro'],
-                            'templates' => ['nestingLabel'=>'{{hidden}}<div class="custom-control custom-radio">{{input}}<label{{attrs}} class="custom-control-label">{{text}}</label></div>']
+                        <?= $this->Form->control('prontuario.castracao.castrado_por_patas', ['type'=>'checkbox', 
+                            'label'=>'Castrado pelo Patas Dadas'
+                            /*'options'=>['P' => 'Pelo Patas', 'T' => 'Por Terceiro'],*/
+                            /*'templates' => ['nestingLabel'=>'{{hidden}}<div class="custom-control custom-radio">{{input}}<label{{attrs}} class="custom-control-label">{{text}}</label></div>']*/
                         ]) ?>
                         <?= $this->Form->control('clinica_castracao', ['label'=>'Clínica', 'type'=>'select']) ?>
-                        <?= $this->Form->control('data_castracao', ['label' => 'Data Castração', 'type'=>'date']) ?>
+                        <?= $this->Form->control('prontuario.castracao.data_castracao', ['label' => 'Data Castração', 'type'=>'date', 'empty' => ['year' => true,'month' => true, 'day' => true ]]) ?>
                     </div>
                 </div>
             </div>
@@ -52,7 +53,8 @@
                         Vacinas <a href="#" data-toggle="modal" data-target="#vacinaDialog"><i class="fa fa-plus-circle"></i></a>
                     </div>
                     <div class="card-body">
-                        <i class="fa fa-circle fa-fw" style="color: <?=$this->CorAviso->getNome($animal->prontuario->proximaVacina)?>;"></i> Próxima:  <?=$animal->prontuario->proximaVacina->format('d/m/Y')?>
+                        <i class="fa fa-circle fa-fw" style="color: <?=isset($animal->prontuario) ? $this->CorAviso->getNome($animal->prontuario->proximaVacina) : ''?>;"></i> 
+                        Próxima:  <?=isset($animal->prontuario) ? $animal->prontuario->proximaVacina->format('d/m/Y') : ''?>
                         <ul class="list-group">
                             <?php if(isset($animal->prontuario->vacinas)){ foreach ($animal->prontuario->vacinas as $vacina):?>
                             <li class="list-group-item">
@@ -72,7 +74,8 @@
                         Seresto <a href="#" data-toggle="modal" data-target="#serestoDialog"><i class="fa fa-plus-circle"></i></a>
                     </div>
                     <div class="card-body"> 
-                        <i class="fa fa-circle fa-fw" style="color: <?=$this->CorAviso->getNome($animal->prontuario->proximoSeresto)?>;"></i> Próxima: <?=$animal->prontuario->proximoSeresto->format('d/m/Y')?>
+                        <i class="fa fa-circle fa-fw" style="color: <?=isset($animal->prontuario) ? $this->CorAviso->getNome($animal->prontuario->proximoSeresto) : ''?>;"></i> 
+                        Próxima: <?=isset($animal->prontuario) ? $animal->prontuario->proximoSeresto->format('d/m/Y') : ''?>
                         <ul class="list-group">
                             <?php if(isset($animal->prontuario->serestos)){ foreach ($animal->prontuario->serestos as $seresto):?>
                             <li class="list-group-item">
@@ -92,7 +95,8 @@
                         Vermífugo <a href="#" data-toggle="modal" data-target="#vermifugoDialog"><i class="fa fa-plus-circle"></i></a>
                     </div>
                     <div class="card-body">
-                        <i class="fa fa-circle fa-fw" style="color: <?=$this->CorAviso->getNome($animal->prontuario->proximoVermifugo)?>;"></i> Próxima: <?=$animal->prontuario->proximoVermifugo->format('d/m/Y')?>
+                        <i class="fa fa-circle fa-fw" style="color: <?=isset($animal->prontuario) ? $this->CorAviso->getNome($animal->prontuario->proximoVermifugo) : ''?>;"></i> 
+                        Próxima: <?=isset($animal->prontuario) ? $animal->prontuario->proximoVermifugo->format('d/m/Y') : ''?>
                         <ul class="list-group">
                             <?php if(isset($animal->prontuario->vermifugos)){ foreach ($animal->prontuario->vermifugos as $vermifugo):?>
                             <li class="list-group-item">
