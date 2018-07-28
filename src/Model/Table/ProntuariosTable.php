@@ -42,15 +42,16 @@ class ProntuariosTable extends BaseTable {
             'joinType' => 'INNER'
         ]);
         
-        $this->hasMany('historicospeso');
-        $this->hasMany('doencascronicas');
-        $this->hasMany('alimentacoesespeciais');
-        $this->hasMany('deficienciasfisicas');
-        $this->hasMany('medicacoes');
-        $this->hasMany('serestos');
-        $this->hasMany('vermifugos');
-        $this->hasMany('vacinas');
-        $this->hasMany('alteracoes');
+        $this->hasMany('Historicospeso');
+        $this->hasMany('Doencascronicas');
+        $this->hasMany('Alimentacoesespeciais');
+        $this->hasMany('Deficienciasfisicas');
+        $this->hasMany('Medicacoes');
+        $this->hasMany('Serestos');
+        $this->hasMany('Vermifugos');
+        $this->hasMany('Vacinas');
+        $this->hasMany('Alteracoes');
+        $this->hasOne('Castracoes');
     }
 
     /**
