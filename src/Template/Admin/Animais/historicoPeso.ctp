@@ -13,8 +13,8 @@
         <table class="table" id="tableHistoricoPeso">
             <?php
             echo $this->Html->tableHeaders(['Data de aferição', 'Peso', '']);
-            if(isset($animal->prontuarios['historicospeso'])){
-                foreach($animal->prontuarios['historicospeso'] as $historico){
+            if(isset($animal->prontuario->historicospeso)){
+                foreach($animal->prontuario->historicospeso as $historico){
                     echo $this->Html->tableCells([$historico->data_afericao, $historico->peso,                        
                         $this->Form->postLink($this->Html->tag('i','',['class'=>'fas fa-trash-alt']),
                             ['action' => 'deleteHistoricoPeso', $historico->id, $animal->id_animal], 

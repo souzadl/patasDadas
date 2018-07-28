@@ -11,13 +11,13 @@
     </div>
     <div class="card-body">
         <?php
-        if(isset($animal->prontuarios['doencascronicas'])){ 
-            foreach($animal->prontuarios['doencascronicas'] as $index=>$doenca){
+        if(isset($animal->prontuario->doencascronicas)){ 
+            foreach($animal->prontuario->doencascronicas as $index=>$doenca){
                 echo $doenca->descricao . ' '.
                     $this->Form->postLink($this->Html->tag('i','',['class'=>'fas fa-trash-alt']),
                     ['action' => 'deleteDoencaCronica', $doenca->id, $animal->id_animal], 
                     ['escape'=>false, 'confirm' => __('Confime a exclusão de {0}?', $doenca->descricao)]);
-                echo ($index < count($animal->prontuarios['doencascronicas'])-1) ? ' | ' : '';
+                echo ($index < count($animal->prontuario->doencascronicas)-1) ? ' | ' : '';
             }
         }
         ?>

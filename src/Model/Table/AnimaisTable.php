@@ -47,7 +47,7 @@ class AnimaisTable extends BaseTable {
             ->setForeignKey('padrinho_pulgas')
             ->bindingKey('id_padrinho');
         
-        $this->hasOne('prontuarios')            
+        $this->hasOne('Prontuarios')            
             ->setForeignKey('id_animal')
             ->setDependent(true);
     }

@@ -37,6 +37,11 @@ class ProntuariosTable extends BaseTable {
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
         
+        $this->belongsTo('Animais', [
+            'foreignKey' => 'id_animal',
+            'joinType' => 'INNER'
+        ]);
+        
         $this->hasMany('historicospeso');
         $this->hasMany('doencascronicas');
         $this->hasMany('alimentacoesespeciais');

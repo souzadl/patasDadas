@@ -11,13 +11,13 @@
     </div>
     <div class="card-body">
         <?php 
-        if(isset($animal->prontuarios['alimentacoesespeciais'])){ 
-            foreach($animal->prontuarios['alimentacoesespeciais'] as $index=>$alimentacao){
+        if(isset($animal->prontuario->alimentacoesespeciais)){ 
+            foreach($animal->prontuario->alimentacoesespeciais as $index=>$alimentacao){
                 echo $alimentacao->descricao.' '.
                     $this->Form->postLink($this->Html->tag('i','',['class'=>'fas fa-trash-alt']),
                     ['action' => 'deleteAlimentacaoEspecial', $alimentacao->id, $animal->id_animal], 
                     ['escape'=>false, 'confirm' => __('Confime a exclusão de {0}?', $alimentacao->descricao)]);
-                echo ($index < count($animal->prontuarios['alimentacoesespeciais'])-1) ? ' | ' : '';
+                echo ($index < count($animal->prontuario->alimentacoesespeciais)-1) ? ' | ' : '';
             }            
         }
         ?>    

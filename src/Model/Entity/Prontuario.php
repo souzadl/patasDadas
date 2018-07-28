@@ -25,7 +25,7 @@ class Prontuario extends Entity
      */
     protected $_accessible = [
         'apto_adocao' => true,
-        'apto_avento' => true,
+        'apto_evento' => true,
         'id_animal' => true
     ];
 }

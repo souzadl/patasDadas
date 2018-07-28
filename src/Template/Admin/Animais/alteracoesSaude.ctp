@@ -6,7 +6,7 @@
 ?>
 
 <div id="accordion">
-    <?php if(isset($animal->prontuarios['alteracoes'])){ foreach ($animal->prontuarios['alteracoes'] as $alteracao):?>        
+    <?php if(isset($animal->prontuario->alteracoes)){ foreach ($animal->prontuario->alteracoes as $alteracao):?>        
     <div class="card">
         <div class="card-header" id="heading<?=$alteracao->id?>">
             <h5 class="mb-0">

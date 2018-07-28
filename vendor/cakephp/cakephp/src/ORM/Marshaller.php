@@ -567,7 +567,7 @@ class Marshaller
         }
 
         $errors = $this->_validate($data + $keys, $options, $isNew);
-        $options['isMerge'] = true;
+        $options['isMerge'] = true;        
         $propertyMap = $this->_buildPropertyMap($data, $options);
         $properties = $marshalledAssocs = [];
         foreach ($data as $key => $value) {
@@ -595,11 +595,10 @@ class Marshaller
             }
             $properties[$key] = $value;
         }
-
+        
         $entity->setErrors($errors);
-        if (!isset($options['fields'])) {
+        if (!isset($options['fields'])) {        
             $entity->set($properties);
-
             foreach ($properties as $field => $value) {
                 if ($value instanceof EntityInterface) {
                     $entity->setDirty($field, $value->isDirty());
@@ -613,12 +612,12 @@ class Marshaller
             if (!array_key_exists($field, $properties)) {
                 continue;
             }
+            debug($field);
             $entity->set($field, $properties[$field]);
             if ($properties[$field] instanceof EntityInterface) {
                 $entity->setDirty($field, $properties[$field]->isDirty());
             }
         }
-
         return $entity;
     }
 

@@ -12,10 +12,10 @@
     <div class="card-body">     
         <div class="row">
             <div class="col">
-                <?= $this->Form->control('apto_adocao', ['type'=>'checkbox', 'label'=>'Apto para Adoção']);?>                
+                <?= $this->Form->control('Prontuario.apto_adocao', ['type'=>'checkbox', 'label'=>'Apto para Adoção']);?>                
             </div>
             <div class="col">
-                <?= $this->Form->control('apto_evento', ['type'=>'checkbox', 'label'=>'Apto para Evento']);?>
+                <?= $this->Form->control('Prontuario.apto_evento', ['type'=>'checkbox', 'label'=>'Apto para Evento']);?>
             </div>
         </div>    
         <div class="row">
@@ -52,9 +52,9 @@
                         Vacinas <a href="#" data-toggle="modal" data-target="#vacinaDialog"><i class="fa fa-plus-circle"></i></a>
                     </div>
                     <div class="card-body">
-                        <i class="fa fa-circle fa-fw" style="color: <?=$this->CorAviso->getNome($animal->prontuarios['proximaVacina'])?>;"></i> Próxima:  <?=$animal->prontuarios['proximaVacina']->format('d/m/Y')?>
+                        <i class="fa fa-circle fa-fw" style="color: <?=$this->CorAviso->getNome($animal->prontuario->proximaVacina)?>;"></i> Próxima:  <?=$animal->prontuario->proximaVacina->format('d/m/Y')?>
                         <ul class="list-group">
-                            <?php if(isset($animal->prontuarios['vacinas'])){ foreach ($animal->prontuarios['vacinas'] as $vacina):?>
+                            <?php if(isset($animal->prontuario->vacinas)){ foreach ($animal->prontuario->vacinas as $vacina):?>
                             <li class="list-group-item">
                                 <?=$vacina->nome .'-'.$vacina->data_aplicacao?>
                                 <?= $this->Form->postLink($this->Html->tag('i','',['class'=>'fas fa-trash-alt']),
@@ -72,9 +72,9 @@
                         Seresto <a href="#" data-toggle="modal" data-target="#serestoDialog"><i class="fa fa-plus-circle"></i></a>
                     </div>
                     <div class="card-body"> 
-                        <i class="fa fa-circle fa-fw" style="color: <?=$this->CorAviso->getNome($animal->prontuarios['proximoSeresto'])?>;"></i> Próxima: <?=$animal->prontuarios['proximoSeresto']->format('d/m/Y')?>
+                        <i class="fa fa-circle fa-fw" style="color: <?=$this->CorAviso->getNome($animal->prontuario->proximoSeresto)?>;"></i> Próxima: <?=$animal->prontuario->proximoSeresto->format('d/m/Y')?>
                         <ul class="list-group">
-                            <?php if(isset($animal->prontuarios['serestos'])){ foreach ($animal->prontuarios['serestos'] as $seresto):?>
+                            <?php if(isset($animal->prontuario->serestos)){ foreach ($animal->prontuario->serestos as $seresto):?>
                             <li class="list-group-item">
                                 <?=$seresto->data_aplicacao?>
                                  <?= $this->Form->postLink($this->Html->tag('i','',['class'=>'fas fa-trash-alt']),
@@ -92,9 +92,9 @@
                         Vermífugo <a href="#" data-toggle="modal" data-target="#vermifugoDialog"><i class="fa fa-plus-circle"></i></a>
                     </div>
                     <div class="card-body">
-                        <i class="fa fa-circle fa-fw" style="color: <?=$this->CorAviso->getNome($animal->prontuarios['proximoVermifugo'])?>;"></i> Próxima: <?=$animal->prontuarios['proximoVermifugo']->format('d/m/Y')?>
+                        <i class="fa fa-circle fa-fw" style="color: <?=$this->CorAviso->getNome($animal->prontuario->proximoVermifugo)?>;"></i> Próxima: <?=$animal->prontuario->proximoVermifugo->format('d/m/Y')?>
                         <ul class="list-group">
-                            <?php if(isset($animal->prontuarios['vermifugos'])){ foreach ($animal->prontuarios['vermifugos'] as $vermifugo):?>
+                            <?php if(isset($animal->prontuario->vermifugos)){ foreach ($animal->prontuario->vermifugos as $vermifugo):?>
                             <li class="list-group-item">
                                 <?=$vermifugo->data_aplicacao?>
                                  <?= $this->Form->postLink($this->Html->tag('i','',['class'=>'fas fa-trash-alt']),

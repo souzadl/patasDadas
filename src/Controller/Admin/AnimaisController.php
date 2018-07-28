@@ -38,11 +38,12 @@ class AnimaisController extends AppController {
     }
     
     private function renderForm($animal, $view = 'form', $layout = null) {
-        if(isset($animal->prontuarios)){
-            $animal->prontuarios['proximoSeresto'] = $this->Prontuarios->proximoSeresto($animal->prontuarios['serestos']);
-            $animal->prontuarios['proximaVacina'] = $this->Prontuarios->proximaVacina($animal->prontuarios['vacinas'], $animal->filhote);
-            $animal->prontuarios['proximoVermifugo'] = $this->Prontuarios->proximoVermifugo($animal->prontuarios['vermifugos']);          
-        }        
+        if(isset($animal->prontuario)){
+            $animal->prontuario->proximoSeresto = $this->Prontuarios->proximoSeresto($animal->prontuario->serestos);
+            $animal->prontuario->proximaVacina = $this->Prontuarios->proximaVacina($animal->prontuario->vacinas, $animal->filhote);
+            $animal->prontuario->proximoVermifugo = $this->Prontuarios->proximoVermifugo($animal->prontuario->vermifugos);          
+        }     
+        
         $this->set('animal', $animal);
         $this->set('padrinhos', $this->padrinhos);        
         //$this->set('prontuario', $prontuario);  
@@ -138,10 +139,12 @@ class AnimaisController extends AppController {
     
     public function addAlteracao(){
         $this->loadModel("Alteracoes");
+        debug($this->request->getData());
         $alteracao = $this->Alteracoes->patchEntity($this->Alteracoes->newEntity(), 
             $this->request->getData(),
             ['associated' => ['AlteracoesDetalhes']]
         );
+        debug($alteracao);die;
         $this->addGenericoNivel2($this->Alteracoes, $alteracao, 'Alteração de Saúde');
     }
     
@@ -201,34 +204,88 @@ class AnimaisController extends AppController {
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
     public function edit($id = null) {
-        /*$query = $this->Animais->find('all')->contain(['Prontuarios' => ['HistoricosPeso']]);
-        $animal = $this->Animais->get($id, [
-            'contain' => ['Prontuarios' => ['HistoricosPeso']]]);
-        debug($animal->prontuarios); die();
-        foreach ($query as $animal) {
-            debug($animal); die();
+        //$data['prontuario_id'] = 0;
+        /*$data['alteracoes_detalhes'][0]['obs'] = 'teste teste';
+        $data['alteracoes_detalhes'][0]['id'] = 1;
+        $this->loadModel("Alteracoes");
+        //$alteracao = $this->Alteracoes->newEntity();
+        $alteracao = $this->Alteracoes->get(1,['contain'=>'AlteracoesDetalhes']);
+        $animal = $this->Animais->get(1, ['contain'=>'Prontuarios']);
+        debug($alteracao);
+        debug($animal);
+        die;
+        $alteracao = $this->Alteracoes->patchEntity($alteracao, 
+            $data,
+            ['associated' => ['AlteracoesDetalhes']]
+        );
+        debug($alteracao->alteracoes_detalhes[0]);
+        if($this->Alteracoes->save($alteracao)){
+            debug($alteracao);
+            debug('ok');
+            //die;
+        }else{
+            debug($alteracao);
+            //die;
+        }
+        die;*/
+        
+        /*$animal = $this->Animais->get(1, ['contain'=>'Prontuarios']);
+        
+        $data2['prontuario']['apto_adocao'] = 0;
+        $data2['prontuario']['id'] = 1;
+        debug($animal->prontuario);
+        //die;
+        
+        $animal = $this->Animais->patchEntity($animal,
+            $data2,
+            ['associated' => ['Prontuarios']]);
+        debug($data2);
+        debug($animal->prontuario);
+        //die;
+        if($this->Animais->save($animal)){
+            debug('ok');
+        }else{
+            debug($animal);
         }
         die;*/
         
         $animal = $this->Animais->get($id, [
             'contain' => ['Prontuarios' => [
-                'HistoricosPeso' => [
-                    'sort' => ['HistoricosPeso.data_afericao']
-                ], 
-                'DoencasCronicas', 
-                'AlimentacoesEspeciais', 
-                'DeficienciasFisicas', 
-                'Medicacoes',
-                'Serestos',
-                'Vermifugos',
-                'Vacinas',
-                'Alteracoes' => ['AlteracoesDetalhes']
-            ]]
-        ]);                                        
-        //debug($animal); die();
+                    'HistoricosPeso' => [
+                        'sort' => ['HistoricosPeso.data_afericao']
+                    ], 
+                    'DoencasCronicas', 
+                    'AlimentacoesEspeciais', 
+                    'DeficienciasFisicas', 
+                    'Medicacoes',
+                    'Serestos',
+                    'Vermifugos',
+                    'Vacinas',
+                    'Alteracoes' => ['AlteracoesDetalhes']
+                ]
+            ]
+        ]);     
+        
+        /*$data['prontuario']['apto_adocao'] = 1;
+        $data['prontuario']['apto_evento'] = 1;
+        $data['prontuario']['id_animal'] = '1';
+        $data['id_animal'] = 1;
+        $animal = $this->Animais->patchEntity($animal, 
+            $data, 
+            ['associated' => ['Prontuarios']]
+        );
+        debug($data);
+        debug($animal);
+        die;*/
+        //debug($animal); die;
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $animal = $this->Animais->patchEntity($animal, $this->request->getData());
-            
+            $animal = $this->Animais->patchEntity($animal, $this->request->getData(), [
+                'associated' => ['Prontuarios']
+            ]);
+            //$animal->prontuarios['apto_adocao'] = $this->request->getData('Prontuarios.apto_adocao');
+            //$animal->prontuarios['apto_evento'] = $this->request->getData('Prontuarios.apto_evento');
+            //debug($this->request->getData('Prontuarios'));
+            //debug($animal->prontuarios); die();
             if ($this->Animais->save($animal)) {
                 $this->Flash->success(__('Animal salvo.'));
 

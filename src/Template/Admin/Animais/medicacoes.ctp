@@ -13,8 +13,8 @@
         <table class="table" id="tableMedicacoes">
         <?php
         echo $this->Html->tableHeaders(['Medicação', 'Uso', 'Dosagem', 'Frequência', 'Contínuo', 'Início', 'Término', '']);
-        if(isset($animal->prontuarios['medicacoes'])){
-            foreach($animal->prontuarios['medicacoes'] as $medicacao){
+        if(isset($animal->prontuario->medicacoes)){
+            foreach($animal->prontuario->medicacoes as $medicacao){
                 echo $this->Html->tableCells([$medicacao->descricao, 
                     $medicacao->uso, $medicacao->dosagem, $medicacao->frequencia, 
                     ($medicacao->continuo == 1 ? 'Sim' : 'Não'), 
