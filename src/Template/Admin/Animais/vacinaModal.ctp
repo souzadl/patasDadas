@@ -16,8 +16,8 @@
             <div class="modal-body">
                 <?php 
                 echo $this->Form->create('', ['action'=>'addVacina']);
-                echo $this->Form->control('id_animal', ['type'=>'hidden', 'value'=>$animai->id_animal]);
-                echo $this->Form->control('prontuario_id', ['type'=>'hidden', 'value'=>$prontuario->id ?? 0]);
+                echo $this->Form->control('id_animal', ['type'=>'hidden', 'value'=>$animal->id_animal]);
+                echo $this->Form->control('prontuario_id', ['type'=>'hidden', 'value'=>$animal->prontuario->id ?? 0]);
                 echo $this->Form->control('nome', ['label'=>'Nome', 'required'=>'required']);
                 echo $this->Form->control('data_aplicacao', ['label'=>'Data', 'type'=>'date', 'required'=>'required']);
                 echo $this->Form->button(__('Submit'));

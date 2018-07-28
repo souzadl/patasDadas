@@ -38,7 +38,7 @@ class AnimaisController extends AppController {
     }
     
     private function renderForm($animal, $view = 'form', $layout = null) {
-        $prontuario = $this->Prontuarios->find('byAnimal', [
+        /*$prontuario = $this->Prontuarios->find('byAnimal', [
             'id_animal' => $animal->id_animal,
             'contain' => [
                 'HistoricosPeso' => [
@@ -53,22 +53,22 @@ class AnimaisController extends AppController {
                 'Vacinas',
                 'Alteracoes' => ['AlteracoesDetalhes']
             ]
-        ]); 
+        ]); */
         
-        if(isset($prontuario)){
-            $prontuario->proximoSeresto = $this->Prontuarios->proximoSeresto($prontuario->serestos);
-            $prontuario->proximaVacina = $this->Prontuarios->proximaVacina($prontuario->vacinas, $animal->filhote);
-            $prontuario->proximoVermifugo = $this->Prontuarios->proximoVermifugo($prontuario->vermifugos);
+        if(isset($animal->prontuario)){
+            $animal->prontuario->proximoSeresto = $this->Prontuarios->proximoSeresto($prontuario->serestos);
+            $animal->prontuario->proximaVacina = $this->Prontuarios->proximaVacina($prontuario->vacinas, $animal->filhote);
+            $animal->prontuario->proximoVermifugo = $this->Prontuarios->proximoVermifugo($prontuario->vermifugos);
         }else{
-            $prontuario = $this->Prontuarios->newEntity();
-            $prontuario->proximoSeresto = Time::today();
-            $prontuario->proximaVacina = Time::today();
-            $prontuario->proximoVermifugo = Time::today();           
+            $animal->prontuario = $this->Prontuarios->newEntity();
+            $animal->prontuario->proximoSeresto = Time::today();
+            $animal->prontuario->proximaVacina = Time::today();
+            $animal->prontuario->proximoVermifugo = Time::today();           
         }
         
-        $this->set('animai', $animal);
+        $this->set('animal', $animal);
         $this->set('padrinhos', $this->padrinhos);        
-        $this->set('prontuario', $prontuario);  
+        //$this->set('prontuario', $prontuario);  
         $this->set('action', $this->request->getParam('action'));
         parent::render($view, $layout);
     }
@@ -82,11 +82,11 @@ class AnimaisController extends AppController {
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function view($id = null) {
-        $animai = $this->Animais->get($id, [
+        $animal = $this->Animais->get($id, [
             'contain' => []
         ]);
 
-        $this->renderForm($animai);
+        $this->renderForm($animal);
     }
 
     /**
@@ -95,17 +95,17 @@ class AnimaisController extends AppController {
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
     public function add() {
-        $animai = $this->Animais->newEntity();
+        $animal = $this->Animais->newEntity();
         if ($this->request->is('post')) {
-            $animai = $this->Animais->patchEntity($animai, $this->request->getData());
-            if ($this->Animais->save($animai)) {
-                $this->Flash->success(__('The animai has been saved.'));
+            $animal = $this->Animais->patchEntity($animal, $this->request->getData());
+            if ($this->Animais->save($animal)) {
+                $this->Flash->success(__('Animal salvo.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The animai could not be saved. Please, try again.'));
+            $this->Flash->error(__('Animal não pode ser salvo.'));
         }
-        $this->renderForm($animai);
+        $this->renderForm($animal);
     }
     
     private function addProntuario($idAnimal){
@@ -171,10 +171,8 @@ class AnimaisController extends AppController {
     public function editAlteracao(){
         $this->autoRender = false;
         $this->loadModel("Alteracoes"); 
-        //debug($alteracao);
         $alteracao = $this->Alteracoes->patchEntity($this->Alteracoes->get($this->request->getData('id')), 
             $this->request->getData());  
-        //debug($alteracao);die();
         $this->salvarModal($this->Alteracoes, $alteracao, 'Alteração de Saúde');
     }
     
@@ -226,18 +224,34 @@ class AnimaisController extends AppController {
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
     public function edit($id = null) {
-        $animai = $this->Animais->get($id);                                        
+        $animal = $this->Animais->get($id, [
+            'contain' => ['Prontuarios' => [
+                'HistoricosPeso' => [
+                    'sort' => ['HistoricosPeso.data_afericao']
+                ], 
+                'DoencasCronicas', 
+                'AlimentacoesEspeciais', 
+                'DeficienciasFisicas', 
+                'Medicacoes',
+                'Serestos',
+                'Vermifugos',
+                'Vacinas',
+                'Alteracoes' => ['AlteracoesDetalhes']
+            ]]
+        ]);                                        
         
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $animai = $this->Animais->patchEntity($animai, $this->request->getData());
-            if ($this->Animais->save($animai)) {
-                $this->Flash->success(__('The animai has been saved.'));
+            $animal = $this->Animais->patchEntity($animal, $this->request->getData());
+            debug($animal);
+            die();
+            if ($this->Animais->save($animal)) {
+                $this->Flash->success(__('Animal salvo.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The animai could not be saved. Please, try again.'));
+            $this->Flash->error(__('Animal não pode ser salvo.'));
         }
-        $this->renderForm($animai);
+        $this->renderForm($animal);
     }
 
     /**

@@ -16,8 +16,8 @@
             <div class="modal-body">
                 <?php 
                 echo $this->Form->create('', ['action'=>'addHistoricoPeso']);
-                echo $this->Form->control('id_animal', ['type'=>'hidden', 'value'=>$animai->id_animal]);
-                echo $this->Form->control('prontuario_id', ['type'=>'hidden', 'value'=>$prontuario->id ?? 0]);
+                echo $this->Form->control('id_animal', ['type'=>'hidden', 'value'=>$animal->id_animal]);
+                echo $this->Form->control('prontuario_id', ['type'=>'hidden', 'value'=>$animal->prontuario->id ?? 0]);
                 echo $this->Form->control('data_afericao', ['label'=>'Data de Aferição', 'type'=>'date', 'required'=>'required']);
                 echo $this->Form->control('peso', ['label'=>'Peso', 'required'=>'required']);
                 echo $this->Form->button(__('Submit'));

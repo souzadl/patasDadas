@@ -38,7 +38,7 @@ use Cake\ORM\Entity;
  * @property string $check_vermifugado
  * @property string $check_vacinado
  */
-class Animai extends Entity
+class Animal extends Entity
 {
 
     /**
@@ -81,7 +81,8 @@ class Animai extends Entity
         'padrinho_pulgas' => true,
         'check_castrado' => true,
         'check_vermifugado' => true,
-        'check_vacinado' => true
+        'check_vacinado' => true,
+        'prontuarios' => true
     ];
     
 }

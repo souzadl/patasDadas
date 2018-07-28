@@ -212,6 +212,7 @@ Type::build('timestamp')
 //Inflector::rules('uninflected', ['dontinflectme']);
 //Inflector::rules('transliteration', ['/å/' => 'aa']);
 Inflector::rules('singular', ['/oes$/' => 'ao']);
+Inflector::rules('singular', ['/is$/' => 'l']);
 
 /*
  * Plugins need to be loaded manually, you can either load them one by one or all of them in a single call

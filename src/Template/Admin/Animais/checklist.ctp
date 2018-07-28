@@ -52,13 +52,13 @@
                         Vacinas <a href="#" data-toggle="modal" data-target="#vacinaDialog"><i class="fa fa-plus-circle"></i></a>
                     </div>
                     <div class="card-body">
-                        <i class="fa fa-circle fa-fw" style="color: <?=$this->CorAviso->getNome($prontuario->proximaVacina)?>;"></i> Próxima:  <?=$prontuario->proximaVacina->format('d/m/Y')?>
+                        <i class="fa fa-circle fa-fw" style="color: <?=$this->CorAviso->getNome($animal->prontuario->proximaVacina)?>;"></i> Próxima:  <?=$animal->prontuario->proximaVacina->format('d/m/Y')?>
                         <ul class="list-group">
-                            <?php if(isset($prontuario->vacinas)){ foreach ($prontuario->vacinas as $vacina):?>
+                            <?php if(isset($animal->prontuario->vacinas)){ foreach ($animal->prontuario->vacinas as $vacina):?>
                             <li class="list-group-item">
                                 <?=$vacina->nome .'-'.$vacina->data_aplicacao?>
                                 <?= $this->Form->postLink($this->Html->tag('i','',['class'=>'fas fa-trash-alt']),
-                                    ['action' => 'deleteVacina', $vacina->id, $prontuario->id_animal], 
+                                    ['action' => 'deleteVacina', $vacina->id, $animal->prontuario->id_animal], 
                                     ['escape'=>false, 'confirm' => __('Confime a exclusão de {0}?', $vacina->data_aplicacao)])?>
                             </li>
                             <?php endforeach;}?>
@@ -72,13 +72,13 @@
                         Seresto <a href="#" data-toggle="modal" data-target="#serestoDialog"><i class="fa fa-plus-circle"></i></a>
                     </div>
                     <div class="card-body"> 
-                        <i class="fa fa-circle fa-fw" style="color: <?=$this->CorAviso->getNome($prontuario->proximoSeresto)?>;"></i> Próxima: <?=$prontuario->proximoSeresto->format('d/m/Y')?>
+                        <i class="fa fa-circle fa-fw" style="color: <?=$this->CorAviso->getNome($animal->prontuario->proximoSeresto)?>;"></i> Próxima: <?=$animal->prontuario->proximoSeresto->format('d/m/Y')?>
                         <ul class="list-group">
-                            <?php if(isset($prontuario->serestos)){ foreach ($prontuario->serestos as $seresto):?>
+                            <?php if(isset($animal->prontuario->serestos)){ foreach ($animal->prontuario->serestos as $seresto):?>
                             <li class="list-group-item">
                                 <?=$seresto->data_aplicacao?>
                                  <?= $this->Form->postLink($this->Html->tag('i','',['class'=>'fas fa-trash-alt']),
-                                    ['action' => 'deleteSeresto', $seresto->id, $prontuario->id_animal], 
+                                    ['action' => 'deleteSeresto', $seresto->id, $animal->prontuario->id_animal], 
                                     ['escape'=>false, 'confirm' => __('Confime a exclusão de {0}?', $seresto->data_aplicacao)])?>
                             </li>
                             <?php endforeach;}?>
@@ -92,13 +92,13 @@
                         Vermífugo <a href="#" data-toggle="modal" data-target="#vermifugoDialog"><i class="fa fa-plus-circle"></i></a>
                     </div>
                     <div class="card-body">
-                        <i class="fa fa-circle fa-fw" style="color: <?=$this->CorAviso->getNome($prontuario->proximoVermifugo)?>;"></i> Próxima: <?=$prontuario->proximoVermifugo->format('d/m/Y')?>
+                        <i class="fa fa-circle fa-fw" style="color: <?=$this->CorAviso->getNome($animal->prontuario->proximoVermifugo)?>;"></i> Próxima: <?=$animal->prontuario->proximoVermifugo->format('d/m/Y')?>
                         <ul class="list-group">
-                            <?php if(isset($prontuario->vermifugos)){ foreach ($prontuario->vermifugos as $vermifugo):?>
+                            <?php if(isset($animal->prontuario->vermifugos)){ foreach ($animal->prontuario->vermifugos as $vermifugo):?>
                             <li class="list-group-item">
                                 <?=$vermifugo->data_aplicacao?>
                                  <?= $this->Form->postLink($this->Html->tag('i','',['class'=>'fas fa-trash-alt']),
-                                    ['action' => 'deleteVermifugo', $vermifugo->id, $prontuario->id_animal], 
+                                    ['action' => 'deleteVermifugo', $vermifugo->id, $animal->prontuario->id_animal], 
                                     ['escape'=>false, 'confirm' => __('Confime a exclusão de {0}?', $vermifugo->data_aplicacao)])?>
                             </li>
                             <?php endforeach;}?>

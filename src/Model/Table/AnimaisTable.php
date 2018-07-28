@@ -51,7 +51,8 @@ class AnimaisTable extends Table {
             ->bindingKey('id_padrinho');
         
         $this->hasOne('prontuarios')
-            ->setForeignKey('id_animal');
+            ->setForeignKey('id_animal')
+            ->setDependent(true);
     }
 
     /**
