@@ -18,7 +18,7 @@ use Cake\ORM\Entity;
  *
  * @property \App\Model\Entity\Prontuario $prontuario
  */
-class Medicaco extends Entity
+class Medicacao extends Entity
 {
 
     /**

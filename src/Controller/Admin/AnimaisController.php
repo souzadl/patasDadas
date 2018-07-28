@@ -38,34 +38,11 @@ class AnimaisController extends AppController {
     }
     
     private function renderForm($animal, $view = 'form', $layout = null) {
-        /*$prontuario = $this->Prontuarios->find('byAnimal', [
-            'id_animal' => $animal->id_animal,
-            'contain' => [
-                'HistoricosPeso' => [
-                    'sort' => ['HistoricosPeso.data_afericao']
-                ], 
-                'DoencasCronicas', 
-                'AlimentacoesEspeciais', 
-                'DeficienciasFisicas', 
-                'Medicacoes',
-                'Serestos',
-                'Vermifugos',
-                'Vacinas',
-                'Alteracoes' => ['AlteracoesDetalhes']
-            ]
-        ]); */
-        
-        if(isset($animal->prontuario)){
-            $animal->prontuario->proximoSeresto = $this->Prontuarios->proximoSeresto($prontuario->serestos);
-            $animal->prontuario->proximaVacina = $this->Prontuarios->proximaVacina($prontuario->vacinas, $animal->filhote);
-            $animal->prontuario->proximoVermifugo = $this->Prontuarios->proximoVermifugo($prontuario->vermifugos);
-        }else{
-            $animal->prontuario = $this->Prontuarios->newEntity();
-            $animal->prontuario->proximoSeresto = Time::today();
-            $animal->prontuario->proximaVacina = Time::today();
-            $animal->prontuario->proximoVermifugo = Time::today();           
-        }
-        
+        if(isset($animal->prontuarios)){
+            $animal->prontuarios['proximoSeresto'] = $this->Prontuarios->proximoSeresto($animal->prontuarios['serestos']);
+            $animal->prontuarios['proximaVacina'] = $this->Prontuarios->proximaVacina($animal->prontuarios['vacinas'], $animal->filhote);
+            $animal->prontuarios['proximoVermifugo'] = $this->Prontuarios->proximoVermifugo($animal->prontuarios['vermifugos']);          
+        }        
         $this->set('animal', $animal);
         $this->set('padrinhos', $this->padrinhos);        
         //$this->set('prontuario', $prontuario);  
@@ -224,6 +201,15 @@ class AnimaisController extends AppController {
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
     public function edit($id = null) {
+        /*$query = $this->Animais->find('all')->contain(['Prontuarios' => ['HistoricosPeso']]);
+        $animal = $this->Animais->get($id, [
+            'contain' => ['Prontuarios' => ['HistoricosPeso']]]);
+        debug($animal->prontuarios); die();
+        foreach ($query as $animal) {
+            debug($animal); die();
+        }
+        die;*/
+        
         $animal = $this->Animais->get($id, [
             'contain' => ['Prontuarios' => [
                 'HistoricosPeso' => [
@@ -239,11 +225,10 @@ class AnimaisController extends AppController {
                 'Alteracoes' => ['AlteracoesDetalhes']
             ]]
         ]);                                        
-        
+        //debug($animal); die();
         if ($this->request->is(['patch', 'post', 'put'])) {
             $animal = $this->Animais->patchEntity($animal, $this->request->getData());
-            debug($animal);
-            die();
+            
             if ($this->Animais->save($animal)) {
                 $this->Flash->success(__('Animal salvo.'));
 

@@ -3,8 +3,6 @@
 namespace App\Model\Table;
 
 use Cake\ORM\Query;
-use Cake\ORM\RulesChecker;
-use Cake\ORM\Table;
 use Cake\Validation\Validator;
 use Cake\I18n\Time;
 
@@ -20,7 +18,7 @@ use Cake\I18n\Time;
  * @method \App\Model\Entity\Prontuario[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\Prontuario findOrCreate($search, callable $callback = null, $options = [])
  */
-class ProntuariosTable extends Table {
+class ProntuariosTable extends BaseTable {
     const VALIDADE_SERESTO = 8; //MESES
     const VALIDADE_VERMIFUGO = 4; //MESES
     const VALIDADE_VACINA_ADULTO = 12; //MESES

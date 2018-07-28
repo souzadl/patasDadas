@@ -12,7 +12,7 @@ use Cake\ORM\Entity;
  *
  * @property \App\Model\Entity\Prontuario $prontuario
  */
-class AlimentacoesEspeciai extends Entity
+class AlimentacoesEspecial extends Entity
 {
 
     /**

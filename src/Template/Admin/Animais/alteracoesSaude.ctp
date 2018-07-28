@@ -6,7 +6,7 @@
 ?>
 
 <div id="accordion">
-    <?php if(isset($prontuario->alteracoes)){ foreach ($prontuario->alteracoes as $alteracao):?>        
+    <?php if(isset($animal->prontuarios['alteracoes'])){ foreach ($animal->prontuarios['alteracoes'] as $alteracao):?>        
     <div class="card">
         <div class="card-header" id="heading<?=$alteracao->id?>">
             <h5 class="mb-0">
@@ -15,7 +15,7 @@
                     <?=substr($alteracao->descricao, 0, 70)?>
                 </button>
                 <?= $this->Form->postLink($this->Html->tag('i','',['class'=>'fas fa-trash-alt']),
-                    ['action' => 'deleteAlteracao', $alteracao->id, $prontuario->id_animal], 
+                    ['action' => 'deleteAlteracao', $alteracao->id, $animal->id_animal], 
                     ['escape'=>false, 'style' => 'float: right;margin-top: 10px;'],
                     ['escape'=>false, 'confirm' => __('Confime a exclusão de {0}?', $alteracao->descricao)])?>
             </h5>

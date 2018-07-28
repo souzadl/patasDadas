@@ -2,9 +2,6 @@
 
 namespace App\Model\Table;
 
-use Cake\ORM\Query;
-use Cake\ORM\RulesChecker;
-use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
@@ -19,7 +16,7 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\Animai[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\Animai findOrCreate($search, callable $callback = null, $options = [])
  */
-class AnimaisTable extends Table {
+class AnimaisTable extends BaseTable {
 
     /**
      * Initialize method
@@ -50,7 +47,7 @@ class AnimaisTable extends Table {
             ->setForeignKey('padrinho_pulgas')
             ->bindingKey('id_padrinho');
         
-        $this->hasOne('prontuarios')
+        $this->hasOne('prontuarios')            
             ->setForeignKey('id_animal')
             ->setDependent(true);
     }
