@@ -203,52 +203,7 @@ class AnimaisController extends AppController {
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function edit($id = null) {
-        //$data['prontuario_id'] = 0;
-        /*$data['alteracoes_detalhes'][0]['obs'] = 'teste teste';
-        $data['alteracoes_detalhes'][0]['id'] = 1;
-        $this->loadModel("Alteracoes");
-        //$alteracao = $this->Alteracoes->newEntity();
-        $alteracao = $this->Alteracoes->get(1,['contain'=>'AlteracoesDetalhes']);
-        $animal = $this->Animais->get(1, ['contain'=>'Prontuarios']);
-        debug($alteracao);
-        debug($animal);
-        die;
-        $alteracao = $this->Alteracoes->patchEntity($alteracao, 
-            $data,
-            ['associated' => ['AlteracoesDetalhes']]
-        );
-        debug($alteracao->alteracoes_detalhes[0]);
-        if($this->Alteracoes->save($alteracao)){
-            debug($alteracao);
-            debug('ok');
-            //die;
-        }else{
-            debug($alteracao);
-            //die;
-        }
-        die;*/
-        
-        /*$animal = $this->Animais->get(1, ['contain'=>'Prontuarios']);
-        
-        $data2['prontuario']['apto_adocao'] = 0;
-        $data2['prontuario']['id'] = 1;
-        debug($animal->prontuario);
-        //die;
-        
-        $animal = $this->Animais->patchEntity($animal,
-            $data2,
-            ['associated' => ['Prontuarios']]);
-        debug($data2);
-        debug($animal->prontuario);
-        //die;
-        if($this->Animais->save($animal)){
-            debug('ok');
-        }else{
-            debug($animal);
-        }
-        die;*/
-        
+    public function edit($id = null) {       
         $animal = $this->Animais->get($id, [
             'contain' => ['Prontuarios' => [
                     'HistoricosPeso' => [
@@ -266,26 +221,11 @@ class AnimaisController extends AppController {
             ]
         ]);     
         
-        /*$data['prontuario']['apto_adocao'] = 1;
-        $data['prontuario']['apto_evento'] = 1;
-        $data['prontuario']['id_animal'] = '1';
-        $data['id_animal'] = 1;
-        $animal = $this->Animais->patchEntity($animal, 
-            $data, 
-            ['associated' => ['Prontuarios']]
-        );
-        debug($data);
-        debug($animal);
-        die;*/
-        //debug($animal); die;
+        
         if ($this->request->is(['patch', 'post', 'put'])) {
             $animal = $this->Animais->patchEntity($animal, $this->request->getData(), [
                 'associated' => ['Prontuarios']
             ]);
-            //$animal->prontuarios['apto_adocao'] = $this->request->getData('Prontuarios.apto_adocao');
-            //$animal->prontuarios['apto_evento'] = $this->request->getData('Prontuarios.apto_evento');
-            //debug($this->request->getData('Prontuarios'));
-            //debug($animal->prontuarios); die();
             if ($this->Animais->save($animal)) {
                 $this->Flash->success(__('Animal salvo.'));
 

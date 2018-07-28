@@ -12,10 +12,10 @@
     <div class="card-body">     
         <div class="row">
             <div class="col">
-                <?= $this->Form->control('Prontuario.apto_adocao', ['type'=>'checkbox', 'label'=>'Apto para Adoção']);?>                
+                <?= $this->Form->control('prontuario.apto_adocao', ['type'=>'checkbox', 'label'=>'Apto para Adoção']);?>                
             </div>
             <div class="col">
-                <?= $this->Form->control('Prontuario.apto_evento', ['type'=>'checkbox', 'label'=>'Apto para Evento']);?>
+                <?= $this->Form->control('prontuario.apto_evento', ['type'=>'checkbox', 'label'=>'Apto para Evento']);?>
             </div>
         </div>    
         <div class="row">
