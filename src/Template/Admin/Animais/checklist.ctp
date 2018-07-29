@@ -22,7 +22,7 @@
             <div class="col-7">
                 <div class="card">
                     <div class="card-header">
-                        Alterações de Saúde <a href="#" data-toggle="modal" data-target="#alteracaoDialog"><i class="fa fa-plus-circle"></i></a>
+                        Alterações de Saúde <?=$this->LinkAdd->get($this, $action, 'alteracaoDialog')?>
                     </div>
                     <div class="card-body">
                         <?php include_once "alteracoesSaude.ctp"?>                      
@@ -37,8 +37,6 @@
                     <div class="card-body">
                         <?= $this->Form->control('prontuario.castracao.castrado_por_patas', ['type'=>'checkbox', 
                             'label'=>'Castrado pelo Patas Dadas'
-                            /*'options'=>['P' => 'Pelo Patas', 'T' => 'Por Terceiro'],*/
-                            /*'templates' => ['nestingLabel'=>'{{hidden}}<div class="custom-control custom-radio">{{input}}<label{{attrs}} class="custom-control-label">{{text}}</label></div>']*/
                         ]) ?>
                         <?= $this->Form->control('prontuario.castracao.clinicas_id', ['label'=>'Clínica', 'type'=>'select','options'=>$clinicas,'empty'=>true]) ?>
                         <?= $this->Form->control('prontuario.castracao.data', ['label' => 'Data Castração', 'type'=>'date', 'empty' => ['year' => true,'month' => true, 'day' => true ]]) ?>
@@ -50,7 +48,7 @@
             <div class="col">
                 <div class="card">
                     <div class="card-header">
-                        Vacinas <a href="#" data-toggle="modal" data-target="#vacinaDialog"><i class="fa fa-plus-circle"></i></a>
+                        Vacinas <?=$this->LinkAdd->get($this, $action, 'vacinaDialog')?>
                     </div>
                     <div class="card-body">
                         <i class="fa fa-circle fa-fw" style="color: <?=isset($animal->prontuario) ? $this->CorAviso->getNome($animal->prontuario->proximaVacina) : ''?>;"></i> 
@@ -59,9 +57,7 @@
                             <?php if(isset($animal->prontuario->vacinas)){ foreach ($animal->prontuario->vacinas as $vacina):?>
                             <li class="list-group-item">
                                 <?=$vacina->nome .'-'.$vacina->data_aplicacao?>
-                                <?= $this->Form->postLink($this->Html->tag('i','',['class'=>'fas fa-trash-alt']),
-                                    ['action' => 'deleteVacina', $vacina->id, $animal->id_animal], 
-                                    ['escape'=>false, 'confirm' => __('Confime a exclusão de {0}?', $vacina->data_aplicacao)])?>
+                                <?=$this->LinkDel->get($this, $action, 'deleteVacina', $vacina->id, $vacina->data_aplicacao, $animal->id_animal)?>
                             </li>
                             <?php endforeach;}?>
                         </ul>                        
@@ -71,7 +67,7 @@
             <div class="col">
                 <div class="card">
                     <div class="card-header">
-                        Seresto <a href="#" data-toggle="modal" data-target="#serestoDialog"><i class="fa fa-plus-circle"></i></a>
+                        Seresto <?=$this->LinkAdd->get($this, $action, 'serestoDialog')?>
                     </div>
                     <div class="card-body"> 
                         <i class="fa fa-circle fa-fw" style="color: <?=isset($animal->prontuario) ? $this->CorAviso->getNome($animal->prontuario->proximoSeresto) : ''?>;"></i> 
@@ -80,9 +76,7 @@
                             <?php if(isset($animal->prontuario->serestos)){ foreach ($animal->prontuario->serestos as $seresto):?>
                             <li class="list-group-item">
                                 <?=$seresto->data_aplicacao?>
-                                 <?= $this->Form->postLink($this->Html->tag('i','',['class'=>'fas fa-trash-alt']),
-                                    ['action' => 'deleteSeresto', $seresto->id, $animal->id_animal], 
-                                    ['escape'=>false, 'confirm' => __('Confime a exclusão de {0}?', $seresto->data_aplicacao)])?>
+                                <?=$this->LinkDel->get($this, $action, 'deleteSeresto', $seresto->id, $seresto->data_aplicacao, $animal->id_animal)?>
                             </li>
                             <?php endforeach;}?>
                         </ul>
@@ -92,7 +86,7 @@
             <div class="col">
                 <div class="card">
                     <div class="card-header">
-                        Vermífugo <a href="#" data-toggle="modal" data-target="#vermifugoDialog"><i class="fa fa-plus-circle"></i></a>
+                        Vermífugo <?=$this->LinkAdd->get($this, $action, 'vermifugoDialog')?>
                     </div>
                     <div class="card-body">
                         <i class="fa fa-circle fa-fw" style="color: <?=isset($animal->prontuario) ? $this->CorAviso->getNome($animal->prontuario->proximoVermifugo) : ''?>;"></i> 
@@ -101,9 +95,7 @@
                             <?php if(isset($animal->prontuario->vermifugos)){ foreach ($animal->prontuario->vermifugos as $vermifugo):?>
                             <li class="list-group-item">
                                 <?=$vermifugo->data_aplicacao?>
-                                 <?= $this->Form->postLink($this->Html->tag('i','',['class'=>'fas fa-trash-alt']),
-                                    ['action' => 'deleteVermifugo', $vermifugo->id, $animal->id_animal], 
-                                    ['escape'=>false, 'confirm' => __('Confime a exclusão de {0}?', $vermifugo->data_aplicacao)])?>
+                                <?=$this->LinkDel->get($this, $action, 'deleteVermifugo', $vermifugo->id, $vermifugo->data_aplicacao, $animal->id_animal)?>
                             </li>
                             <?php endforeach;}?>
                         </ul>                       

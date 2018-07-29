@@ -7,16 +7,14 @@
 ?>
 <div class="card">
     <div class="card-header">
-        Deficiências Físicas <a href="#" data-toggle="modal" data-target="#deficienciaFisicaDialog"><i class="fa fa-plus-circle"></i></a>
+        Deficiências Físicas <?=$this->LinkAdd->get($this, $action, 'deficienciaFisicaDialog')?>
     </div>
     <div class="card-body">
         <?php 
         if(isset($animal->prontuario->deficienciasfisicas)){ 
             foreach($animal->prontuario->deficienciasfisicas as $index => $deficiencia){
                 echo $deficiencia->descricao.' '.
-                    $this->Form->postLink($this->Html->tag('i','',['class'=>'fas fa-trash-alt']),
-                    ['action' => 'deleteDeficienciaFisica', $deficiencia->id, $animal->id_animal], 
-                    ['escape'=>false, 'confirm' => __('Confime a exclusão de {0}?', $deficiencia->descricao)]);
+                    $this->LinkDel->get($this, $action, 'deleteDeficienciaFisica', $deficiencia->id, $deficiencia->descricao, $animal->id_animal);
                 echo ($index < count($animal->prontuario->deficienciasfisicas)-1) ? ' | ' : '';
             }
         }

@@ -7,7 +7,7 @@
 ?>
 <div class="card">
     <div class="card-header">
-        Medicações <a href="#" data-toggle="modal" data-target="#medicacaoDialog"><i class="fa fa-plus-circle"></i></a>
+        Medicações <?=$this->LinkAdd->get($this, $action, 'medicacaoDialog')?>
     </div>
     <div class="card-body">
         <table class="table" id="tableMedicacoes">
@@ -15,13 +15,16 @@
         echo $this->Html->tableHeaders(['Medicação', 'Uso', 'Dosagem', 'Frequência', 'Contínuo', 'Início', 'Término', '']);
         if(isset($animal->prontuario->medicacoes)){
             foreach($animal->prontuario->medicacoes as $medicacao){
-                echo $this->Html->tableCells([$medicacao->descricao, 
-                    $medicacao->uso, $medicacao->dosagem, $medicacao->frequencia, 
+                echo $this->Html->tableCells([
+                    $medicacao->descricao, 
+                    $medicacao->uso, 
+                    $medicacao->dosagem, 
+                    $medicacao->frequencia, 
                     ($medicacao->continuo == 1 ? 'Sim' : 'Não'), 
-                    $medicacao->inicio, $medicacao->termino,
-                    $this->Form->postLink($this->Html->tag('i','',['class'=>'fas fa-trash-alt']),
-                        ['action' => 'deleteMedicacao', $medicacao->id, $animal->id_animal], 
-                        ['escape'=>false, 'confirm' => __('Confime a exclusão de {0}?', $medicacao->descricao)])]);    
+                    $medicacao->inicio, 
+                    $medicacao->termino,
+                    $this->LinkDel->get($this, $action, 'deleteMedicacao', $medicacao->id, $medicacao->descricao, $animal->id_animal)
+                ]);
             }
         }
         ?>

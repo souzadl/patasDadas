@@ -14,10 +14,7 @@
                 <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse<?=$alteracao->id?>" aria-expanded="false" aria-controls="collapse<?=$alteracao->id?>">
                     <?=substr($alteracao->descricao, 0, 70)?>
                 </button>
-                <?= $this->Form->postLink($this->Html->tag('i','',['class'=>'fas fa-trash-alt']),
-                    ['action' => 'deleteAlteracao', $alteracao->id, $animal->id_animal], 
-                    ['escape'=>false, 'style' => 'float: right;margin-top: 10px;'],
-                    ['escape'=>false, 'confirm' => __('Confime a exclusão de {0}?', $alteracao->descricao)])?>
+                <?=$this->LinkDel->get($this, $action, 'deleteAlteracao', $alteracao->id, $alteracao->descricao, $animal->id_animal)?>
             </h5>
         </div>
 

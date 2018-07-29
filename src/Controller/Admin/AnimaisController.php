@@ -62,9 +62,7 @@ class AnimaisController extends AppController {
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function view($id = null) {
-        $animal = $this->Animais->get($id, [
-            'contain' => []
-        ]);
+        $animal = $this->get($id);
 
         $this->renderForm($animal);
     }
@@ -195,16 +193,9 @@ class AnimaisController extends AppController {
             echo json_encode($retorno);
         }        
     }
-
-    /**
-     * Edit method
-     *
-     * @param string|null $id Animai id.
-     * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Network\Exception\NotFoundException When record not found.
-     */
-    public function edit($id = null) {       
-        $animal = $this->Animais->get($id, [
+    
+    private function get($id){
+        return $this->Animais->get($id, [
             'contain' => ['Prontuarios' => [
                     'HistoricosPeso' => [
                         'sort' => ['HistoricosPeso.data_afericao']
@@ -220,8 +211,18 @@ class AnimaisController extends AppController {
                     'Castracoes'
                 ]
             ]
-        ]);    
+        ]); 
+    }
 
+    /**
+     * Edit method
+     *
+     * @param string|null $id Animai id.
+     * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
+     * @throws \Cake\Network\Exception\NotFoundException When record not found.
+     */
+    public function edit($id = null) {       
+        $animal =  $this->get($id);
         
         if ($this->request->is(['patch', 'post', 'put'])) {
             $castracao = $this->request->getData('prontuario.castracao');            
