@@ -59,10 +59,16 @@
                         echo $this->Form->control('perfil_instagram');
                         ?>    
                     </div>
-                    <div class="col">                      
+                    <div class="col">     
+                        <div class="row">
+                            <div class="col-8">
+                                <?=$this->Form->control('data_nascimento', ['empty' => true]); ?>
+                            </div>
+                            <div class="col" style="padding-top: 46px;">
+                                <?=$this->Form->control('filhote', ['type' => 'checkbox']);?>
+                            </div>
+                        </div>
                         <?php                         
-                        echo $this->Form->control('data_nascimento', ['empty' => true]);  
-                        echo $this->Form->control('filhote', ['type' => 'checkbox']);
                         echo $this->Form->control('tipo', [
                             'type' => 'radio', 
                             'options' => ['C'=>'Cão', 'G'=>'Gato'],

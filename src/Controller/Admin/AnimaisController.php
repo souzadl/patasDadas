@@ -141,12 +141,10 @@ class AnimaisController extends AppController {
     
     public function addAlteracao(){
         $this->loadModel("Alteracoes");
-        debug($this->request->getData());
         $alteracao = $this->Alteracoes->patchEntity($this->Alteracoes->newEntity(), 
             $this->request->getData(),
             ['associated' => ['AlteracoesDetalhes']]
         );
-        debug($alteracao);die;
         $this->addGenericoNivel2($this->Alteracoes, $alteracao, 'Alteração de Saúde');
     }
     
@@ -223,36 +221,21 @@ class AnimaisController extends AppController {
                 ]
             ]
         ]);    
-    /*$data = array();
-   $data['prontuario']['apto_adocao'] = 1;
-   $data['prontuario']['castracao']['castrado_por_patas'] = 1;
 
-   $animal = $this->Animais->patchEntity($animal, $data, [
-                'associated' => ['Prontuarios' => [
-                    'associated' => ['Castracoes']
-                    ]
-                ]
-            ]);
-   debug($animal);
-   die;*/
         
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $castracao = $this->request->getData('prontuario.castracao');
-            //debug($this->request->getData('prontuario.castracao'));
+            $castracao = $this->request->getData('prontuario.castracao');            
             $associacoesProntuario = (!empty($castracao['clinicas_id']) or 
                 !empty($castracao['data']['day']) or
                 !empty($castracao['castrado_por_patas']))
                 ? ['Castracoes'] : [];
-            //debug($castracao);
-            //debug($associacoesProntuario);die;
             $animal = $this->Animais->patchEntity($animal, $this->request->getData(), [
                 'associated' => ['Prontuarios' => [
                     'associated' => $associacoesProntuario
                     ]
                 ]
             ]);
-            //debug($animal->prontuario);
-            //die;
+
             if ($this->Animais->save($animal)) {
                 $this->Flash->success(__('Animal salvo.'));
 
@@ -260,8 +243,6 @@ class AnimaisController extends AppController {
             }
             
             $this->Flash->error($animal->prontuario->castracao->lastErrorMessage);
-            //debug($animal->prontuario->castracao->getErrors());
-            //die;
             //$this->Flash->error(__('Animal não pode ser salvo.'));
         }
         $this->renderForm($animal);
