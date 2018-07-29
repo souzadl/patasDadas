@@ -4,21 +4,27 @@
  * @var \App\Model\Entity\User $user
  */
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <!--<li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('New User'), ['controller' => 'Users', 'action' => 'add']) ?></li>-->
-    </ul>
-</nav>
-<div class="users form large-9 medium-8 columns content">
-    <?= $this->Form->create() ?>
-    <fieldset>
-        <legend><?= __('Login') ?></legend>
-        <?php
-            echo $this->Form->control('login');
-            echo $this->Form->control('senha');
-        ?>
-    </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
-    <?= $this->Form->end() ?>
+<div class="row">
+    <div class="col-md-4 col-md-offset-4" style="float: none;margin: auto;">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Autenticação</h3>
+            </div>
+            <div class="panel-body">
+                <?= $this->Form->create() ?>
+                    <fieldset>
+                        <div class="form-group">
+                            <input class="form-control" placeholder="Usuário" name="login" type="text">
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" placeholder="Senha" name="senha" type="password" value="">
+                        </div>
+                        <input class="btn btn-lg btn-success btn-block" type="submit" value="Entrar">    
+                        <?= $this->Html->link(__('Relembrar Senha'), ['controller' => 'Users', 'action' => 'relembrarPassword'], []) ?>
+                    </fieldset>
+                <?= $this->Form->end() ?>
+            </div>
+        </div>
+    </div>
 </div>
+

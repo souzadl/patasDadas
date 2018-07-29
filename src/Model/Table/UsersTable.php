@@ -125,7 +125,7 @@ class UsersTable extends BaseTable
     
     public function findAuth(\Cake\ORM\Query $query, array $options){
         $query
-            ->select(['id_usuario', 'login', 'senha'])
+            ->select(['id_usuario', 'login', 'senha', 'email', 'nome'])
             ->where(['Users.ativo' => 'S']);
             //->contain('Pessoas');
 

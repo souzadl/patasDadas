@@ -13,7 +13,7 @@ class HomeController extends AppController{
     
     public function beforeFilter(\Cake\Event\Event $event) {
         parent::beforeFilter($event);
-        $this->Auth->allow(['index']);
+        //$this->Auth->allow(['index']);
     }
     
     public function index()

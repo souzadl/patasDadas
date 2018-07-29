@@ -19,6 +19,9 @@ msgstr ""
 msgid "This value is already in use"
 msgstr "Este valor já está cadastrado"
 
+msgid "You are not authorized to access that location."
+msgstr "Você não está autorizado a acessar essa localização."
+
 msgid "Name"
 msgstr "Nome"
 
