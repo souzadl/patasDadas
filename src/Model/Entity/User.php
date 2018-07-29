@@ -54,6 +54,10 @@ class User extends Entity
         }
     }   
     
+    protected function _getHash(){
+        return substr($this->senha, 0, 20);
+    }
+    
     
 
     

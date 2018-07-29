@@ -20,7 +20,7 @@
                             <input class="form-control" placeholder="Senha" name="senha" type="password" value="">
                         </div>
                         <input class="btn btn-lg btn-success btn-block" type="submit" value="Entrar">    
-                        <?= $this->Html->link(__('Relembrar Senha'), ['controller' => 'Users', 'action' => 'relembrarPassword'], []) ?>
+                        <?= $this->Html->link(__('Relembrar Senha'), ['controller' => 'Users', 'action' => 'rememberPassword'], []) ?>
                     </fieldset>
                 <?= $this->Form->end() ?>
             </div>

@@ -199,55 +199,43 @@ class UsersController extends AppController{
     
     public function rememberPassword(){
         $user = $this->Users->newEntity();
-        if(!empty($this->request->data)){
-            if($this->request->is('post')){
-                $user = $this->Users->patchEntities($user, $this->request->getData());
-                if($user = $this->Users->findByEmail($this->request->data['email'])->toArray()){
-                    $this->getMailer('User')->send('recovery', [$user]);
-                    $msg = 'Email enviado para sua caixa de email!';
-                    $this->Flash->success(__($msg));
-                    return $this->redirect(['action' => 'rememberPassword']);
-                }else{
-                    $msg = 'Email não encontrado!';
-                    $this->Flash->error(__($msg));
-                    return $this->redirect(['action' => 'rememberPassword']);
-                }
-            }            
-        }
+        if($this->request->is('post')){
+            $user = $this->Users->findByEmail($this->request->data['email'])->toArray()[0];
+            if($user->has('email')){
+                $this->getMailer('User')->send('recovery', [$user]);
+                $msg = 'Email enviado para sua caixa de email!';
+                $this->Flash->success(__($msg));
+                return $this->redirect(['action' => 'rememberPassword']);
+            }else{
+                $msg = 'Email não encontrado!';
+                $this->Flash->error(__($msg));
+                return $this->redirect(['action' => 'rememberPassword']);
+            }
+        }            
         $this->set(compact('user'));
     }
     
     public function  changePassword(){
-        $q_hash = $this->request->query('h');
-        $q_email = $this->request->query('email');
-        $user = $this->Users->newEntity();
-        if($this->request->is(['post','put'])){ 
-            //$this->Users->pa
-            $user = $this->Users->get($this->request->data['id']);
-            //echo "<pre>";
-            //var_dump($this->request->data);
-            $user = $this->Users->patchEntity($user, $this->request->getData());
-            //var_dump($user);
-            //$user = $this->Users->patchEntities($user, $this->request->data);
-            //var_dump($user);
+        $user = $this->Users->newEntity();   
+        if($this->request->is(['post','put'])){     
+            $user = $this->Users->patchEntity($this->Users->get($this->request->getData('id_usuario')), $this->request->getData());
             if($this->Users->save($user)){
-                $this->Flash->success(__('The password has been saved.'));
+                $this->Flash->success(__('Senha alterada.'));
                 return $this->redirect(['action'=>'login']);
             }else{
-                $this->Flash->error(__('The password could not be saved. Please, try again.'));
+                $this->Flash->error(__('Senha não alterada.'));
             }
         }else{
-            if($user = $this->Users->findByEmail($q_email)->toArray()){
-                $hash = substr($user[0]['password'], 0, 25);
-                if($hash == $q_hash){
-                    $this->Flash->set(__('Alterar senha do email: '.$q_email));
-                }else{
-                    $this->Flash->set(__('Você não tem permissão para alterar esse senha!'));
-                    $this->redirect(array('action'=>'rememberPassword'));                    
-                }
+            $q_hash = $this->request->getParam('pass')[1];
+            $q_email = $this->request->getParam('pass')[0];
+            $user = $this->Users->findByEmail($q_email)->toArray()[0];
+            if($user and $user->hash == $q_hash){
+                $this->Flash->set(__('Alterar senha do email: '.$q_email));
+            }else{
+                $this->Flash->set(__('Você não tem permissão para alterar esse senha!'));
+                $this->redirect(array('action'=>'rememberPassword'));                    
             }
-        }
-        $this->set('id', $user[0]['id']);
+        }        
         $this->set(compact('user'));
     }
 }

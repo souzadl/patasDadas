@@ -13,8 +13,8 @@
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
 
-$content = explode("\n", $content);
+echo "Nome: ".$nome."<br>";
+echo "Email: ".$email."<br><br>";
+echo "Link para troca de senha: <br>";
+echo $url;
 
-foreach ($content as $line) :
-    echo '<p> ' . $line . "</p>\n";
-endforeach;

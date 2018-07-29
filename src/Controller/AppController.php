@@ -121,7 +121,7 @@ class AppController extends Controller{
     }
     
     public function beforeFilter(Event $event) {
-        $this->set('user', $this->Auth->user());
+        $this->set('userAuth', $this->Auth->user());
     }
     
     private function carregarAcoesPermitidasIndex($user, $controle){

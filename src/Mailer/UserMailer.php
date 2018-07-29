@@ -2,6 +2,7 @@
 namespace App\Mailer;
 
 use Cake\Mailer\Mailer;
+use Cake\Routing\Router;
 
 /**
  * User mailer.
@@ -27,13 +28,14 @@ class UserMailer extends Mailer
     }
     
     public function recovery($user){
-        $this->to($user[0]['email'])
+        $this->to($user->email)
             ->profile('patasdadas')
             ->emailFormat('html')
             ->template('recovery_email_template')
             ->layout('default')
-            ->viewVars(['nome' => $user[0]['name'], 'email' => $user[0]['email'],
-                'hash' => substr($user[0]['password'], 0, 25)])
+            ->viewVars(['nome' => $user->nome, 
+                'email' => $user->email,
+                'url' => Router::url(array("controller"=>"users","action"=>"changePassword", $user->email, $user->hash),true)])
             ->subject('Recuperação de senha');
     }
 }

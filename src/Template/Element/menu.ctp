@@ -6,15 +6,14 @@
 ?>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="#">
-        <?= $this->Html->image('patasdadas-header-logo.png', ['alt' => 'Patas Dadas', 'width' => '50', 'style' => 'margin-top: 5px;']); ?>  
-        <!--<?= $this->fetch('title') ?>    -->        
+        <?= $this->Html->image('patasdadas-header-logo.png', ['alt' => 'Patas Dadas', 'width' => '50', 'style' => 'margin-top: 5px;']); ?>        
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <?php if(isset($user)): ?>
+        <?php if(isset($userAuth)): ?>
         <ul class="navbar-nav mr-auto">         
             <li class="nav-item active"><?= $this->Html->link(__('Home'), ['controller' => 'Home', 'action' => 'index'], ['class' => 'nav-link']) ?></li>
             <li class="nav-item disabled"><?= $this->Html->link(__('Usuários'), ['controller' => 'Users', 'action' => 'index'], ['class' => 'nav-link']) ?></li>
@@ -70,7 +69,7 @@
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                     <span class="fa fa-user"></span> 
-                    <strong><?=$user['login']?></strong>
+                    <strong><?=$userAuth['login']?></strong>
                     <span class="glyphicon glyphicon-chevron-down"></span>
                 </a>
                 <ul class="dropdown-menu">
@@ -83,8 +82,8 @@
                                     </p>
                                 </div>
                                 <div class="col-lg-8">
-                                    <p class="text-left"><strong><?=$user['nome']?></strong></p>
-                                    <p class="text-left small"><?=$user['email']?></p>
+                                    <p class="text-left"><strong><?=$userAuth['nome']?></strong></p>
+                                    <p class="text-left small"><?=$userAuth['email']?></p>
                                     <p class="text-left">
                                         <a href="#" class="btn btn-primary btn-block btn-sm">Atualizar Dados</a>
                                     </p>
