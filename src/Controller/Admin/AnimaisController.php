@@ -43,9 +43,12 @@ class AnimaisController extends AppController {
             $animal->prontuario->proximaVacina = $this->Prontuarios->proximaVacina($animal->prontuario->vacinas, $animal->filhote);
             $animal->prontuario->proximoVermifugo = $this->Prontuarios->proximoVermifugo($animal->prontuario->vermifugos);          
         }  
+        
+        $this->loadModel('Clinicas');
+        
         $this->set('animal', $animal);
         $this->set('padrinhos', $this->padrinhos);        
-        //$this->set('prontuario', $prontuario);  
+        $this->set('clinicas', $this->Clinicas->find('list'));  
         $this->set('action', $this->request->getParam('action'));
         parent::render($view, $layout);
     }
@@ -234,10 +237,17 @@ class AnimaisController extends AppController {
    die;*/
         
         if ($this->request->is(['patch', 'post', 'put'])) {
-            //debug($this->request->getData('castracao'));
+            $castracao = $this->request->getData('prontuario.castracao');
+            //debug($this->request->getData('prontuario.castracao'));
+            $associacoesProntuario = (!empty($castracao['clinicas_id']) or 
+                !empty($castracao['data']['day']) or
+                !empty($castracao['castrado_por_patas']))
+                ? ['Castracoes'] : [];
+            //debug($castracao);
+            //debug($associacoesProntuario);die;
             $animal = $this->Animais->patchEntity($animal, $this->request->getData(), [
                 'associated' => ['Prontuarios' => [
-                    'associated' => ['Castracoes']
+                    'associated' => $associacoesProntuario
                     ]
                 ]
             ]);
@@ -248,7 +258,11 @@ class AnimaisController extends AppController {
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('Animal não pode ser salvo.'));
+            
+            $this->Flash->error($animal->prontuario->castracao->lastErrorMessage);
+            //debug($animal->prontuario->castracao->getErrors());
+            //die;
+            //$this->Flash->error(__('Animal não pode ser salvo.'));
         }
         $this->renderForm($animal);
     }

@@ -60,14 +60,11 @@ class CastracoesTable extends Table
             ->integer('id')
             ->allowEmpty('id', 'create');
 
-        $validator
+        /*$validator
             ->date('data')
             ->requirePresence('data', 'create')
-            ->notEmpty('data');
+            ->notEmpty('data');*/
 
-        $validator
-            ->requirePresence('castrado_por_patas', 'create')
-            ->notEmpty('castrado_por_patas');
 
         return $validator;
     }
@@ -81,7 +78,7 @@ class CastracoesTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['clinicas_id'], 'Clinicas'));
+        //$rules->add($rules->existsIn(['clinicas_id'], 'Clinicas'));
         $rules->add($rules->existsIn(['prontuario_id'], 'Prontuarios'));
 
         return $rules;

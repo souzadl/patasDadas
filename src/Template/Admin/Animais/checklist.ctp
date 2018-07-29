@@ -40,8 +40,8 @@
                             /*'options'=>['P' => 'Pelo Patas', 'T' => 'Por Terceiro'],*/
                             /*'templates' => ['nestingLabel'=>'{{hidden}}<div class="custom-control custom-radio">{{input}}<label{{attrs}} class="custom-control-label">{{text}}</label></div>']*/
                         ]) ?>
-                        <?= $this->Form->control('clinica_castracao', ['label'=>'Clínica', 'type'=>'select']) ?>
-                        <?= $this->Form->control('prontuario.castracao.data_castracao', ['label' => 'Data Castração', 'type'=>'date', 'empty' => ['year' => true,'month' => true, 'day' => true ]]) ?>
+                        <?= $this->Form->control('prontuario.castracao.clinicas_id', ['label'=>'Clínica', 'type'=>'select','options'=>$clinicas,'empty'=>true]) ?>
+                        <?= $this->Form->control('prontuario.castracao.data', ['label' => 'Data Castração', 'type'=>'date', 'empty' => ['year' => true,'month' => true, 'day' => true ]]) ?>
                     </div>
                 </div>
             </div>

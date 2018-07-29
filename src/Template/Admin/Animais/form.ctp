@@ -4,6 +4,7 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Animai $animai
  */
+
 ?>
 <div class="animais form large-9 medium-8 columns content">
     <legend><?= $this->RotuloAcao($action, 'Animal'); ?></legend>
@@ -43,6 +44,8 @@
                 <div class="row">
                     <div class="col">
                         <?php 
+                        echo $this->Form->hidden('id_animal');
+                        echo $this->Form->hidden('prontuario.id_animal', ['value'=>$animal->id_animal]);
                         echo $this->Form->control('nome');
                         echo $this->Form->control('sexo', [
                             'type' => 'radio', 

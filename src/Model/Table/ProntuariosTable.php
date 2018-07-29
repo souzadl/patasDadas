@@ -88,7 +88,10 @@ class ProntuariosTable extends BaseTable {
     
     
     private function proximo($entidades, $inc, $tipo='meses'){
-        $data = (count($entidades) > 0) ? end($entidades)->data_aplicacao : '';
+        $data = '';
+        if(is_array($entidades) and count($entidades) > 0){
+            $data = end($entidades)->data_aplicacao;
+        }
         $proximo = new Time($data);
         if($tipo === 'meses'){
             $proximo->addMonth($inc);
