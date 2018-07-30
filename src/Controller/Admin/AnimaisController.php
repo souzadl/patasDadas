@@ -314,7 +314,7 @@ class AnimaisController extends AppController {
     }
     
     public function deleteAlteracao($id = null, $id_animal = null){
-        $this->delete($id, 'Mudancas', 'Alterações de Saúde');
+        $this->delete($id, 'Alteracoes', 'Alterações de Saúde');
         return $this->redirect(['action' => 'edit', $id_animal]);           
     }
 
