@@ -33,19 +33,19 @@ class AnimaisTable extends BaseTable {
 
         $this->belongsTo('padrinhos')
             ->setForeignKey('padrinho_racao')
-            ->bindingKey('id_padrinho');
+            ->setBindingKey('id_padrinho');
 
         $this->belongsTo('padrinhos')
             ->setForeignKey('padrinho_castracao')
-            ->bindingKey('id_padrinho');
+            ->setBindingKey('id_padrinho');
 
         $this->belongsTo('padrinhos')
             ->setForeignKey('padrinho_vacinas')
-            ->bindingKey('id_padrinho');
+            ->setBindingKey('id_padrinho');
 
         $this->belongsTo('padrinhos')
             ->setForeignKey('padrinho_pulgas')
-            ->bindingKey('id_padrinho');
+            ->setBindingKey('id_padrinho');
         
         $this->hasOne('Prontuarios')            
             ->setForeignKey('id_animal')
