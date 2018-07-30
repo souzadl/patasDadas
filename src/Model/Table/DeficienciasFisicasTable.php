@@ -20,7 +20,7 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\DeficienciasFisica[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\DeficienciasFisica findOrCreate($search, callable $callback = null, $options = [])
  */
-class DeficienciasFisicasTable extends BaseTable
+class DeficienciasfisicasTable extends BaseTable
 {
 
     /**

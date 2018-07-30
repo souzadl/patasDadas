@@ -18,7 +18,7 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\DoencasCronica[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\DoencasCronica findOrCreate($search, callable $callback = null, $options = [])
  */
-class DoencasCronicasTable extends BaseTable
+class DoencascronicasTable extends BaseTable
 {
 
     /**

@@ -20,7 +20,7 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\AlteracoesDetalhe[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\AlteracoesDetalhe findOrCreate($search, callable $callback = null, $options = [])
  */
-class AlteracoesDetalhesTable extends Table
+class AlteracoesdetalhesTable extends Table
 {
 
     /**

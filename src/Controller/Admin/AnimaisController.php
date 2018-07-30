@@ -3,7 +3,6 @@
 namespace App\Controller\Admin;
 
 use App\Controller\AppController;
-use Cake\I18n\Time;
 
 /**
  * Animais Controller
@@ -106,19 +105,19 @@ class AnimaisController extends AppController {
     }
     
     public function addHistoricoPeso(){
-        $this->addGenericoNivel1('HistoricosPeso', 'Histórico Peso');
+        $this->addGenericoNivel1('Historicospeso', 'Histórico Peso');
     }
     
     public function addDoencaCronica(){
-        $this->addGenericoNivel1('DoencasCronicas', 'Doença crônica');
+        $this->addGenericoNivel1('Doencascronicas', 'Doença crônica');
     }
     
     public function addAlimentacaoEspecial(){
-        $this->addGenericoNivel1('AlimentacoesEspeciais', 'Alimentação especial');
+        $this->addGenericoNivel1('Alimentacoesespeciais', 'Alimentação especial');
     }
     
     public function addDeficienciaFisica(){
-        $this->addGenericoNivel1('DeficienciasFisicas', 'Deficiência física');
+        $this->addGenericoNivel1('Deficienciasfisicas', 'Deficiência física');
     }
     
     public function addMedicacao(){
@@ -141,7 +140,7 @@ class AnimaisController extends AppController {
         $this->loadModel("Alteracoes");
         $alteracao = $this->Alteracoes->patchEntity($this->Alteracoes->newEntity(), 
             $this->request->getData(),
-            ['associated' => ['AlteracoesDetalhes']]
+            ['associated' => ['Alteracoesdetalhes']]
         );
         $this->addGenericoNivel2($this->Alteracoes, $alteracao, 'Alteração de Saúde');
     }
@@ -157,7 +156,7 @@ class AnimaisController extends AppController {
     public function addAlteracaoDetalhe(){
         $this->autoRender = false;
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $this->loadModel('AlteracoesDetalhes');
+            $this->loadModel('Alteracoesdetalhes');
             $entidade = $this->AlteracoesDetalhes->patchEntity($this->AlteracoesDetalhes->newEntity(), 
                 $this->request->getData());               
             $this->salvarModal($this->AlteracoesDetalhes, $entidade, 'Detalhes Alteração de Saúde');
@@ -197,17 +196,17 @@ class AnimaisController extends AppController {
     private function get($id){
         return $this->Animais->get($id, [
             'contain' => ['Prontuarios' => [
-                    'HistoricosPeso' => [
-                        'sort' => ['HistoricosPeso.data_afericao']
+                    'Historicospeso' => [
+                        'sort' => ['Historicospeso.data_afericao']
                     ], 
-                    'DoencasCronicas', 
-                    'AlimentacoesEspeciais', 
-                    'DeficienciasFisicas', 
+                    'Doencascronicas', 
+                    'Alimentacoesespeciais', 
+                    'Deficienciasfisicas', 
                     'Medicacoes',
                     'Serestos',
                     'Vermifugos',
                     'Vacinas',
-                    'Alteracoes' => ['AlteracoesDetalhes'],
+                    'Alteracoes' => ['Alteracoesdetalhes'],
                     'Castracoes'
                 ]
             ]
@@ -237,14 +236,14 @@ class AnimaisController extends AppController {
                 ]
             ]);
 
-            if ($this->Animais->save($animal)) {
+            if ($this->Animais->save($animal)) {                
                 $this->Flash->success(__('Animal salvo.'));
 
                 return $this->redirect(['action' => 'index']);
             }
             
-            $this->Flash->error($animal->prontuario->castracao->lastErrorMessage);
-            //$this->Flash->error(__('Animal não pode ser salvo.'));
+            //$this->Flash->error($animal->prontuario->castracao->lastErrorMessage);
+            $this->Flash->error(__('Animal não pode ser salvo.'));
         }
         $this->renderForm($animal);
     }
@@ -256,8 +255,8 @@ class AnimaisController extends AppController {
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    private function delete($id, $model, $label) {
-        $this->request->allowMethod(['post', 'delete']);
+    private function delete($id, $model, $label) {        
+        $this->request->allowMethod(['post', 'delete']);        
         $this->loadModel($model);
         $entidade = $this->$model->get($id);
         if ($this->$model->delete($entidade)) {
@@ -275,22 +274,22 @@ class AnimaisController extends AppController {
     }
     
     public function deleteHistoricoPeso($id = null, $id_animal = null){
-        $this->delete($id, 'HistoricosPeso', 'Histórico peso');
+        $this->delete($id, 'Historicospeso', 'Histórico peso');
         return $this->redirect(['action' => 'edit', $id_animal]);
     }
     
     public function deleteDoencaCronica($id = null, $id_animal = null){
-        $this->delete($id, 'DoencasCronicas', 'Doença crônica');
+        $this->delete($id, 'Doencascronicas', 'Doença crônica');
         return $this->redirect(['action' => 'edit', $id_animal]);
     }
     
     public function deleteAlimentacaoEspecial($id = null, $id_animal = null){
-        $this->delete($id, 'AlimentacoesEspeciais', 'Alimentação especial');
+        $this->delete($id, 'Alimentacoesespeciais', 'Alimentação especial');
         return $this->redirect(['action' => 'edit', $id_animal]);
     }
     
     public function deleteDeficienciaFisica($id = null, $id_animal = null){
-        $this->delete($id, 'DeficienciasFisicas', 'Deficiência física');
+        $this->delete($id, 'Deficienciasfisicas', 'Deficiência física');
         return $this->redirect(['action' => 'edit', $id_animal]);
     }
     

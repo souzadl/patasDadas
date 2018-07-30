@@ -19,7 +19,7 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\HistoricosPeso[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\HistoricosPeso findOrCreate($search, callable $callback = null, $options = [])
  */
-class HistoricosPesoTable extends BaseTable {
+class HistoricospesoTable extends Table {
 
     /**
      * Initialize method

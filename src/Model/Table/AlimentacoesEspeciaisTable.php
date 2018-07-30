@@ -20,7 +20,7 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\AlimentacoesEspeciai[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\AlimentacoesEspeciai findOrCreate($search, callable $callback = null, $options = [])
  */
-class AlimentacoesEspeciaisTable extends BaseTable
+class AlimentacoesespeciaisTable extends BaseTable
 {
 
     /**
