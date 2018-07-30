@@ -31,7 +31,7 @@ $(document).ready(function () {
     });
         
   
-    $("form").submit(function(e){         
+    $(".modal-body form").submit(function(e){         
         try{            
             var form = $(this);
             form.find("div.error-message").remove();
