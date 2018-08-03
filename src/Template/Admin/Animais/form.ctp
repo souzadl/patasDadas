@@ -89,7 +89,7 @@
                 
                 ?>
             </div>
-            <div class="tab-pane fade" id="fotos" role="tabpanel" aria-labelledby="fotos-tab">Fotos</div>
+            <div class="tab-pane fade" id="fotos" role="tabpanel" aria-labelledby="fotos-tab"><?php include_once "galeriaFotos.ctp"?></div>
             <div class="tab-pane fade" id="padrinhos" role="tabpanel" aria-labelledby="padrinhos-tab">
                 <?php
                 echo $this->Form->control('padrinho_racao', ['options' => $padrinhos]);

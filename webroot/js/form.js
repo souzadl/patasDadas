@@ -65,7 +65,24 @@ $(document).ready(function () {
         }
         catch(err){alert('err='+err);};
               
-    });    
+    });  
+    
+    /*Galeria de Fotos*/
+    // Activate Carousel
+    $("#myCarousel").carousel();
+    
+    // Enable Carousel Indicators
+    $(".carousel-indicators li").click(function(){
+        $("#myCarousel").carousel($(this).data('id'));
+    });
+    
+    // Enable Carousel Controls
+    $(".carousel-control-prev").click(function(){
+        $("#myCarousel").carousel("prev");
+    });
+    $(".carousel-control-next").click(function(){
+        $("#myCarousel").carousel("next");
+    });   
     
 });
 

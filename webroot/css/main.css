@@ -96,4 +96,11 @@ div.date select[name*="year"]{
     right: 0;
 }
 
+/*Galeria de Fotos*/
+.carousel-inner img {
+     width: 100%;
+     height: 100%;
+}
+/*Fim Galeria de Fotos*/
+
 
