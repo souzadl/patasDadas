@@ -4,24 +4,24 @@ echo $this->Form->control('fotos[]', ['type'=>'file', 'label'=>'', 'multiple'=>'
 <div id="myCarousel" class="carousel slide">
 	<!-- Indicators -->
     <ul class="carousel-indicators">
-        <li class="item1 active" data-id="0"></li>
-        <li class="item2" data-id="1"></li>
-        <li class="item3" data-id="2"></li>
-        <li class="item4" data-id="3"></li>
+    	<?php    
+    	foreach ($animal->animais_galerias as $index=>$animaisGaleria){
+    	    $ativo = ($index===0)?"active":"";
+    	    echo "<li data-id=\"".$index."\" ".$ativo."></li>";
+    	}
+    	?>        
     </ul>
   
     <!-- The slideshow -->
     <div class="carousel-inner">
-        <div class="carousel-item active">
-    		<?=$this->Html->image('fotos/img1.jpg');?>
-        </div>
-        <div class="carousel-item">
-        	<?=$this->Html->image('fotos/img2.jpg');?>
-        </div>
-        <div class="carousel-item">
-        	<?=$this->Html->image('fotos/img3.jpg');?>
-        </div>
+    	<?php    
+    	foreach ($animal->animais_galerias as $index=>$animaisGaleria){
+    	    $ativo = ($index===0)?"active":"";
+    	    echo "<div class=\"carousel-item ".$ativo."\">".$this->Html->image($animaisGaleria->imagem)."</div>";
+    	}
+    	?>            
     </div>
+
   
     <!-- Left and right controls -->
   	<a class="carousel-control-prev" href="#myCarousel">

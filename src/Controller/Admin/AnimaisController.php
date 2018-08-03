@@ -195,7 +195,9 @@ class AnimaisController extends AppController {
     
     private function get($id){
         return $this->Animais->get($id, [
-            'contain' => ['Prontuarios' => [
+            'contain' => [
+                'AnimaisGalerias',
+                'Prontuarios' => [
                     'Historicospeso' => [
                         'sort' => ['Historicospeso.data_afericao']
                     ], 
@@ -207,7 +209,7 @@ class AnimaisController extends AppController {
                     'Vermifugos',
                     'Vacinas',
                     'Alteracoes' => ['Alteracoesdetalhes'],
-                    'Castracoes'
+                    'Castracoes'                    
                 ]
             ]
         ]); 
@@ -222,7 +224,7 @@ class AnimaisController extends AppController {
      */
     public function edit($id = null) {       
         $animal =  $this->get($id);
-        
+        //debug($animal->animais_galerias);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $castracao = $this->request->getData('prontuario.castracao');            
             $associacoesProntuario = (!empty($castracao['clinicas_id']) or 

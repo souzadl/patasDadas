@@ -50,6 +50,10 @@ class AnimaisTable extends BaseTable {
         $this->hasOne('Prontuarios')            
             ->setForeignKey('id_animal')
             ->setDependent(true);
+        
+        $this->hasMany('AnimaisGalerias')
+            ->setForeignKey('id_animal')
+            ->setDependent(true);
     }
 
     /**
