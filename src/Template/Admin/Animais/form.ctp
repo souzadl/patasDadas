@@ -36,7 +36,7 @@
     <?php include_once 'alteracaoModal.ctp';?>
     <?php include_once 'alteracaoDetalheModal.ctp';?>
 
-    <?= $this->Form->create($animal) ?>
+    <?= $this->Form->create($animal, ['type' => 'file']) ?>
     <fieldset <?= (isset($action) and $action === 'view') ? 'disabled' : ''; ?> > 
 
         <div class="tab-content" id="myTabContent">

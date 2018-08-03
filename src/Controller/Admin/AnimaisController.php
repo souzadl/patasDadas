@@ -3,6 +3,8 @@
 namespace App\Controller\Admin;
 
 use App\Controller\AppController;
+use App\Model\Entity\Animal;
+use Cake\Core\Configure;
 
 /**
  * Animais Controller
@@ -17,7 +19,8 @@ class AnimaisController extends AppController {
     public function initialize() {
         parent::initialize();
         $this->loadModel('Padrinhos');
-        $this->loadModel('Prontuarios');                
+        $this->loadModel('Prontuarios');     
+        $this->loadComponent('Upload');
         $this->padrinhos = $this->Padrinhos->find('list')->order('nome');
         
     }
@@ -214,7 +217,24 @@ class AnimaisController extends AppController {
             ]
         ]); 
     }
+    
+    private function setImagensNovas(Animal $animal){
+        $animal->animais_galerias = array();
+        foreach ($this->Upload->fileNames as $fileName){
+            $img = $this->Animais->AnimaisGalerias->newEntity();
+            $img->imagem = $fileName;
+            //$img->users_id = $this->Auth->user()['id'];
+            //$img->active = true;
+            $animal->animais_galerias[] = $img;
+        }
+    }
 
+    private function addImagensNovas(Animal $animal, $imagens){
+        if ($this->Upload->upload($imagens, Configure::read('App.fotosUrl'))){
+            $this->setImagensNovas($animal);
+        }  
+    }
+    
     /**
      * Edit method
      *
@@ -227,18 +247,26 @@ class AnimaisController extends AppController {
         //debug($animal->animais_galerias);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $castracao = $this->request->getData('prontuario.castracao');            
-            $associacoesProntuario = (!empty($castracao['clinicas_id']) or 
+            $associacoesProntuario = (
+                !empty($castracao['clinicas_id']) or 
                 !empty($castracao['data']['day']) or
-                !empty($castracao['castrado_por_patas']))
-                ? ['Castracoes'] : [];
+                !empty($castracao['castrado_por_patas'])) ? ['Castracoes'] : [];
+            
             $animal = $this->Animais->patchEntity($animal, $this->request->getData(), [
-                'associated' => ['Prontuarios' => [
-                    'associated' => $associacoesProntuario
+                'associated' => [
+                    'AnimaisGalerias',
+                    'Prontuarios' => [
+                        'associated' => $associacoesProntuario
                     ]
                 ]
             ]);
+            
+            $this->addImagensNovas($animal, $this->request->getData('AnimaisGalerias.imagem'));
+//debug($this->request->getData('AnimaisGalerias.imagem'));            
+            //$animal->animais_galerias[]
 
-            if ($this->Animais->save($animal)) {                
+            if ($this->Animais->save($animal)) {   
+                debug($animal->animais_galerias);die;
                 $this->Flash->success(__('Animal salvo.'));
 
                 return $this->redirect(['action' => 'index']);

@@ -1,5 +1,6 @@
 <?php 
-echo $this->Form->control('fotos[]', ['type'=>'file', 'label'=>'', 'multiple'=>'multiple']);
+use Cake\Core\Configure;
+echo $this->Form->control('AnimaisGalerias.imagem[]', ['type'=>'file', 'label'=>'', 'multiple'=>'multiple']);
 ?>
 <div id="myCarousel" class="carousel slide">
 	<!-- Indicators -->
@@ -17,7 +18,7 @@ echo $this->Form->control('fotos[]', ['type'=>'file', 'label'=>'', 'multiple'=>'
     	<?php    
     	foreach ($animal->animais_galerias as $index=>$animaisGaleria){
     	    $ativo = ($index===0)?"active":"";
-    	    echo "<div class=\"carousel-item ".$ativo."\">".$this->Html->image($animaisGaleria->imagem)."</div>";
+    	    echo "<div class=\"carousel-item ".$ativo."\">".$this->Html->image(Configure::read('App.fotosUrl').$animaisGaleria->imagem)."</div>";
     	}
     	?>            
     </div>
