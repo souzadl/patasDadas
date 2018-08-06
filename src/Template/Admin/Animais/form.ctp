@@ -52,7 +52,7 @@
                             'options' => ['M'=>'Macho', 'F'=>'Fêmea'],
                             'templates' => ['nestingLabel'=>'{{hidden}}<div class="custom-control custom-radio">{{input}}<label{{attrs}} class="custom-control-label">{{text}}</label></div>']
                             ]);
-                        echo $this->Form->control('data_aparicao', ['empty' => true]);
+                        echo $this->Form->control('data_aparicao', ['empty' => true, 'minYear' => 2000]);
                         echo $this->Form->control('porte', ['options'=>['P'=>'Pequeno','M'=>'Médio','G'=>'Grande']]);
                         echo $this->Form->control('condicao', ['options'=>['DI'=>'Disponível','A'=>'Adotado','D'=>'Desaparecido','O'=>'Óbito','I'=>'Indisponível']]);
                         echo $this->Form->control('foto');
@@ -62,7 +62,7 @@
                     <div class="col">     
                         <div class="row">
                             <div class="col-8">
-                                <?=$this->Form->control('data_nascimento', ['empty' => true]); ?>
+                                <?=$this->Form->control('data_nascimento', ['empty' => true, 'minYear' => 2000]); ?>
                             </div>
                             <div class="col" style="padding-top: 46px;">
                                 <?=$this->Form->control('filhote', ['type' => 'checkbox']);?>
@@ -76,7 +76,7 @@
                             ]);                
                         echo $this->Form->control('local_aparicao');
                         echo $this->Form->control('pelagem', ['options'=>['C'=>'Curta','L'=>'Longa']]);
-                        echo $this->Form->control('data_condicao', ['empty' => true]);
+                        echo $this->Form->control('data_condicao', ['empty' => true, 'minYear' => 2000]);
                         echo $this->Form->control('perfil_facebook');
                         echo $this->Form->control('album_facebook');
                         ?>
@@ -92,10 +92,10 @@
             <div class="tab-pane fade" id="fotos" role="tabpanel" aria-labelledby="fotos-tab"></div>
             <div class="tab-pane fade" id="padrinhos" role="tabpanel" aria-labelledby="padrinhos-tab">
                 <?php
-                echo $this->Form->control('padrinho_racao', ['options' => $padrinhos]);
-                echo $this->Form->control('padrinho_castracao', ['options' => $padrinhos]);
-                echo $this->Form->control('padrinho_vacinas', ['options' => $padrinhos]);
-                echo $this->Form->control('padrinho_pulgas', ['options' => $padrinhos]);
+                echo $this->Form->control('padrinho_racao', ['options' => $padrinhos, 'label'=>'Padrinho Ração']);
+                echo $this->Form->control('padrinho_castracao', ['options' => $padrinhos, 'label'=>'Padrinho Castração']);
+                echo $this->Form->control('padrinho_vacinas', ['options' => $padrinhos, 'label'=>'Padrinho Vacina']);
+                echo $this->Form->control('padrinho_pulgas', ['options' => $padrinhos, 'label'=>'Padrinho Antipulgas']);
                 ?>
             </div>
             <div class="tab-pane fade" id="prontuario" role="tabpanel" aria-labelledby="prontuario-tab">
