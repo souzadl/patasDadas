@@ -82,10 +82,10 @@
                                     </p>
                                 </div>
                                 <div class="col-lg-8">
-                                    <p class="text-left"><strong><?=$userAuth['nome']?></strong></p>
-                                    <p class="text-left small"><?=$userAuth['email']?></p>
+                                    <p class="text-left"><strong><?=$userAuth['pessoas']['nome']?></strong></p>
+                                    <p class="text-left small"><?=$userAuth['pessoas']['email']?></p>
                                     <p class="text-left">
-                                        <a href="#" class="btn btn-primary btn-block btn-sm">Atualizar Dados</a>
+                                    	<?= $this->Html->link(__('Atualizar Dados'), ['controller' => 'Users', 'action' => 'edit', $userAuth['id_usuario']], ['class' => 'btn btn-primary btn-block btn-sm']) ?>
                                     </p>
                                 </div>
                             </div>

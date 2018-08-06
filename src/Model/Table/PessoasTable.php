@@ -38,7 +38,7 @@ class PessoasTable extends BaseTable
 
         $this->setTable('pessoas');
         $this->setDisplayField('nome');
-        $this->setPrimaryKey('id');
+        $this->setPrimaryKey('id_pessoa');
 
         $this->addBehavior('Timestamp');
 
@@ -61,8 +61,8 @@ class PessoasTable extends BaseTable
     public function validationDefault(Validator $validator)
     {
         $validator
-            ->integer('id')
-            ->allowEmpty('id', 'create');
+            ->integer('id_pessoa')
+            ->allowEmpty('id_pessoa', 'create');
 
         $validator
             ->scalar('nome')
@@ -75,10 +75,10 @@ class PessoasTable extends BaseTable
             ->requirePresence('email', 'create')
             ->notEmpty('email');
 
-        $validator
+        /*$validator
             ->boolean('active')
             ->requirePresence('active', 'create')
-            ->notEmpty('active');
+            ->notEmpty('active');*/
 
         return $validator;
     }

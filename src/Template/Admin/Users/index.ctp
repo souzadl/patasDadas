@@ -5,7 +5,7 @@
  */
 ?>
 <h4><?= __('Usuários') ?></h4>
-<?= $this->element('acao_add') ?>
+<?= $this->Acoes->getAdd($acoesPermitidas) ?>
 <table class="table">
     <thead>
         <tr>
@@ -18,11 +18,11 @@
     <tbody>
         <?php foreach ($users as $user): ?>
         <tr>
-            <td><?= h($user->nome) ?></td>
+            <td><?= ($user->pessoa) ? h($user->pessoa->nome) : ''?></td>
             <td><?= h($user->login) ?></td>            
-            <td><?= h($user->ativo) ?></td>
+            <td><?= $user->ativo ? __('Sim') : __('Não') ?></td>
             <td class="actions">
-                <?= $this->element('acoes_lista', ['id' => $user->id_usuario, 'descDel' => $user->login]) ?>                            
+            	<?= $this->Acoes->getAll($user->id_usuario, $user->login, $acoesPermitidas)?>                          
             </td>
         </tr>
         <?php endforeach; ?>

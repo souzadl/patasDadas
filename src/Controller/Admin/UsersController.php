@@ -42,9 +42,9 @@ class UsersController extends AppController{
      * @return \Cake\Http\Response|void
      */
     public function index(){
-        $this->paginate['order'] = ['nome'];
-        //$this->paginate['contain'] = ['Roles', 'Pessoas'];
-        $users = $this->paginate($this->Users);              
+        $this->paginate['order'] = ['Pessoas.nome'];
+        $this->paginate['contain'] = ['Pessoas'];
+        $users = $this->paginate($this->Users);       
         $this->set(compact('users'));                 
     }
     
@@ -57,7 +57,9 @@ class UsersController extends AppController{
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function view($id = null){        
-        $user = $this->Users->get($id);
+        $user = $this->Users->get($id, [
+            'contain' => 'Pessoas'
+        ]);
 
         $this->renderForm($user);
     }
@@ -107,7 +109,9 @@ class UsersController extends AppController{
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
     public function edit($id = null){
-        $user = $this->Users->get($id);
+        $user = $this->Users->get($id,[
+            'contain' => ['Pessoas']
+        ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $user = $this->Users->patchEntity($user, $this->request->getData());
             if ($this->Users->save($user)) {

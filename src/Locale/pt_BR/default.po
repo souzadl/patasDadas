@@ -16,6 +16,9 @@ msgstr ""
 "Language: Portuguese\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
+msgid "This field cannot be left empty"
+msgstr "Campo obrigatório"
+
 msgid "This value is already in use"
 msgstr "Este valor já está cadastrado"
 

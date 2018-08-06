@@ -24,6 +24,13 @@ use Cake\View\View;
  */
 class AppView extends View
 {
+    
+    CONST ADD = 'add';
+    CONST ADD_PUBLIC = 'addPublic';
+    CONST EDIT = 'edit';
+    CONST VIEW = 'view';
+    CONST DELETE = 'delete';
+    CONST PERMISSOES = 'permissoes';
 
     /**
      * Initialization hook method.
@@ -41,6 +48,7 @@ class AppView extends View
         $this->loadHelper('CorAviso');
         $this->loadHelper('LinkAdd');
         $this->loadHelper('LinkDel');
+        $this->loadHelpers('Acoes');
     }
     
     protected function SimOuNao($var){
@@ -49,14 +57,14 @@ class AppView extends View
     
     protected function RotuloAcao($action, $label){
         switch ($action){
-            case 'add': 
-            case 'addPublic': 
+            case AppView::ADD: 
+            case AppView::ADD_PUBLIC: 
                 $rotulo = __('Adicionar'); 
                 break;
-            case 'edit': 
+            case AppView::EDIT: 
                 $rotulo = __('Editar'); 
                 break;
-            case 'view': 
+            case AppView::VIEW: 
                 $rotulo = __('Visualizar'); 
                 break;            
         }

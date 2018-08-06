@@ -40,14 +40,16 @@ class UsersTable extends BaseTable
         $this->setDisplayField('nome');
         $this->setPrimaryKey('id_usuario');
 
-        /*$this->addBehavior('Timestamp');
+        //$this->addBehavior('Timestamp');
 
         $this->belongsTo('Pessoas', [
             'foreignKey' => 'pessoas_id',
-            'joinType' => 'INNER'
+            'joinType' => 'left'
         ]);   
         
-        $this->belongsTo('Roles', [
+        
+        
+        /*$this->belongsTo('Roles', [
             'foreignKey' => 'roles_id',
             'joinType' => 'INNER'
         ]);        
@@ -70,7 +72,7 @@ class UsersTable extends BaseTable
             ->integer('id_usuario')
             ->allowEmpty('id_usuario', 'create');
 
-        $validator
+        /*$validator
             ->scalar('nome')
             ->maxLength('nome', 200)
             ->requirePresence('nome', 'create')
@@ -79,7 +81,7 @@ class UsersTable extends BaseTable
         $validator
             ->email('email')
             ->requirePresence('email', 'create')
-            ->notEmpty('email');
+            ->notEmpty('email');*/
 
         $validator
             ->scalar('login')
@@ -97,17 +99,13 @@ class UsersTable extends BaseTable
                 'confirm_senha', 
                 'compareWith',[
                     'rule' => ['compareWith', 'senha'],
-                    'message' => 'Passwords not equal.'
+                    'message' => 'Confirmação de senha não é igual.'
                 ]
             );
 
-        /*$validator
-            ->dateTime('changed')
-            ->requirePresence('changed', 'create')
-            ->notEmpty('changed');
-            */
         return $validator;
     }
+
 
     /**
      * Returns a rules checker object that will be used for validating
@@ -123,11 +121,11 @@ class UsersTable extends BaseTable
         return $rules;
     }
     
-    public function findAuth(\Cake\ORM\Query $query, array $options){
+    public function findAuth(Query $query, array $options){
         $query
-            ->select(['id_usuario', 'login', 'senha', 'email', 'nome'])
-            ->where(['Users.ativo' => 'S']);
-            //->contain('Pessoas');
+            ->select(['id_usuario', 'login', 'senha', 'pessoas.email', 'pessoas.nome'])
+            ->where(['Users.ativo' => 'S'])
+            ->contain('Pessoas');
 
         return $query;    
     }
