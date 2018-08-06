@@ -3,3 +3,20 @@ ALTER TABLE `animais` ADD `filhote` BOOLEAN NOT NULL AFTER `data_nascimento`;
 ALTER TABLE `usuarios` CHANGE `nome` `nome_bkp` VARCHAR(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
 ALTER TABLE `usuarios` CHANGE `email` `email_bkp` VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
 ALTER TABLE `usuarios` ADD `pessoas_id` INT NOT NULL AFTER `senha`;
+
+
+--
+-- Estrutura da tabela `perfis`
+--
+
+DROP TABLE IF EXISTS `perfis`;
+CREATE TABLE IF NOT EXISTS `perfis` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(50) NOT NULL,
+  `ativo` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+COMMIT;
+
+
+ALTER TABLE `usuarios` ADD `perfis_id` INT NOT NULL AFTER `pessoas_id`;

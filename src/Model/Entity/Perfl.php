@@ -4,14 +4,13 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * Role Entity
+ * Perfl Entity
  *
  * @property int $id
- * @property string $role
- * @property \Cake\I18n\FrozenTime $created
- * @property \Cake\I18n\FrozenTime $changed
+ * @property string $nome
+ * @property bool $ativo
  */
-class Role extends Entity
+class Perfl extends Entity
 {
 
     /**
@@ -25,8 +24,6 @@ class Role extends Entity
      */
     protected $_accessible = [
         'nome' => true,
-        'created' => true,
-        'modified' => true,
-        'active' => true
+        'ativo' => true
     ];
 }

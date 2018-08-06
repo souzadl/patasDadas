@@ -37,6 +37,8 @@ class User extends Entity
         'login' => true,
         'senha' => true,
         'pessoa' => true,
+        'perfis_id' => true,
+        'perfil' => true,
         'ativo' => true
     ];
 

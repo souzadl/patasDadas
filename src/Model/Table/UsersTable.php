@@ -47,6 +47,11 @@ class UsersTable extends BaseTable
             'joinType' => 'left'
         ]);   
         
+        $this->belongsTo('Perfis', [
+            'foreignKey' => 'perfis_id',
+            'joinType' => 'left'
+        ]);  
+        
         
         
         /*$this->belongsTo('Roles', [

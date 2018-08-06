@@ -10,10 +10,10 @@
         <legend><?= $this->RotuloAcao($action, 'Usuário '.$user->username); ?></legend>
         <?php
             //echo $this->Form->control('nome', ['value'=>$user->pessoa->nome, 'required'=>true]);
-            //echo $this->Form->control('email', ['value'=>$user->pessoa->email, 'required'=>true]);
-            //echo $this->Form->control('roles_id', ['options' => $roles]);                                 
+            //echo $this->Form->control('email', ['value'=>$user->pessoa->email, 'required'=>true]);                                             
             echo $this->Form->control('pessoa.nome');
             echo $this->Form->control('pessoa.email');
+            echo $this->Form->control('perfis_id', ['options' => $perfis]);
             echo $this->Form->control('login', ['readonly' => ($action === $this::EDIT)]);
             echo $this->Form->control('senha', ['value'=>'','type'=>'password']);
             echo $this->Form->control('confirm_senha', ['label'=>'Confirme Senha','type'=>'password']);

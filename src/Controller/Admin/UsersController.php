@@ -24,7 +24,7 @@ class UsersController extends AppController{
     private function renderForm($user, $view = 'form', $layout = null) {
         $this->set('user', $user);
         $this->set('action', $this->request->getParam('action'));
-        //$this->set('roles', $this->Users->Roles->find('list')->where(['active =' => 1]));
+        $this->set('perfis', $this->Users->Perfis->find('list')->where(['ativo =' => 1]));
         parent::render($view, $layout);
     }
     
@@ -110,7 +110,7 @@ class UsersController extends AppController{
      */
     public function edit($id = null){
         $user = $this->Users->get($id,[
-            'contain' => ['Pessoas']
+            'contain' => ['Pessoas','Perfis']
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $user = $this->Users->patchEntity($user, $this->request->getData());
