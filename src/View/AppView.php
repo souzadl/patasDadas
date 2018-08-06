@@ -69,38 +69,6 @@ class AppView extends View
                 break;            
         }
         return $rotulo .' '. $label;   
-    }
-    
-    protected function ShowAcoes($acoesPermitidas){
-        return (trim($this->ShowLinksAcoes($acoesPermitidas)) <> '') 
-            ? '<th scope="col" class="actions">'.__('Actions').'</th>'
-            : '';
-    }
-    
-    protected function ShowLinkAdd($acoesPermitidas){
-        $links = '';
-        if (is_array($acoesPermitidas) and count($acoesPermitidas) >= 1) {   
-            $links = (in_array('add', $acoesPermitidas)) ? $this->Html->link(__('New'), ['action' => 'add']) : '';
-        }
-        return $links;
-    }     
-    
-    protected function ShowLinksAcoes($acoesPermitidas){
-        $links = '';
-        if (is_array($acoesPermitidas) and count($acoesPermitidas) >= 1) {
-            $links .= (in_array('view', $acoesPermitidas)) ? $this->Html->link(__('View'), ['action' => 'view', $user->id]) : '';
-            $links .= (in_array('edit', $acoesPermitidas)) ? $this->Html->link(__('Edit'), ['action' => 'edit', $user->id]) : '';
-            $links .= (in_array('delete', $acoesPermitidas)) ? $this->Form->postLink(__('Delete'), ['action' => 'delete', $user->id], ['confirm' => __('Are you sure you want to delete # {0}?', $user->id)]) : '';
-            $links .= (in_array('permissoes', $acoesPermitidas)) ? $this->Html->link(__('Permissões'), ['action' => 'permissoes', $user->id]) : '';
-        }
-        $td = '';
-        if(trim($links) <> ''){
-            $td = '<td class="actions">';    
-            $td .= $links;
-            $td .= '</td>';        
-        }
-        return $td;
-    }
-    
+    }    
     
 }

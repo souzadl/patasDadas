@@ -41,7 +41,7 @@ class AppController extends Controller{
         parent::initialize();
         
         $this->loadModel('PermissoesUsers');
-        $this->loadModel('PermissoesRoles');
+        $this->loadModel('PermissoesPerfis');
         $this->loadModel('Controles');
         $this->loadModel('Acoes');
         $this->loadModel('Adotaveis');               

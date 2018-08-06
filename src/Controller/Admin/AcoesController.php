@@ -52,6 +52,7 @@ class AcoesController extends AppController{
         $acao = $this->Acoes->newEntity();
         if ($this->request->is('post')) {
             $acao = $this->Acoes->patchEntity($acao, $this->request->getData());
+            $acao->ativo = true;
             if ($this->Acoes->save($acao)) {
                 $this->Flash->success(__('{0} saved.', $this->label));
 

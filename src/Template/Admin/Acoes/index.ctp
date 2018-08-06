@@ -5,7 +5,7 @@
  */
 ?>
 <h4><?= __('Ações') ?></h4>
-<?= $this->element('acao_add') ?>
+<?= $this->Acoes->getAdd($acoesPermitidas) ?>
 <table class="table">
     <thead>
         <tr>
@@ -20,7 +20,7 @@
             <td><?= $this->Number->format($acao->id) ?></td>
             <td><?= h($acao->nome) ?></td>
             <td class="actions">
-                <?= $this->element('acoes_lista', ['id' => $acao->id, 'descDel' => $acao->nome]) ?>
+                <?= $this->Acoes->getList($acao->id, $acao->nome, $acoesPermitidas)?>   
             </td>
         </tr>
         <?php endforeach; ?>

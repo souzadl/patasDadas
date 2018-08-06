@@ -20,3 +20,22 @@ COMMIT;
 
 
 ALTER TABLE `usuarios` ADD `perfis_id` INT NOT NULL AFTER `pessoas_id`;
+
+
+DROP TABLE IF EXISTS `acoes`;
+CREATE TABLE IF NOT EXISTS `acoes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(50) NOT NULL,
+  `ativo` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+COMMIT;
+
+
+DROP TABLE IF EXISTS `controles`;
+CREATE TABLE IF NOT EXISTS `controles` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+COMMIT;

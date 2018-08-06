@@ -27,7 +27,7 @@ class AcoesHelper  extends Helper
         return ($this->acaoPermitida(AppView::DELETE, $acoesPermitidas)) ? $this->Form->postLink($this->Html->tag('i','',['class'=>'fas fa-trash-alt']), ['action' => AppView::DELETE, $id], ['escape'=>false, 'confirm' => __('Confime a exclusão de {0}?', $descDel)]) : '';
     }
     
-    private function makePermissoes($id, $acoesPermitidas){
+    public function getPermissoes($id, $acoesPermitidas){
         return ($this->acaoPermitida(AppView::PERMISSOES, $acoesPermitidas)) ? $this->Html->link($this->Html->tag('i','',['class'=>'fas fa-lock']),['action' => AppView::PERMISSOES, $id],['escape'=>false]) : '';   
     }
     
@@ -36,11 +36,10 @@ class AcoesHelper  extends Helper
     }
     
 
-    public function getAll($id, $descDel, $acoesPermitidas){
+    public function getList($id, $descDel, $acoesPermitidas){
         return $this->makeView($id, $acoesPermitidas)
         . $this->makeEdit($id, $acoesPermitidas)
-        . $this->makeDelete($id, $descDel, $acoesPermitidas)
-        . $this->makePermissoes($id, $acoesPermitidas);
+        . $this->makeDelete($id, $descDel, $acoesPermitidas);
     }
 }
 

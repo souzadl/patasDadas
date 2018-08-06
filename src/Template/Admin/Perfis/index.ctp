@@ -20,7 +20,8 @@
             <td><?= h($perfil->nome) ?></td>
             <td><?= $perfil->ativo ? __('Sim') : __('Não') ?></td>
             <td class="actions">
-            	<?= $this->Acoes->getAll($perfil->id, $perfil->nome, $acoesPermitidas)?>                          
+            	<?= $this->Acoes->getList($perfil->id, $perfil->nome, $acoesPermitidas)?>			
+            	<?= $this->Acoes->getPermissoes($perfil->id, $acoesPermitidas)?>   	           	                          
             </td>
         </tr>
         <?php endforeach; ?>

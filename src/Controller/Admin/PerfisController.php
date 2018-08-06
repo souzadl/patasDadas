@@ -111,4 +111,9 @@ class PerfisController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+    
+    public function permissoes($id = null)
+    {
+        //$this->set(compact('controles', 'acoes', 'user'));
+    }
 }

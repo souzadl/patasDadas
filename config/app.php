@@ -59,12 +59,7 @@ return [
             'templates' => [APP . 'Template' . DS],
             'locales' => [APP . 'Locale' . DS],
         ],
-        'idRoleAdmin' => 1,
-        'idRoleVoluntario' => 2,         
-        'idRolePadrinho' => 3,        
-        'idRoleAdotante' => 4,        
-        'idRoleSistema' => 5,        
-              
+        'idPerfilAdmin' => 1,                   
         'limitPagination' => 5,
     ],
 
