@@ -37,7 +37,7 @@ class ControlesController extends AppController{
      */
     public function view($id = null){
         $controle = $this->Controles->get($id, [
-            'contain' => []
+            'contain' => ['Acoes']
         ]);
 
         $this->renderForm($controle);
@@ -69,17 +69,20 @@ class ControlesController extends AppController{
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function edit($id = null){
-        $controle = $this->Controles->get($id, [
-            'contain' => []
+    public function edit($id = null){        
+        $controle = $this->Controles->get($id,[
+            'contain' => ['Acoes']
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $controle = $this->Controles->patchEntity($controle, $this->request->getData());
+            $controle = $this->Controles->patchEntity($controle, $this->request->getData(),[
+                'associated' => ['Acoes']
+            ]);
             if ($this->Controles->save($controle)) {
                 $this->Flash->success(__('{0} saved.', $this->label));
 
                 return $this->redirect(['action' => 'index']);
             }
+            die;
             $this->Flash->error(__('{0} not saved.', $this->label));
         }
         $this->renderForm($controle);
@@ -107,6 +110,7 @@ class ControlesController extends AppController{
     private function renderForm($controle, $view = 'form', $layout = null) {
         $this->set('controle', $controle);
         $this->set('action', $this->request->getParam('action'));
+        $this->set('acoes', $this->Controles->Acoes->find('list')->where(['ativo =' => 1]));
         parent::render($view, $layout);
     }      
 }

@@ -64,7 +64,7 @@ class PermissoesPerfisTable extends BaseTable
         $rules = parent::buildRules($rules); 
         $rules->add($rules->existsIn(['acoes_id'], 'Acoes'));
         $rules->add($rules->existsIn(['controles_id'], 'Controles'));
-        $rules->add($rules->existsIn(['roles_id'], 'Roles'));
+        $rules->add($rules->existsIn(['perfis_id'], 'Perfis'));
 
         return $rules;
     }

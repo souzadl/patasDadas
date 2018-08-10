@@ -39,3 +39,12 @@ CREATE TABLE IF NOT EXISTS `controles` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 COMMIT;
+
+DROP TABLE IF EXISTS `acoes_controles`;
+CREATE TABLE IF NOT EXISTS `acoes_controles` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `controles_id` int(11) NOT NULL,
+  `acoes_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+COMMIT;

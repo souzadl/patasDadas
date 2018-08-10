@@ -34,6 +34,11 @@ class PerfisTable extends Table
         $this->setTable('perfis');
         $this->setDisplayField('nome');
         $this->setPrimaryKey('id');
+        
+        $this->hasMany('PermissoesPerfis',[
+            'dependent' => true,
+            'foreignKey' => 'perfis_id'
+        ]);
     }
 
     /**

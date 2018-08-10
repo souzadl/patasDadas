@@ -114,6 +114,13 @@ class PerfisController extends AppController
     
     public function permissoes($id = null)
     {
-        //$this->set(compact('controles', 'acoes', 'user'));
+        $perfil = $this->Perfis->get($id, [
+            'contain' => []
+        ]);
+        $controles = $this->Perfis->PermissoesPerfis->Controles->find('all');    
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            
+        }
+        $this->set(compact('perfil', 'controles'));
     }
 }

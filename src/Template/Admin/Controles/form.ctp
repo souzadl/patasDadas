@@ -10,6 +10,12 @@
         <legend><?= $this->RotuloAcao($action, 'Controle'); ?></legend>
         <?php
             echo $this->Form->control('nome');
+            echo $this->Form->control('acoes._ids', [
+                'multiple' => 'multiple',
+                'type' => 'select',
+                'options' => $acoes,
+                'label' => 'Ações'
+            ]);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit'), [(isset($action) and $action === 'view') ? 'disabled' : '']) ?>

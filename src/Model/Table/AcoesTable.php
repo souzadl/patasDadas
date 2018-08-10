@@ -43,7 +43,17 @@ class AcoesTable extends BaseTable
         $this->hasMany('PermissoesPerfis',[
             'dependent' => true,
             'foreignKey' => 'acoes_id'
-        ]);          
+        ]); 
+        
+        $this->hasMany('AcoesControles',[
+            'dependent' => true,
+            'foreignKey' => 'acoes_id'
+        ]);         
+        
+        $this->belongsToMany('Controles',[
+            'joinTable' => 'acoes_controles',
+            'foreignKey' => 'acoes_id'
+        ]);
     }
 
     /**

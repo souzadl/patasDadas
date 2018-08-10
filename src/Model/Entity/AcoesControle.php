@@ -4,12 +4,16 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * Controle Entity
+ * AcoesControle Entity
  *
  * @property int $id
- * @property string $nome
+ * @property int $controles_id
+ * @property int $acoes_id
+ *
+ * @property \App\Model\Entity\Controle $controle
+ * @property \App\Model\Entity\Acao $acao
  */
-class Controle extends Entity
+class AcoesControle extends Entity
 {
 
     /**
@@ -22,7 +26,9 @@ class Controle extends Entity
      * @var array
      */
     protected $_accessible = [
-        'nome' => true,
-        'acoes' => true
+        'controles_id' => true,
+        'acoes_id' => true,
+        'controle' => true,
+        'acao' => true
     ];
 }
