@@ -74,6 +74,7 @@ class ControlesController extends AppController{
             'contain' => ['Acoes']
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
+            debug($this->request->getData());die;
             $controle = $this->Controles->patchEntity($controle, $this->request->getData(),[
                 'associated' => ['Acoes']
             ]);
@@ -82,7 +83,6 @@ class ControlesController extends AppController{
 
                 return $this->redirect(['action' => 'index']);
             }
-            die;
             $this->Flash->error(__('{0} not saved.', $this->label));
         }
         $this->renderForm($controle);

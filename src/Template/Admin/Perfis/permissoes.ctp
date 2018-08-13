@@ -11,16 +11,26 @@
         <?php
             echo $this->Form->control('Selecionar Todos', ['type'=>'checkbox',
                 'name'=>'selecionarTodos']);
-            foreach($controles as $controle){
+             
+            
+            foreach($controles as $controle){              
+                $options = array();
+                foreach($controle->acoes as $acao){
+                    //debug($acao->_joinData->id);
+                    $options[$acao->_joinData->id] = $acao->nome;
+                }
                 $selOptions = array();
-                /*foreach ($user->permissoes_users as $permissao){
-                    if($controle->id === $permissao->controles_id){
-                        $selOptions[] = $permissao->acoes_id;
+                //debug($perfil->acoes_controles);
+                foreach ($perfil->acoes_controles as $permissao){
+                    //debug($permissao);
+                    if($permissao->controles_id === $controle->id){
+                        $selOptions[] = $permissao->id;
                     }
-                }  */
+                }                 
                 echo $this->Form->control($controle->nome,[
+                    'name'=>'acoes_controles._ids',
                     'type'=>'multiCheckbox',                           
-                    'options'=>$acoes,
+                    'options'=>$options,
                     'default'=>$selOptions,
                     'label'=>['style'=>'width: 150px;'],
                     'templates'=>[

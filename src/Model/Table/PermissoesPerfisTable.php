@@ -3,26 +3,25 @@ namespace App\Model\Table;
 
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
-use App\Model\Table\BaseTable;
+use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * PermissoesRoles Model
+ * PermissoesPerfis Model
  *
- * @property \App\Model\Table\AcoesTable|\Cake\ORM\Association\BelongsTo $Acoes
- * @property \App\Model\Table\ControlesTable|\Cake\ORM\Association\BelongsTo $Controles
- * @property \App\Model\Table\RolesTable|\Cake\ORM\Association\BelongsTo $Roles
+ * @property \App\Model\Table\PerfisTable|\Cake\ORM\Association\BelongsTo $Perfis
+ * @property |\Cake\ORM\Association\BelongsTo $AcoesControles
  *
- * @method \App\Model\Entity\PermissoesRole get($primaryKey, $options = [])
- * @method \App\Model\Entity\PermissoesRole newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\PermissoesRole[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\PermissoesRole|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\PermissoesRole|bool saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\PermissoesRole patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\PermissoesRole[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\PermissoesRole findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\PermissoesPerfil get($primaryKey, $options = [])
+ * @method \App\Model\Entity\PermissoesPerfil newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\PermissoesPerfil[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\PermissoesPerfil|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\PermissoesPerfil|bool saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\PermissoesPerfil patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\PermissoesPerfil[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\PermissoesPerfil findOrCreate($search, callable $callback = null, $options = [])
  */
-class PermissoesPerfisTable extends BaseTable
+class PermissoesPerfisTable extends Table
 {
 
     /**
@@ -36,21 +35,34 @@ class PermissoesPerfisTable extends BaseTable
         parent::initialize($config);
 
         $this->setTable('permissoes_perfis');
-        $this->setDisplayField('acoes_id');
-        $this->setPrimaryKey(['acoes_id', 'controles_id', 'roles_id']);
+        $this->setDisplayField('id');
+        $this->setPrimaryKey('id');
 
-        $this->belongsTo('Acoes', [
-            'foreignKey' => 'acoes_id',
-            'joinType' => 'INNER'
-        ]);
-        $this->belongsTo('Controles', [
-            'foreignKey' => 'controles_id',
-            'joinType' => 'INNER'
-        ]);
+        /*Relação muitos para muitos entre Perfíl e Ações Controles*/
         $this->belongsTo('Perfis', [
             'foreignKey' => 'perfis_id',
             'joinType' => 'INNER'
         ]);
+        $this->belongsTo('AcoesControles', [
+            'foreignKey' => 'acoes_controles_id',
+            'joinType' => 'INNER'
+        ]);
+        /*Relação muitos para muitos entre Perfíl e Ações Controles*/
+    }
+
+    /**
+     * Default validation rules.
+     *
+     * @param \Cake\Validation\Validator $validator Validator instance.
+     * @return \Cake\Validation\Validator
+     */
+    public function validationDefault(Validator $validator)
+    {
+        $validator
+            ->integer('id')
+            ->allowEmpty('id', 'create');
+
+        return $validator;
     }
 
     /**
@@ -60,11 +72,10 @@ class PermissoesPerfisTable extends BaseTable
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
      * @return \Cake\ORM\RulesChecker
      */
-    public function buildRules(RulesChecker $rules){
-        $rules = parent::buildRules($rules); 
-        $rules->add($rules->existsIn(['acoes_id'], 'Acoes'));
-        $rules->add($rules->existsIn(['controles_id'], 'Controles'));
+    public function buildRules(RulesChecker $rules)
+    {
         $rules->add($rules->existsIn(['perfis_id'], 'Perfis'));
+        $rules->add($rules->existsIn(['acoes_controles_id'], 'AcoesControles'));
 
         return $rules;
     }

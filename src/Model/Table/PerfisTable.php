@@ -1,9 +1,6 @@
 <?php
 namespace App\Model\Table;
 
-use Cake\ORM\Query;
-use Cake\ORM\RulesChecker;
-use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
@@ -18,7 +15,7 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\Perfl[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\Perfl findOrCreate($search, callable $callback = null, $options = [])
  */
-class PerfisTable extends Table
+class PerfisTable extends BaseTable
 {
 
     /**
@@ -34,9 +31,16 @@ class PerfisTable extends Table
         $this->setTable('perfis');
         $this->setDisplayField('nome');
         $this->setPrimaryKey('id');
-        
+
+        /*Relação muitos para muitos entre Perfíl e Ações Controles*/
         $this->hasMany('PermissoesPerfis',[
             'dependent' => true,
+            'foreignKey' => 'perfis_id'
+        ]);          
+        /*Relação muitos para muitos entre Perfíl e Ações Controles*/
+        
+        $this->belongsToMany('AcoesControles',[
+            'joinTable' => 'permissoes_perfis',
             'foreignKey' => 'perfis_id'
         ]);
     }

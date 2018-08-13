@@ -10,7 +10,7 @@ use Cake\ORM\Entity;
  * @property string $nome
  * @property bool $ativo
  */
-class Perfl extends Entity
+class Perfil extends Entity
 {
 
     /**
@@ -24,6 +24,7 @@ class Perfl extends Entity
      */
     protected $_accessible = [
         'nome' => true,
-        'ativo' => true
+        'ativo' => true,
+        'acoes_controles' => true
     ];
 }

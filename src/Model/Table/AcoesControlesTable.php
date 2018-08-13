@@ -1,9 +1,7 @@
 <?php
 namespace App\Model\Table;
 
-use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
-use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
@@ -21,7 +19,7 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\AcoesControle[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\AcoesControle findOrCreate($search, callable $callback = null, $options = [])
  */
-class AcoesControlesTable extends Table
+class AcoesControlesTable extends BaseTable
 {
 
     /**
@@ -38,6 +36,7 @@ class AcoesControlesTable extends Table
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
+        /*Relação muitos para muitos entre Controles e Ações*/
         $this->belongsTo('Controles', [
             'foreignKey' => 'controles_id',
             'joinType' => 'INNER'
@@ -46,6 +45,14 @@ class AcoesControlesTable extends Table
             'foreignKey' => 'acoes_id',
             'joinType' => 'INNER'
         ]);
+        /*Relação muitos para muitos entre Controles e Ações*/
+        
+        /*Relação muitos para muitos entre Perfíl e Ações Controles*/
+        $this->hasMany('PermissoesPerfis',[
+            'dependent' => true,
+            'foreignKey' => 'acoes_controles_id'
+        ]);          
+        /*Relação muitos para muitos entre Perfíl e Ações Controles*/
     }
 
     /**

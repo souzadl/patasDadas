@@ -115,11 +115,26 @@ class PerfisController extends AppController
     public function permissoes($id = null)
     {
         $perfil = $this->Perfis->get($id, [
-            'contain' => []
+            'contain' => ['AcoesControles']
+        ]);        
+        $controles = $this->Perfis->AcoesControles->Controles->find('all',[
+            'contain'=>['Acoes']
         ]);
-        $controles = $this->Perfis->PermissoesPerfis->Controles->find('all');    
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            
+
+        if ($this->request->is(['patch', 'post', 'put'])) {                      
+            //debug($this->request->getData());
+            $dados['acoes_controles']['_ids'] = $this->request->getData('acoes_controles__ids');
+            //debug($dados);
+            $perfil = $this->Perfis->patchEntity($perfil, $dados,[
+                'associated' => ['AcoesControles']
+            ]);            
+            //debug($perfil);die;
+            if ($this->Perfis->save($perfil)) {
+                $this->Flash->success(__('{0} saved.', 'Permissões'));
+
+                return $this->redirect(['action' => 'index']);
+            }
+            $this->Flash->error(__('{0} not saved.', 'Permissões'));            
         }
         $this->set(compact('perfil', 'controles'));
     }

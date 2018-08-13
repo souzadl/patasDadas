@@ -48,3 +48,16 @@ CREATE TABLE IF NOT EXISTS `acoes_controles` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 COMMIT;
+
+--
+-- Estrutura da tabela `permissoes_perfis`
+--
+
+DROP TABLE IF EXISTS `permissoes_perfis`;
+CREATE TABLE IF NOT EXISTS `permissoes_perfis` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `perfis_id` int(11) NOT NULL,
+  `acoes_controles_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+COMMIT;

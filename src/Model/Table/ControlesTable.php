@@ -35,7 +35,7 @@ class ControlesTable extends BaseTable
         $this->setDisplayField('nome');
         $this->setPrimaryKey('id');
         
-        $this->hasMany('PermissoesUsers',[
+        /*$this->hasMany('PermissoesUsers',[
             'dependent' => true,
             'foreignKey' => 'controles_id'
         ]); 
@@ -43,7 +43,7 @@ class ControlesTable extends BaseTable
         $this->hasMany('PermissoesPerfis',[
             'dependent' => true,
             'foreignKey' => 'controles_id'
-        ]);        
+        ]);*/        
         
         $this->hasMany('AcoesControles',[
             'dependent' => true,
