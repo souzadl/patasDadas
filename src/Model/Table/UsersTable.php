@@ -128,9 +128,15 @@ class UsersTable extends BaseTable
     
     public function findAuth(Query $query, array $options){
         $query
-            ->select(['id_usuario', 'login', 'senha', 'pessoas.email', 'pessoas.nome'])
+            //->select(['id_usuario', 'login', 'senha', 'pessoas.email', 'pessoas.nome', 'perfis.id', 'AcoesControles.acao'])
             ->where(['Users.ativo' => 'S'])
-            ->contain('Pessoas');
+            ->contain([
+                'Pessoas',
+                'Perfis' => ['AcoesControles' => [
+                    'Acoes',
+                    'Controles'
+                ]]
+            ]);
 
         return $query;    
     }

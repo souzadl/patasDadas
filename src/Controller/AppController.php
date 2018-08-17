@@ -40,11 +40,11 @@ class AppController extends Controller{
     public function initialize(){
         parent::initialize();
         
-        $this->loadModel('PermissoesUsers');
+        //$this->loadModel('PermissoesUsers');
         $this->loadModel('PermissoesPerfis');
-        $this->loadModel('Controles');
-        $this->loadModel('Acoes');
-        $this->loadModel('Adotaveis');               
+        //$this->loadModel('Controles');
+        //$this->loadModel('Acoes');
+        //$this->loadModel('Adotaveis');               
         
         $this->paginate['limit'] = Configure::read('App.limitPagination');
         //$this->paginate['maxLimit'] = 2;
@@ -85,64 +85,30 @@ class AppController extends Controller{
         //$this->loadComponent('Security');
     }
     
-    public function isAuthorized($user){  
-        $permitido = true; 
-        $this->set('acoesPermitidas', array('all'));
-        /*if($user['roles_id'] == Configure::read('App.idRoleSistema')){
+    public function isAuthorized($user){         
+        if($user['perfil']['id'] == Configure::read('App.idPerfilAdmin')){
             $permitido = true; 
-            $this->set('acoesPermitidas', array('all'));
-        }else{          
+            $this->set('acoesPermitidas', array('all'));            
+        }else{        
             $permitido = false;
-            $controle = $this->Controles->find('all')
-                    ->where(['nome =' => $this->request->getParam('controller')]);
-            $acao = $this->Acoes->find('all')
-                    ->where(['nome =' => $this->request->getParam('action')]);
-
-            if($controle->count() === 1 && $acao->count() === 1){
-                $permissoesRoles = $this->PermissoesRoles->find('all')
-                  ->where(['roles_id =' => $user['roles_id']
-                          , 'controles_id =' => $controle->first()->id
-                          , 'acoes_id' => $acao->first()->id]);   
-                $permitido = ($permissoesRoles->count() > 0);
-                if($permitido === false){
-                    $permissoesUser = $this->PermissoesUsers->find('all')
-                      ->where(['users_id =' => $user['id']
-                              , 'controles_id =' => $controle->first()->id
-                              , 'acoes_id' => $acao->first()->id]);
-
-                    $permitido = ($permissoesUser->count() > 0);
+            $acoesPermitidas = array();
+            foreach($user['perfil']['acoes_controles'] as $acaoControle){
+                if($this->request->getParam('controller') == $acaoControle['controle']['nome']){
+                    if($this->request->getParam('action') == $acaoControle['acao']['nome']){                
+                        $permitido = true;
+                    }
+                    $acoesPermitidas[] = $acaoControle['acao']['nome'];
                 }
-                if($permitido && $this->request->getParam('action') === 'index'){
-                    $this->carregarAcoesPermitidasIndex($user, $controle->first());
-                }
-            }
-        }  */
+            } 
+            $this->set('acoesPermitidas', $acoesPermitidas);          
+        }  
+        //$permitido = true; 
+        //$this->set('acoesPermitidas', array('all'));  
         return $permitido;     
     }
     
     public function beforeFilter(Event $event) {
         $this->set('userAuth', $this->Auth->user());
-    }
-    
-    private function carregarAcoesPermitidasIndex($user, $controle){
-        $permissoesRole = $this->PermissoesRoles->find('all')
-            ->where([
-                'roles_id =' => $user['roles_id'], 
-                'controles_id =' => $controle->id 
-            ])->contain(['Acoes']); 
-        $permissoesUser = $this->PermissoesUsers->find('all')
-            ->where([
-                'users_id =' => $user['id'], 
-                'controles_id =' => $controle->id 
-            ])->contain(['Acoes']);         
-        $acoesPermitidas = array();
-        foreach ($permissoesRole as $permissao){
-            $acoesPermitidas[] = $permissao->aco->nome;
-        }
-        foreach ($permissoesUser as $permissao){
-            $acoesPermitidas[] = $permissao->aco->nome;
-        }        
-        $this->set('acoesPermitidas', $acoesPermitidas);
-    }
+    }   
 
 }

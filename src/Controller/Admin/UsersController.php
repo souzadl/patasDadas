@@ -17,7 +17,7 @@ class UsersController extends AppController{
     
     public function beforeFilter(\Cake\Event\Event $event) {
         parent::beforeFilter($event);
-        $this->Auth->allow(['rememberPassword', 'changePassword', 'add']);
+        $this->Auth->allow(['rememberPassword', 'changePassword', 'logout', 'add']);
     }
 
     
