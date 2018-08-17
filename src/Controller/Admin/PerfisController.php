@@ -122,13 +122,17 @@ class PerfisController extends AppController
         ]);
 
         if ($this->request->is(['patch', 'post', 'put'])) {                      
-            //debug($this->request->getData());
-            $dados['acoes_controles']['_ids'] = $this->request->getData('acoes_controles__ids');
-            //debug($dados);
+            $dados['acoes_controles']['_ids'] = array();
+            foreach($controles as $controle){
+                $dados['acoes_controles']['_ids'] = array_merge(
+                        $dados['acoes_controles']['_ids'],
+                        $this->request->getData($controle->nome)
+                );
+            }
             $perfil = $this->Perfis->patchEntity($perfil, $dados,[
                 'associated' => ['AcoesControles']
             ]);            
-            //debug($perfil);die;
+
             if ($this->Perfis->save($perfil)) {
                 $this->Flash->success(__('{0} saved.', 'Permissões'));
 

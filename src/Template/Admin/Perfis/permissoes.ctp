@@ -28,7 +28,7 @@
                     }
                 }                 
                 echo $this->Form->control($controle->nome,[
-                    'name'=>'acoes_controles._ids',
+                    //'name'=>'acoes_controles._ids',
                     'type'=>'multiCheckbox',                           
                     'options'=>$options,
                     'default'=>$selOptions,
