@@ -49,6 +49,7 @@ class AppView extends View
         $this->loadHelper('LinkAdd');
         $this->loadHelper('LinkDel');
         $this->loadHelpers('Acoes');
+        $this->loadHelpers('Controle');
     }
     
     protected function SimOuNao($var){

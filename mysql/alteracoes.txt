@@ -18,6 +18,8 @@ CREATE TABLE IF NOT EXISTS `perfis` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 COMMIT;
 
+insert into perfis(id, nome, ativo) values (1, 'Administrador', true);
+
 
 ALTER TABLE `usuarios` ADD `perfis_id` INT NOT NULL AFTER `pessoas_id`;
 

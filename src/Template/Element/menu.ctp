@@ -14,10 +14,17 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <?php if(isset($userAuth)): ?>
-        <ul class="navbar-nav mr-auto">         
+        <ul class="navbar-nav mr-auto">
+            <?php if($this->Controle->TemAcesso('Home', $userAuth)): ?>
             <li class="nav-item active"><?= $this->Html->link(__('Home'), ['controller' => 'Home', 'action' => 'index'], ['class' => 'nav-link']) ?></li>
+            <?php endif; ?>
+            <?php if($this->Controle->TemAcesso('Users', $userAuth)): ?>
             <li class="nav-item disabled"><?= $this->Html->link(__('Usuários'), ['controller' => 'Users', 'action' => 'index'], ['class' => 'nav-link']) ?></li>
+            <?php endif; ?>
+            <?php if($this->Controle->TemAcesso('Conteudos', $userAuth)): ?>
             <li class="nav-item disabled"><?= $this->Html->link(__('Conteúdos'), ['controller' => 'Conteudos', 'action' => 'edit', 1], ['class' => 'nav-link']) ?></li>            
+            <?php endif; ?>
+            <?php if($this->Controle->TemAcesso('Animais', $userAuth)): ?>
             <li class="nav-item active dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="animais" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?= _('Animais')?></a> 
                 <div class="dropdown-menu" aria-labelledby="animais">
@@ -29,11 +36,22 @@
                     <?= $this->Html->link(__('Óbito'), ['controller' => 'Animais', 'action' => 'index', 'O'], ['class' => 'nav-link']) ?>
                 </div>
             </li>
+            <?php endif; ?>
+            <?php if($this->Controle->TemAcesso('Adocoes', $userAuth)): ?>
             <li class="nav-item disabled"><?= $this->Html->link(__('Adoções'), ['controller' => 'Adocoes', 'action' => 'index'], ['class' => 'nav-link']) ?></li>
+            <?php endif; ?>
+            <?php if($this->Controle->TemAcesso('Apadrinhamentos', $userAuth)): ?>
             <li class="nav-item disabled"><?= $this->Html->link(__('Apadrinhamento'), ['controller' => 'Apadrinhamentos', 'action' => 'index'], ['class' => 'nav-link']) ?></li>
+            <?php endif; ?>
+            <?php if($this->Controle->TemAcesso('Pedidos', $userAuth)): ?>
             <li class="nav-item disabled"><?= $this->Html->link(__('Pedidos'), ['controller' => 'Pedidos', 'action' => 'index'], ['class' => 'nav-link']) ?></li>
+            <?php endif; ?>
+            <?php if($this->Controle->TemAcesso('Produtos', $userAuth)): ?>
             <li class="nav-item disabled"><?= $this->Html->link(__('Produtos'), ['controller' => 'Produtos', 'action' => 'index'], ['class' => 'nav-link']) ?></li>
+            <?php endif; ?>
+            <?php if($this->Controle->TemAcesso('Eventos', $userAuth)): ?>
             <li class="nav-item disabled"><?= $this->Html->link(__('Eventos'), ['controller' => 'Eventos', 'action' => 'index'], ['class' => 'nav-link']) ?></li>
+            <?php endif; ?>            
             <li class="nav-item disabled dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="cadastros" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?= _('Cadastros')?></a>            
                 <div class="dropdown-menu" aria-labelledby="cadastros">
@@ -44,15 +62,7 @@
                     <?= $this->Html->link(__('Pessoas'), ['controller' => 'Pessoas', 'action' => 'index'], ['class' => 'dropdown-item']) ?>
                     <?= $this->Html->link(__('Padrinhos'), ['controller' => 'Padrinhos', 'action' => 'index'], ['class' => 'dropdown-item']) ?>
                 </div>
-            </li>
-            <!--
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?= _('Tipos')?></a>
-              <div class="dropdown-menu" aria-labelledby="dropdown01">
-                  <?= $this->Html->link(__('Padrinhos'), ['controller' => 'TiposPadrinhos', 'action' => 'index'], ['class' => 'dropdown-item']) ?>
-                  <?= $this->Html->link(__('Adotáveis'), ['controller' => 'TiposAdotaveis', 'action' => 'index'], ['class' => 'dropdown-item']) ?>
-              </div>
-            </li>-->     
+            </li>  
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?= _('Admin')?></a>
               <div class="dropdown-menu" aria-labelledby="dropdown01">
