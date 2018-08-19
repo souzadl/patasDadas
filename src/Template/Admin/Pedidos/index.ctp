@@ -6,7 +6,7 @@
  */
 ?>
 <h4><?= __('Pedidos') ?></h4>
-<?= $this->element('acao_add') ?>
+<?= $this->Acoes->getAdd($acoesPermitidas) ?>
 <table class="table">
     <thead>
         <tr>
@@ -25,7 +25,7 @@
             <td><?= h($pedido->data_alteracao) ?></td>
             <td><?= h($pedido->status) ?></td>
             <td class="actions">
-                    <?= $this->element('acoes_lista', ['id' => $pedido->id_pedido, 'descDel' => $pedido->id_pedido]) ?>
+                <?= $this->Acoes->getList($pedido->id_pedido, $pedido->id_pedido, $acoesPermitidas)?> 
             </td>
         </tr>
             <?php endforeach; ?>

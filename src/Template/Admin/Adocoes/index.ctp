@@ -5,8 +5,8 @@
  * @var \App\Model\Entity\Adoco[]|\Cake\Collection\CollectionInterface $adocoes
  */
 ?>
-<h4><?= __('Usuários') ?></h4>
-<?= $this->element('acao_add') ?>
+<h4><?= __('Adoções') ?></h4>
+<?= $this->Acoes->getAdd($acoesPermitidas) ?>
 <table class="table">
     <thead>
         <tr>
@@ -25,7 +25,7 @@
             <td><?= h($adoco->email) ?></td>
             <td><?= h($adoco->data_alteracao) ?></td>
             <td class="actions">
-                <?= $this->element('acoes_lista', ['id' => $adoco->id_adocao, 'descDel' => $adoco->nome]) ?>
+                <?= $this->Acoes->getList($adoco->id_adocao, $adoco->nome, $acoesPermitidas)?>  
             </td>
         </tr>
             <?php endforeach; ?>

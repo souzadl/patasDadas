@@ -6,7 +6,7 @@
  */
 ?>
 <h4><?= __('Apadrinhamentos') ?></h4>
-<?= $this->element('acao_add') ?>
+<?= $this->Acoes->getAdd($acoesPermitidas) ?>
 <table class="table">
     <thead>
         <tr>
@@ -58,7 +58,7 @@
             </td>           
             <td><?= date('d/m/Y H:i:s', strtotime($apadrinhamento->data_alteracao)) ?></td>
             <td class="actions">
-                <?= $this->element('acoes_lista', ['id' => $apadrinhamento->id_apadrinhamento, 'descDel' => $apadrinhamento->id_apadrinhamento]) ?>
+                <?= $this->Acoes->getList($apadrinhamento->id_apadrinhamento, $apadrinhamento->id_apadrinhamento, $acoesPermitidas)?>     
             </td>
         </tr>
             <?php endforeach; ?>
