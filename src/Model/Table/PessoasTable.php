@@ -42,10 +42,10 @@ class PessoasTable extends BaseTable
 
         $this->addBehavior('Timestamp');
 
-        $this->belongsTo('Roles', [
+        /*$this->belongsTo('Roles', [
             'foreignKey' => 'roles_id',
             'joinType' => 'INNER'
-        ]);  
+        ]);  */
         
         $this->hasOne('Users',[
             'foreignKey' => 'pessoas_id'

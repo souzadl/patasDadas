@@ -22,8 +22,7 @@
             <td><?= h($user->login) ?></td>            
             <td><?= $user->ativo ? __('Sim') : __('Não') ?></td>
             <td class="actions">
-            	<?= $this->Acoes->getList($user->id_usuario, $user->login, $acoesPermitidas)?>    
-            	<?= $this->Acoes->getPermissoes($user->id_usuario, $acoesPermitidas)?>                       
+            	<?= $this->Acoes->getList($user->id_usuario, $user->login, $acoesPermitidas)?>           	              
             </td>
         </tr>
         <?php endforeach; ?>

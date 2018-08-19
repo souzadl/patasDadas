@@ -37,9 +37,9 @@ class AcoesHelper  extends Helper
     
 
     public function getList($id, $descDel, $acoesPermitidas){
-        return $this->makeView($id, $acoesPermitidas)
-        . $this->makeEdit($id, $acoesPermitidas)
-        . $this->makeDelete($id, $descDel, $acoesPermitidas);
+        return $this->makeView($id, $acoesPermitidas) .
+            $this->makeEdit($id, $acoesPermitidas) .
+            $this->makeDelete($id, $descDel, $acoesPermitidas);
     }
 }
 

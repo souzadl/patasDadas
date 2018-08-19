@@ -51,18 +51,21 @@
             <?php endif; ?>
             <?php if($this->Controle->TemAcesso('Eventos', $userAuth)): ?>
             <li class="nav-item disabled"><?= $this->Html->link(__('Eventos'), ['controller' => 'Eventos', 'action' => 'index'], ['class' => 'nav-link']) ?></li>
-            <?php endif; ?>            
+            <?php endif; ?> 
+            <?php if($this->Controle->TemAcesso('Cadastros', $userAuth)): ?>
             <li class="nav-item disabled dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="cadastros" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?= _('Cadastros')?></a>            
                 <div class="dropdown-menu" aria-labelledby="cadastros">
-                    <?= $this->Html->link(__('Parceiros'), ['controller' => 'Parceiros', 'action' => 'index'], ['class' => 'dropdown-item']) ?>
-                    <?= $this->Html->link(__('Pontos de Coleta'), ['controller' => 'PontosColeta', 'action' => 'index'], ['class' => 'dropdown-item']) ?>
-                    <?= $this->Html->link(__('Mídias'), ['controller' => 'Midias', 'action' => 'index'], ['class' => 'dropdown-item']) ?>
-                    <?= $this->Html->link(__('Perguntas e Respostas'), ['controller' => 'PerguntasRespostas', 'action' => 'index'], ['class' => 'dropdown-item']) ?>
-                    <?= $this->Html->link(__('Pessoas'), ['controller' => 'Pessoas', 'action' => 'index'], ['class' => 'dropdown-item']) ?>
-                    <?= $this->Html->link(__('Padrinhos'), ['controller' => 'Padrinhos', 'action' => 'index'], ['class' => 'dropdown-item']) ?>
+                    <?php if($this->Controle->TemAcesso('Parceiros', $userAuth)){ echo $this->Html->link(__('Parceiros'), ['controller' => 'Parceiros', 'action' => 'index'], ['class' => 'dropdown-item']); } ?>
+                    <?php if($this->Controle->TemAcesso('PontosColeta', $userAuth)){ echo $this->Html->link(__('Pontos de Coleta'), ['controller' => 'PontosColeta', 'action' => 'index'], ['class' => 'dropdown-item']); } ?>
+                    <?php if($this->Controle->TemAcesso('Midias', $userAuth)){ echo $this->Html->link(__('Mídias'), ['controller' => 'Midias', 'action' => 'index'], ['class' => 'dropdown-item']); } ?>
+                    <?php if($this->Controle->TemAcesso('PerguntasRespostas', $userAuth)){ echo $this->Html->link(__('Perguntas e Respostas'), ['controller' => 'PerguntasRespostas', 'action' => 'index'], ['class' => 'dropdown-item']); } ?>
+                    <?php if($this->Controle->TemAcesso('Pessoas', $userAuth)){ echo $this->Html->link(__('Pessoas'), ['controller' => 'Pessoas', 'action' => 'index'], ['class' => 'dropdown-item']); } ?>
+                    <?php if($this->Controle->TemAcesso('Padrinhos', $userAuth)){ echo $this->Html->link(__('Padrinhos'), ['controller' => 'Padrinhos', 'action' => 'index'], ['class' => 'dropdown-item']); } ?>
                 </div>
-            </li>  
+            </li> 
+            <?php endif; ?> 
+            <?php if($this->Controle->TemAcesso('Admin', $userAuth)): ?>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?= _('Admin')?></a>
               <div class="dropdown-menu" aria-labelledby="dropdown01">
@@ -70,7 +73,8 @@
                   <?= $this->Html->link(__('Ações'), ['controller' => 'Acoes', 'action' => 'index'], ['class' => 'dropdown-item']) ?>
                   <?= $this->Html->link(__('Controles'), ['controller' => 'Controles', 'action' => 'index'], ['class' => 'dropdown-item']) ?>
               </div>
-            </li>                                         
+            </li>  
+            <?php endif; ?> 
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
@@ -89,8 +93,8 @@
                                     </p>
                                 </div>
                                 <div class="col-lg-8">
-                                    <p class="text-left"><strong><?=$userAuth['pessoas']['nome']?></strong></p>
-                                    <p class="text-left small"><?=$userAuth['pessoas']['email']?></p>
+                                    <p class="text-left"><strong><?=$userAuth['pessoa']['nome']?></strong></p>
+                                    <p class="text-left small"><?=$userAuth['pessoa']['email']?></p>
                                     <p class="text-left">
                                     	<?= $this->Html->link(__('Atualizar Dados'), ['controller' => 'Users', 'action' => 'edit', $userAuth['id_usuario']], ['class' => 'btn btn-primary btn-block btn-sm']) ?>
                                     </p>
