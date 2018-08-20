@@ -1,5 +1,5 @@
 <?php
-namespace App\Controller;
+namespace App\Controller\Admin;
 
 use App\Controller\AppController;
 
@@ -12,7 +12,12 @@ use App\Controller\AppController;
  */
 class ProdutosCategoriasController extends AppController
 {
-
+    private function renderForm($categoria, $view = 'form', $layout = null) {    
+        $this->set(compact(['categoria']));
+        $this->set('action', $this->request->getParam('action'));
+        parent::render($view, $layout);
+    } 
+    
     /**
      * Index method
      *
@@ -37,8 +42,7 @@ class ProdutosCategoriasController extends AppController
         $produtosCategoria = $this->ProdutosCategorias->get($id, [
             'contain' => []
         ]);
-
-        $this->set('produtosCategoria', $produtosCategoria);
+        $this->renderForm($produtosCategoria);
     }
 
     /**
@@ -58,7 +62,7 @@ class ProdutosCategoriasController extends AppController
             }
             $this->Flash->error(__('The produtos categoria could not be saved. Please, try again.'));
         }
-        $this->set(compact('produtosCategoria'));
+        $this->renderForm($produtosCategoria);
     }
 
     /**
@@ -82,7 +86,7 @@ class ProdutosCategoriasController extends AppController
             }
             $this->Flash->error(__('The produtos categoria could not be saved. Please, try again.'));
         }
-        $this->set(compact('produtosCategoria'));
+        $this->renderForm($produtosCategoria);
     }
 
     /**
