@@ -32,7 +32,7 @@ class ApadrinhamentosTiposTable extends Table
         parent::initialize($config);
 
         $this->setTable('apadrinhamentos_tipos');
-        $this->setDisplayField('id_apadrinhamento_tipo');
+        $this->setDisplayField('tipo_apadrinhamento');
         $this->setPrimaryKey('id_apadrinhamento_tipo');
     }
 

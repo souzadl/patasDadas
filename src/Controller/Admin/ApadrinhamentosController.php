@@ -12,6 +12,14 @@ use App\Controller\AppController;
  * @method \App\Model\Entity\Apadrinhamento[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class ApadrinhamentosController extends AppController {
+    private function renderForm($apadrinhamento, $view = 'form', $layout = null) {
+        $this->set('apadrinhamento', $apadrinhamento);
+        $this->set('action', $this->request->getParam('action'));
+        $this->set('apadrinhamentosTipos', $this->Apadrinhamentos->ApadrinhamentosTipos->find('list'));
+        $this->set('animais', $this->Apadrinhamentos->Animais->find('list'));
+        $this->set('padrinhos', $this->Apadrinhamentos->Padrinhos->find('list'));
+        parent::render($view, $layout);
+    }
 
     /**
      * Index method
@@ -35,10 +43,9 @@ class ApadrinhamentosController extends AppController {
      */
     public function view($id = null) {
         $apadrinhamento = $this->Apadrinhamentos->get($id, [
-            'contain' => []
-        ]);
-
-        $this->set('apadrinhamento', $apadrinhamento);
+            'contain' => ['ApadrinhamentosTipos']
+        ]); 
+        $this->renderForm($apadrinhamento);
     }
 
     /**
@@ -57,7 +64,7 @@ class ApadrinhamentosController extends AppController {
             }
             $this->Flash->error(__('The apadrinhamento could not be saved. Please, try again.'));
         }
-        $this->set(compact('apadrinhamento'));
+        $this->renderForm($apadrinhamento);
     }
 
     /**
@@ -69,7 +76,7 @@ class ApadrinhamentosController extends AppController {
      */
     public function edit($id = null) {
         $apadrinhamento = $this->Apadrinhamentos->get($id, [
-            'contain' => []
+            'contain' => ['ApadrinhamentosTipos']
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $apadrinhamento = $this->Apadrinhamentos->patchEntity($apadrinhamento, $this->request->getData());
@@ -80,7 +87,8 @@ class ApadrinhamentosController extends AppController {
             }
             $this->Flash->error(__('The apadrinhamento could not be saved. Please, try again.'));
         }
-        $this->set(compact('apadrinhamento'));
+        
+        $this->renderForm($apadrinhamento);
     }
 
     /**
