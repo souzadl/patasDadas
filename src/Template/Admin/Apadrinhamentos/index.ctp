@@ -26,36 +26,7 @@
             <td><?= $apadrinhamento->animais['nome'] ?></td>
             <td><?= $apadrinhamento->padrinhos['nome'] ?></td>
             <td><?= h($apadrinhamento->apadrinhamentostipos['tipo_apadrinhamento']) ?></td>
-            <td>
-                <?php
-                switch ($apadrinhamento->status) {	
-                    case 1:
-                        $result = "Aguardando pagamento";
-                        break;
-                    case 2:
-                        $result = "Em análise";
-                        break;
-                    case 3:
-                        $result = "Paga";
-                        break;
-                    case 4:
-                        $result = "Disponível";
-                        break;
-                    case 5:
-                        $result = "Em disputa";
-                        break;
-                    case 6:
-                        $result = "Devolvida";
-                        break;
-                    case 7:
-                        $result = "Cancelada";
-                        break;
-                    default:
-                        $result = "Aguardando pagamento";
-		}
-                echo $result;
-                ?>
-            </td>           
+            <td><?= h($apadrinhamento->status_desc) ?> </td>           
             <td><?= date('d/m/Y H:i:s', strtotime($apadrinhamento->data_alteracao)) ?></td>
             <td class="actions">
                 <?= $this->Acoes->getList($apadrinhamento->id_apadrinhamento, $apadrinhamento->id_apadrinhamento, $acoesPermitidas)?>     

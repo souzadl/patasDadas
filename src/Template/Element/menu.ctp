@@ -3,6 +3,7 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Adotavei[]|\Cake\Collection\CollectionInterface $adotaveis
  */
+use App\Model\Entity\Apadrinhamento;
 ?>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="#">
@@ -41,7 +42,20 @@
             <li class="nav-item disabled"><?= $this->Html->link(__('Adoções'), ['controller' => 'Adocoes', 'action' => 'index'], ['class' => 'nav-link']) ?></li>
             <?php endif; ?>
             <?php if($this->Controle->TemAcesso('Apadrinhamentos', $userAuth)): ?>
-            <li class="nav-item disabled"><?= $this->Html->link(__('Apadrinhamento'), ['controller' => 'Apadrinhamentos', 'action' => 'index'], ['class' => 'nav-link']) ?></li>
+            <li class="nav-item active dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="apadrinhamentos" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?= _('Apadrinhamentos')?></a> 
+                <div class="dropdown-menu" aria-labelledby="apadrinhamentos">
+                    <?= $this->Html->link(__('Todos'), ['controller' => 'Apadrinhamentos', 'action' => 'index'], ['class' => 'nav-link']) ?>
+                    <?= $this->Html->link(__('Vencidos'), ['controller' => 'Apadrinhamentos', 'action' => 'index', Apadrinhamento::VENCIDOS], ['class' => 'nav-link']) ?>
+                    <?= $this->Html->link(__('Pagos'), ['controller' => 'Apadrinhamentos', 'action' => 'index', Apadrinhamento::STATUS_PAGO], ['class' => 'nav-link']) ?>
+                    <?= $this->Html->link(__('Aguardando Pagamento'), ['controller' => 'Apadrinhamentos', 'action' => 'index', Apadrinhamento::STATUS_AGUARDANDO_PAGAMENTO], ['class' => 'nav-link']) ?>
+                    <?= $this->Html->link(__('Em Análise'), ['controller' => 'Apadrinhamentos', 'action' => 'index', Apadrinhamento::STATUS_EM_ANALISE], ['class' => 'nav-link']) ?>
+                    <?= $this->Html->link(__('Disponível'), ['controller' => 'Apadrinhamentos', 'action' => 'index', Apadrinhamento::STATUS_DISPONIVEL], ['class' => 'nav-link']) ?>
+                    <?= $this->Html->link(__('Em Disputa'), ['controller' => 'Apadrinhamentos', 'action' => 'index', Apadrinhamento::STATUS_EM_DISPUTA], ['class' => 'nav-link']) ?>
+                    <?= $this->Html->link(__('Devolvida'), ['controller' => 'Apadrinhamentos', 'action' => 'index', Apadrinhamento::STATUS_DEVOLVIDA], ['class' => 'nav-link']) ?>
+                    <?= $this->Html->link(__('Cancelada'), ['controller' => 'Apadrinhamentos', 'action' => 'index', Apadrinhamento::STATUS_CANCELADA], ['class' => 'nav-link']) ?>
+                </div>
+            </li>
             <?php endif; ?>
             <?php if($this->Controle->TemAcesso('Pedidos', $userAuth)): ?>
             <li class="nav-item disabled"><?= $this->Html->link(__('Pedidos'), ['controller' => 'Pedidos', 'action' => 'index'], ['class' => 'nav-link']) ?></li>

@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Controller\AppController;
+use App\Model\Entity\Apadrinhamento;
 
 /**
  * Apadrinhamentos Controller
@@ -29,6 +30,15 @@ class ApadrinhamentosController extends AppController {
     public function index() {
         $this->paginate['contain'] = ['Animais', 'Padrinhos', 'ApadrinhamentosTipos'];  
         $this->paginate['order'] = ['Apadrinhamentos.id_apadrinhamento'=>'desc'];
+        if(is_array($this->request->getParam('pass')) and isset($this->request->getParam('pass')[0])){
+            $parametro =  $this->request->getParam('pass')[0];
+            if(in_array($parametro, Apadrinhamento::STATUS)){
+                $this->paginate['finder'] = ['ByStatus' => ['status' => $parametro]];
+            }
+            if($parametro == Apadrinhamento::VENCIDOS){
+                $this->paginate['finder'] = ['ByVencidos' => []]; 
+            }
+        }
         $apadrinhamentos = $this->paginate($this->Apadrinhamentos);
 
         $this->set(compact('apadrinhamentos'));

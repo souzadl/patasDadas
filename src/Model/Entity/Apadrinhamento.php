@@ -33,7 +33,25 @@ use Cake\ORM\Entity;
  */
 class Apadrinhamento extends Entity
 {
-
+    const STATUS_AGUARDANDO_PAGAMENTO = 1;
+    const STATUS_EM_ANALISE = 2;
+    const STATUS_PAGO = 3;
+    const STATUS_DISPONIVEL = 4;
+    const STATUS_EM_DISPUTA = 5;
+    const STATUS_DEVOLVIDA = 6;
+    const STATUS_CANCELADA = 7;
+    const STATUS = [
+        self::STATUS_AGUARDANDO_PAGAMENTO,
+        self::STATUS_EM_ANALISE,
+        self::STATUS_PAGO,
+        self::STATUS_DISPONIVEL,
+        self::STATUS_EM_DISPUTA,
+        self::STATUS_DEVOLVIDA,
+        self::STATUS_CANCELADA
+    ];
+    
+    const VENCIDOS = 'V';
+    
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      *
@@ -68,4 +86,33 @@ class Apadrinhamento extends Entity
         'sender_email' => true,
         'sender_phone' => true
     ];
+    
+    protected function _getStatusDesc(){
+        switch ($this->status) {	
+            case Apadrinhamento::STATUS_AGUARDANDO_PAGAMENTO:
+                $result = "Aguardando pagamento";
+                break;
+            case Apadrinhamento::STATUS_EM_ANALISE:
+                $result = "Em análise";
+                break;
+            case Apadrinhamento::STATUS_PAGO:
+                $result = "Paga";
+                break;
+            case Apadrinhamento::STATUS_DISPONIVEL:
+                $result = "Disponível";
+                break;
+            case Apadrinhamento::STATUS_EM_DISPUTA:
+                $result = "Em disputa";
+                break;
+            case Apadrinhamento::STATUS_DEVOLVIDA:
+                $result = "Devolvida";
+                break;
+            case Apadrinhamento::STATUS_CANCELADA:
+                $result = "Cancelada";
+                break;
+            default:
+                $result = "Aguardando pagamento";
+        }
+        return $result;
+    }
 }

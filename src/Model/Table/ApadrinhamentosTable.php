@@ -166,5 +166,18 @@ class ApadrinhamentosTable extends Table {
 
         return $validator;
     }
+    
+    
+    public function findByStatus($query, array $options){
+        $query
+            ->where(['Apadrinhamentos.status' => $options['status']]);
+        return $query; 
+    }
+    
+    public function findByVencidos($query, array $options){
+        $query
+            ->where(['Apadrinhamentos.status' => 3]);
+        return $query; 
+    }
 
 }
