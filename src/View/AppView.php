@@ -53,7 +53,7 @@ class AppView extends View
     }
     
     protected function SimOuNao($var){
-        return ($var) ? __('Sim') : __('Não');
+        return ($var == 'S') ? __('Sim') : __('Não');
     }
     
     protected function RotuloAcao($action, $label){
