@@ -51,6 +51,7 @@ return [
         //'baseUrl' => env('SCRIPT_NAME'),
         'fullBaseUrl' => false,
         'imageBaseUrl' => 'img/',
+        'imageProdutoUrl' => 'produtos/',
         'fotosUrl' => 'fotos/',
         'cssBaseUrl' => 'css/',
         'jsBaseUrl' => 'js/',
