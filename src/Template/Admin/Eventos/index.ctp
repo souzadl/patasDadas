@@ -29,4 +29,4 @@ use Cake\Core\Configure;
         <?php endforeach; ?>
     </tbody>
 </table>
-
+<?= $this->element('paginacao') ?>

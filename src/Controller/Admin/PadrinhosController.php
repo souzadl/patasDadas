@@ -1,5 +1,5 @@
 <?php
-namespace App\Controller;
+namespace App\Controller\Admin;
 
 use App\Controller\AppController;
 
@@ -12,7 +12,12 @@ use App\Controller\AppController;
  */
 class PadrinhosController extends AppController
 {
-
+    private function renderForm($padrinho, $view = 'form', $layout = null) {    
+        $this->set(compact(['padrinho']));
+        $this->set('action', $this->request->getParam('action'));
+        parent::render($view, $layout);
+    } 
+    
     /**
      * Index method
      *
@@ -20,9 +25,6 @@ class PadrinhosController extends AppController
      */
     public function index()
     {
-        $this->paginate = [
-            'contain' => ['Pessoas', 'Adotaveis', 'TiposPadrinhos', 'Users']
-        ];
         $padrinhos = $this->paginate($this->Padrinhos);
 
         $this->set(compact('padrinhos'));
@@ -38,10 +40,10 @@ class PadrinhosController extends AppController
     public function view($id = null)
     {
         $padrinho = $this->Padrinhos->get($id, [
-            'contain' => ['Pessoas', 'Adotaveis', 'TiposPadrinhos', 'Users']
+            'contain' => [/*'Pessoas', 'Adotaveis', 'TiposPadrinhos', 'Users'*/]
         ]);
 
-        $this->set('padrinho', $padrinho);
+        $this->renderForm($padrinho);
     }
 
     /**
@@ -61,11 +63,7 @@ class PadrinhosController extends AppController
             }
             $this->Flash->error(__('The padrinho could not be saved. Please, try again.'));
         }
-        $pessoas = $this->Padrinhos->Pessoas->find('list', ['limit' => 200]);
-        $adotaveis = $this->Padrinhos->Adotaveis->find('list', ['limit' => 200]);
-        $tiposPadrinhos = $this->Padrinhos->TiposPadrinhos->find('list', ['limit' => 200]);
-        $users = $this->Padrinhos->Users->find('list', ['limit' => 200]);
-        $this->set(compact('padrinho', 'pessoas', 'adotaveis', 'tiposPadrinhos', 'users'));
+        $this->renderForm($padrinho);
     }
 
     /**
@@ -89,11 +87,7 @@ class PadrinhosController extends AppController
             }
             $this->Flash->error(__('The padrinho could not be saved. Please, try again.'));
         }
-        $pessoas = $this->Padrinhos->Pessoas->find('list', ['limit' => 200]);
-        $adotaveis = $this->Padrinhos->Adotaveis->find('list', ['limit' => 200]);
-        $tiposPadrinhos = $this->Padrinhos->TiposPadrinhos->find('list', ['limit' => 200]);
-        $users = $this->Padrinhos->Users->find('list', ['limit' => 200]);
-        $this->set(compact('padrinho', 'pessoas', 'adotaveis', 'tiposPadrinhos', 'users'));
+        $this->renderForm($padrinho);
     }
 
     /**
