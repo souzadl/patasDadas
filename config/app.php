@@ -54,6 +54,7 @@ return [
         'imageProdutoUrl' => 'produtos/',
         'imageEventoUrl' => 'eventos/',
         'imageParceiroUrl' => 'parceiros/',
+        'imageMidiaUrl' => 'midias/',
         'fotosUrl' => 'fotos/',
         'cssBaseUrl' => 'css/',
         'jsBaseUrl' => 'js/',
