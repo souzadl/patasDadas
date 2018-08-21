@@ -42,7 +42,7 @@ class ParceirosFixture extends TestFixture
         $this->records = [
             [
                 'id_parceiro' => 1,
-                'data_alteracao' => '2018-07-28 22:42:47',
+                'data_alteracao' => '2018-08-21 12:37:52',
                 'nome' => 'Lorem ipsum dolor sit amet',
                 'logo' => 'Lorem ipsum dolor sit amet',
                 'link' => 'Lorem ipsum dolor sit amet'

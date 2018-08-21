@@ -53,6 +53,7 @@ return [
         'imageBaseUrl' => 'img/',
         'imageProdutoUrl' => 'produtos/',
         'imageEventoUrl' => 'eventos/',
+        'imageParceiroUrl' => 'parceiros/',
         'fotosUrl' => 'fotos/',
         'cssBaseUrl' => 'css/',
         'jsBaseUrl' => 'js/',
