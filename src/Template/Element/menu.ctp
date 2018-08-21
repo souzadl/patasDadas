@@ -71,7 +71,7 @@ use App\Model\Entity\Apadrinhamento;
                 <a class="nav-link dropdown-toggle" href="#" id="cadastros" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?= _('Cadastros')?></a>            
                 <div class="dropdown-menu" aria-labelledby="cadastros">
                     <?php if($this->Controle->TemAcesso('Parceiros', $userAuth)){ echo $this->Html->link(__('Parceiros'), ['controller' => 'Parceiros', 'action' => 'index'], ['class' => 'dropdown-item']); } ?>
-                    <?php if($this->Controle->TemAcesso('PontosColeta', $userAuth)){ echo $this->Html->link(__('Pontos de Coleta'), ['controller' => 'PontosColeta', 'action' => 'index'], ['class' => 'dropdown-item']); } ?>
+                    <?php if($this->Controle->TemAcesso('Pontos', $userAuth)){ echo $this->Html->link(__('Pontos de Coleta'), ['controller' => 'Pontos', 'action' => 'index'], ['class' => 'dropdown-item']); } ?>
                     <?php if($this->Controle->TemAcesso('Midias', $userAuth)){ echo $this->Html->link(__('Mídias'), ['controller' => 'Midias', 'action' => 'index'], ['class' => 'dropdown-item']); } ?>
                     <?php if($this->Controle->TemAcesso('PerguntasRespostas', $userAuth)){ echo $this->Html->link(__('Perguntas e Respostas'), ['controller' => 'PerguntasRespostas', 'action' => 'index'], ['class' => 'dropdown-item']); } ?>
                     <?php if($this->Controle->TemAcesso('Pessoas', $userAuth)){ echo $this->Html->link(__('Pessoas'), ['controller' => 'Pessoas', 'action' => 'index'], ['class' => 'dropdown-item']); } ?>
