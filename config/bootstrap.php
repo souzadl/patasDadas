@@ -48,7 +48,7 @@ use Cake\Event\EventManager;
 // Prior to 3.6 use Cake\Network\Exception\NotFoundException
 use Cake\Http\Exception\InternalErrorException;
 
-$isCakeBakeShellRunning = (PHP_SAPI === 'cli' && isset($argv[1]) && $argv[1] === 'bake');
+/*$isCakeBakeShellRunning = (PHP_SAPI === 'cli' && isset($argv[1]) && $argv[1] === 'bake');
 if (!$isCakeBakeShellRunning) {
     EventManager::instance()->on('Model.initialize', function($event) {
         $subject = $event->getSubject();
@@ -59,7 +59,7 @@ if (!$isCakeBakeShellRunning) {
             throw new InternalErrorException($msg);
         }
     });
-}
+}*/
 
 /**
  * Uncomment block of code below if you want to use `.env` file during development.

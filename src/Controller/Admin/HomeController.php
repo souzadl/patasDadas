@@ -2,6 +2,7 @@
 namespace App\Controller\Admin;
 
 use App\Controller\AppController;
+use Cake\Mailer\MailerAwareTrait;
 
 /**
  * Home Controller
@@ -10,6 +11,7 @@ use App\Controller\AppController;
  * @method \App\Model\Entity\Home[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class HomeController extends AppController{
+    use MailerAwareTrait;    
     
     public function beforeFilter(\Cake\Event\Event $event) {
         parent::beforeFilter($event);
@@ -21,6 +23,7 @@ class HomeController extends AppController{
         //$home = $this->paginate($this->Home);
 
         //$this->set(compact('home'));
+        $this->getMailer('Admin')->send('testeMail', []);
     }
 
     

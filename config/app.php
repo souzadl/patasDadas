@@ -207,7 +207,7 @@ return [
             /*
              * The following keys are used in SMTP transports:
              */
-            'host' => 'localhost',
+            'host' => 'patasdadas.com.br',
             'port' => 25,
             'timeout' => 30,
             'username' => null,
@@ -216,6 +216,23 @@ return [
             'tls' => null,
             'url' => env('EMAIL_TRANSPORT_DEFAULT_URL', null),
         ],
+        
+        'kinghost' => [
+            'className' => 'Smtp',
+            'host' => 'ssl://smtp.kinghost.net',
+            'port' => 587,
+            //'timeout' => 30,
+            'username' => 'sistema@patasdadas.com.br',
+            'password' => 'S1E48#k!9',
+            'log' => true,
+            'context' => [
+                'ssl' => [
+                    'verify_peer' => false,
+                    'verify_peer_name' => false,
+                    'allow_self_signed' => true
+                ]
+              ],
+        ],        
         
         'gmail' => [
             'className' => 'Smtp',
@@ -251,6 +268,12 @@ return [
             //'charset' => 'utf-8',
             //'headerCharset' => 'utf-8',
         ],
+        'kinghost' => [
+            'transport' => 'kinghost',
+            'from' => ['sistema@patasdadas.com.br' => 'Patas Dadas'],
+            //'charset' => 'utf-8',
+            //'headerCharset' => 'utf-8',
+        ],        
         'patasdadas' => [
             'transport' => 'gmail',
             'from' => ['patasdadassistema@gmail.com' => 'Patas Dadas'],
@@ -283,10 +306,17 @@ return [
              * MySQL on MAMP uses port 8889, MAMP users will want to uncomment
              * the following line and set the port accordingly
              */
-            'port' => '3307',
-            'username' => 'root',
-            'password' => '',
-            'database' => 'patas_dadas_site',
+            /*Desenvolvimento*/
+            /*
+            * 'port' => '3307',
+            * 'username' => 'root',
+            * 'password' => '',
+            * 'database' => 'patas_dadas_site',             
+             */
+            /*Produção*/
+            'username' => 'patasdadascp',
+            'password' => 'D4g2E7J9E4f6',
+            'database' => 'patasdadascp',
             /*
              * You do not need to set this flag to use full utf-8 encoding (internal default since CakePHP 3.6).
              */

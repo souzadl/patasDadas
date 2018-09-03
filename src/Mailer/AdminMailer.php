@@ -28,4 +28,14 @@ class AdminMailer extends Mailer
             ->subject(sprintf('Novo Usuário, %s', $user->name));
     }
     
+    public function testeMail(){
+        $this->to('souzadl@gmail.com')
+            ->profile('kinghost')
+            ->emailFormat('html')
+            ->template('novo_usuario')
+            ->layout('default')
+            ->viewVars(['nome' => 'Diego Lemos de Souza'])
+            ->subject(sprintf('Novo Usuário, %s', 'souzadl'));        
+    }
+    
 }
